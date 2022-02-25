@@ -30,6 +30,7 @@ sudo apt -y install automake
 sudo apt -y install gettext
 sudo apt -y install build-essential
 sudo apt -y install cmake
+sudo apt -y install cmake-curses-gui
 sudo apt -y install doxygen
 sudo apt -y install git
 sudo apt -y install graphviz
@@ -95,7 +96,7 @@ sudo apt -y install zlib1g-dev
 # used to convert between different character encodings. 
 #
 cd ~/Desktop
-mkdir ~/Desktop/ffmpeg_libraries
+mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fv libiconv-1.16.tar.gz
 rm -fvR ~/Desktop/ffmpeg_libraries/libiconv-1.16
@@ -120,6 +121,8 @@ export -n LDFLAGS
 # xz depends on iconv
 #
 cd ~/Desktop
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
 rm -fvR ~/Desktop/ffmpeg_libraries/xz
 git clone --depth 1 https://github.com/xz-mirror/xz ~/Desktop/ffmpeg_libraries/xz
 cd ~/Desktop/ffmpeg_libraries/xz
@@ -142,6 +145,8 @@ export -n LDFLAGS
 # Clone and compile the code by running the command below.
 #
 cd ~/Desktop
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
 rm -fvR ~/Desktop/ffmpeg_libraries/zimg
 git clone --depth 1 https://github.com/sekrit-twc/zimg.git ~/Desktop/ffmpeg_libraries/zimg
 cd ~/Desktop/ffmpeg_libraries/zimg
@@ -164,6 +169,8 @@ export -n LDFLAGS
 # Compiling this library will allow FFmpeg to have support for the AAC sound format.
 #
 cd ~/Desktop
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
 rm -fvR ~/Desktop/ffmpeg_libraries/fdk-aac
 git clone --depth 1 https://github.com/mstorsjo/fdk-aac.git ~/Desktop/ffmpeg_libraries/fdk-aac
 cd ~/Desktop/ffmpeg_libraries/fdk-aac
@@ -185,7 +192,7 @@ export -n LDFLAGS
 # For mp3 encoding
 #
 cd ~/Desktop
-mkdir ~/Desktop/ffmpeg_libraries
+mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fv lame-3.100.tar.gz
 rm -fvR ~/Desktop/ffmpeg_libraries/lame-3.100
@@ -210,7 +217,7 @@ export -n LDFLAGS
 # TwoLAME is an optimized MPEG Audio Layer 2 (MP2) encoder
 #
 cd ~/Desktop
-mkdir ~/Desktop/ffmpeg_libraries
+mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fv twolame-0.4.0.tar.gz
 rm -fvR ~/Desktop/ffmpeg_libraries/twolame-0.4.0
@@ -236,9 +243,11 @@ export -n LDFLAGS
 # This codec is considered the successor of the VP9 codec and as a competitor to the x265 codec.
 #
 cd ~/Desktop
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
 rm -fvR ~/Desktop/ffmpeg_libraries/dav1d
 git clone --depth 1 https://code.videolan.org/videolan/dav1d.git ~/Desktop/ffmpeg_libraries/dav1d
-mkdir ~/Desktop/ffmpeg_libraries/dav1d/build
+mkdir -pv ~/Desktop/ffmpeg_libraries/dav1d/build
 cd ~/Desktop/ffmpeg_libraries/dav1d/build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -278,10 +287,12 @@ export -n LDFLAGS
 # This library will add support for libx264 encoding 
 #
 cd ~/Desktop
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
 rm -fvR ~/Desktop/ffmpeg_libraries/libx264
 git clone --depth 1 https://code.videolan.org/videolan/x264.git ~/Desktop/ffmpeg_libraries/libx264
-mkdir ~/Desktop/ffmpeg_libraries/libx264
-cd ~/Desktop/ffmpeg_libraries/libx264/build
+mkdir -pv ~/Desktop/ffmpeg_libraries/libx264
+cd ~/Desktop/ffmpeg_libraries/libx264
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -296,6 +307,84 @@ export -n LDFLAGS
 
 
 
+{
+	#'repo_type' : 'git',
+	#'url' : 'https://bitbucket.org/multicoreware/x265_git',
+	#'folder_name': 'x265_multilib_git',
+	#'depth_git': 0,
+	'source_subfolder' : '_build',
+	'configure_options' :
+		'../source {cmake_prefix_options} '
+		'-DCMAKE_AR={cross_prefix_full}ar '
+		'-DENABLE_ASSEMBLY=ON '
+		'-DENABLE_SHARED=OFF '
+		'-DENABLE_CLI:BOOL=OFF '
+		'-DEXTRA_LIB="x265_main10.a;x265_main12.a" '
+		'-DEXTRA_LINK_FLAGS="-L{offtree_prefix}/libx265_10bit/lib;-L{offtree_prefix}/libx265_12bit/lib" '
+		'-DLINKED_10BIT=ON '
+		'-DLINKED_12BIT=ON '
+		'-DCMAKE_INSTALL_PREFIX={target_prefix} '
+		'-DLIBXML_STATIC=ON ' # 2019.12.13
+		'-DGLIB_STATIC_COMPILATION=ON ' # 2019.12.13
+		'-DENABLE_HDR10_PLUS=ON ' # 2020.07.27
+	,
+	'conf_system' : 'cmake',
+	'run_post_build' : [
+		'mv -fv libx265.a libx265_main.a',
+		'cp -fv {offtree_prefix}/libx265_10bit/lib/libx265_main10.a libx265_main10.a',
+		'cp -fv {offtree_prefix}/libx265_12bit/lib/libx265_main12.a libx265_main12.a',
+		"\"{cross_prefix_full}ar\" -M <<EOF\nCREATE libx265.a\nADDLIB libx265_main.a\nADDLIB libx265_main10.a\nADDLIB libx265_main12.a\nSAVE\nEND\nEOF",
+	],
+	'run_post_install' : [
+		'sed -i.bak \'s|-lmingwex||g\' "{pkg_config_path}/x265.pc"',
+	],
+	'depends_on' : [ 'libxml2', 'libx265_multibit_10', 'libx265_multibit_12' ],
+	'update_check' : { 'type' : 'git', },
+	'_info' : { 'version' : 'git (master)', 'fancy_name' : 'x265 (multibit library 12/10/8)' },
+}
+### LIBX265 multibit
+# This library will add support for libx265 encoding 
+#
+#$ git clone https://bitbucket.org/multicoreware/x265_git
+#$ cd x265/build/linux
+#$ ./make-Makefiles.bash
+#$ make
+#
+cd ~/Desktop
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
+rm -fvR ~/Desktop/ffmpeg_libraries/libx265_multibit
+rm -fvR ~/Desktop/ffmpeg_libraries/libx265_multibit_10
+rm -fvR ~/Desktop/ffmpeg_libraries/libx265_multibit_12
+git clone --depth 1 https://bitbucket.org/multicoreware/x265_git ~/Desktop/ffmpeg_libraries/libx265_multibit_12
+git clone --depth 1 https://bitbucket.org/multicoreware/x265_git ~/Desktop/ffmpeg_libraries/libx265_multibit_10
+git clone --depth 1 https://bitbucket.org/multicoreware/x265_git ~/Desktop/ffmpeg_libraries/libx265_multibit
+
+mkdir -pv ~/Desktop/ffmpeg_libraries/libx265_multibit_12/_build
+mkdir -pv ~/Desktop/ffmpeg_libraries/libx265_multibit_10/_build
+mkdir -pv ~/Desktop/ffmpeg_libraries/libx265_multibit/_build
+
+
+cd ~/Desktop/ffmpeg_libraries/libx265_multibit/_build
+export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+
+./configure --enable-static --enable-strip --enable-lto --enable-pic --bit-depth=all --chroma-format=all --disable-win32thread --extra-cflags="-DLIBXML_STATIC" --extra-cflags="-DGLIB_STATIC_COMPILATION" --disable-cli --disable-lavf --disable-avs --disable-ffms --disable-gpac --disable-lsmash --disable-opencl
+make -j$(nproc)
+sudo make install
+
+export -n CFLAGS
+export -n CXXFLAGS
+export -n CPPFLAGS
+export -n LDFLAGS
+
+
+
+
+
+
 
 
 # LIBVPX
@@ -303,6 +392,8 @@ export -n LDFLAGS
 # This library we are compiling is called LibVPX and is developed by Google.
 #
 cd ~/Desktop
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
 rm -fvR ~/Desktop/ffmpeg_libraries/libvpx
 git clone --depth 1 https://chromium.googlesource.com/webm/libvpx ~/Desktop/ffmpeg_libraries/libvpx
 cd ~/Desktop/ffmpeg_libraries/libvpx
@@ -323,9 +414,11 @@ export -n LDFLAGS
 # This library will allow us to add support for encoding to the AP1 video codec on your Raspberry Pi.
 #
 cd ~/Desktop
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
 rm -fvR ~/Desktop/ffmpeg_libraries/aom
 git clone --depth 1 https://aomedia.googlesource.com/aom ~/Desktop/ffmpeg_libraries/aom
-mkdir ~/Desktop/ffmpeg_libraries/aom/aom_build
+mkdir -pv ~/Desktop/ffmpeg_libraries/aom/aom_build
 cd ~/Desktop/ffmpeg_libraries/aom/aom_build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -359,8 +452,11 @@ sudo ldconfig
 # During the compilation, we will be enabling all the extra libraries that we compiled and installed in the previous two sections.
 #
 cd ~/Desktop
-git clone --branch release/4.4 --depth 1 https://github.com/FFmpeg/FFmpeg.git ~/Desktop/FFmpeg
-cd ~/Desktop/FFmpeg
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
+rm -fvR ~/Desktop/ffmpeg_libraries/FFmpeg
+git clone --branch release/4.4 --depth 1 https://github.com/FFmpeg/FFmpeg.git ~/Desktop/ffmpeg_libraries/FFmpeg
+cd ~/Desktop/ffmpeg_libraries/FFmpeg
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -374,47 +470,47 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 ./configure \
 	--extra-version=hydra3333_RPi4B_for_h264_v4l2m2m \
 	--disable-shared --enable-static \
-    --extra-cflags="-I/usr/local/include" \
-    --extra-ldflags="-L/usr/local/lib" \
-    --extra-libs="-lpthread -lm -latomic" \
+	--extra-cflags="-I/usr/local/include" \
+	--extra-ldflags="-L/usr/local/lib" \
+	--extra-libs="-lpthread -lm -latomic" \
 	--enable-gpl --enable-version3 --enable-nonfree \
 	--arch=aarch64 --target-os=linux \
 	--pkg-config=pkg-config \
 	--pkg-config-flags=--static \
-    --enable-hardcoded-tables \
-    --enable-gmp \
+	--enable-hardcoded-tables \
+	--enable-gmp \
 	--enable-gnutls
-    --enable-libaom \
-    --enable-libass \
-    --enable-libdav1d \
-    --enable-libdrm \
-    --enable-libfdk-aac \
-    --enable-libmp3lame \
+	--enable-libaom \
+	--enable-libass \
+	--enable-libdav1d \
+	--enable-libdrm \
+	--enable-libfdk-aac \
+	--enable-libmp3lame \
 	--enable-libtwolame \
-    --enable-libfreetype \
-    --enable-libkvazaar \
-    --enable-libopencore-amrnb \
-    --enable-libopencore-amrwb \
-    --enable-libopus \
-    --enable-librtmp \
-    --enable-libsnappy \
-    --enable-libsoxr \
-    --enable-libssh \
-    --enable-libvorbis \
-    --enable-libvpx \
-    --enable-libzimg \
-    --enable-libwebp \
-    --enable-libx264 \
-    --enable-libx265 \
-    --enable-libxml2 \
-    --enable-openssl \
+	--enable-libfreetype \
+	--enable-libkvazaar \
+	--enable-libopencore-amrnb \
+	--enable-libopencore-amrwb \
+	--enable-libopus \
+	--enable-librtmp \
+	--enable-libsnappy \
+	--enable-libsoxr \
+	--enable-libssh \
+	--enable-libvorbis \
+	--enable-libvpx \
+	--enable-libzimg \
+	--enable-libwebp \
+	--enable-libx264 \
+	--enable-libx265 \
+	--enable-libxml2 \
+	--enable-openssl \
 	--enable-h264_v4l2m2m \
 	--enable-librubberband \
 	--enable-zlib \
 	--enable-lzma \	
 	--enable xvidcore \
 	--enable-libxvid \
-    --enable-pthreads --disable-w32threads \
+	--enable-pthreads --disable-w32threads \
 	--extra-cflags="-DLIBTWOLAME_STATIC" \
 	--extra-cflags="-DLIBXML_STATIC"
 make -j$(nproc) \
