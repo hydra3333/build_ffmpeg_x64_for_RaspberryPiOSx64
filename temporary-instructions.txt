@@ -92,8 +92,8 @@ sudo apt -y install yasm
 sudo apt -y install zlib1g-dev
 
 
-# FFTW
-# FFTW is a free collection of fast C routines for computing the Discrete Fourier Transform in one or more dimensions.
+# FFTW3
+# FFTW3 is a free collection of fast C routines for computing the Discrete Fourier Transform in one or more dimensions.
 #
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
@@ -194,57 +194,48 @@ export -n LDFLAGS
 
 
 
-{
-	'repo_type' : 'git',
-	'url' : 'https://github.com/breakfastquay/rubberband.git',
-	#'branch': 'cc13a41fd5888a0c1f9f1b6525e32810b584f6ea', # fatal: reference is not a tree: cc13a41fd5888a0c1f9f1b6525e32810b584f6ea
-	'branch': 'default', # "default" is another 'merican race/colour word mis-use/move away from master as a plain word # fatal: reference is not a tree: cc13a41fd5888a0c1f9f1b6525e32810b584f6ea
-    'depth_git' : 0,
-	'download_header' : [
-				'https://raw.githubusercontent.com/hydra3333/h3333_python_cross_compile_script_v100/master/additional_headers/ladspa.h',
-	],
-	'conf_system' : 'meson',
-	'build_system' : 'ninja',
-	'source_subfolder' : 'build',
-	'configure_options' :
-		'--prefix={target_prefix} '
-		'--libdir={target_prefix}/lib '
-		'--default-library=static '
-		'--buildtype=release '  # plain
-		'--backend=ninja '
-		'-Dno_shared=true '
-		'--buildtype=release '
-		'--cross-file={meson_env_file} ./ ..'
-	,
-	'depends_on' : [
-		'libsamplerate', 'libopus', 'libogg', 'libvorbis', 'libflac', 'libsndfile', 'vamp_plugin', 'fftw3',
-	],
-	'update_check' : { 'type' : 'git', },
-	'_info' : { 'version' : 'git (master)', 'fancy_name' : 'rubberband' },
-}
+
+
+### LIBSAMPLERATE
+
+### LIBOPUS
+
+### LIBOGG
+
+### LIBVORBIS
+
+### LIBFLAC
+
+### LIBSNDFILE
+
+### VAMP_PLUGIN
+
+
 ### RUBBERBAND
 # An audio time-stretching and pitch-shifting library and utility program.
+# depends on 'libsamplerate', 'libopus', 'libogg', 'libvorbis', 'libflac', 'libsndfile', 'vamp_plugin', 'fftw3'
 #
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fvR ~/Desktop/ffmpeg_libraries/rubberband
-wget https://raw.githubusercontent.com/hydra3333/h3333_python_cross_compile_script_v100/master/additional_headers/ladspa.h ??????????? where does this go
-git clone --depth 1 https://github.com/mstorsjo/fdk-aac.git ~/Desktop/ffmpeg_libraries/rubberband
+wget https://raw.githubusercontent.com/hydra3333/h3333_python_cross_compile_script_v100/master/additional_headers/ladspa.h
+sudo mv -fv ladspa.h /usr/local/include/ladspa.h
+git clone --depth 1 https://github.com/breakfastquay/rubberband.git ~/Desktop/ffmpeg_libraries/rubberband
 mkdir -pv ~/Desktop/ffmpeg_libraries/rubberband/build
+cd ~/Desktop/ffmpeg_libraries/rubberband
 cd ~/Desktop/ffmpeg_libraries/rubberband/build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-meson .. --backend=ninja --default-library=static --buildtype=release -Dno_shared=true
+meson ./ .. --backend=ninja --default-library=static --buildtype=release --strip -Dno_shared=true 
 ninja
 sudo ninja install
 export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
-
 
 
 
@@ -340,7 +331,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-meson .. --backend=ninja --default-library=static --strip -Denable_tests=false -Denable_tools=false --buildtype=release
+meson ./ .. --backend=ninja --default-library=static --strip -Denable_tests=false -Denable_tools=false --buildtype=release
 ninja
 sudo ninja install
 export -n CFLAGS
