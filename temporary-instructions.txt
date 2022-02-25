@@ -322,7 +322,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #
-cd ~/Desktop/ffmpeg_libraries/libx265_multibit_12/build/linux
+cd ~/Desktop/ffmpeg_libraries/libx265/build/linux
 mkdir -pv 8bit
 mkdir -pv 10bit
 mkdir -pv 12bit
@@ -331,14 +331,14 @@ cd 12bit
 cmake -G "Unix Makefiles" ../../../source -DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF -DMAIN12=ON \
 		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
 make -j$(nproc)
-make install
+sudo make install
 mv -fv "./libx265.a" "./libx265_main12.a"
 #
 cd ../10bit
 cmake -G "Unix Makefiles" ../../../source -DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF \
 		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
 make -j$(nproc)
-make install
+sudo make install
 mv -fv "./libx265.a" "./libx265_main10.a"
 #
 cd ../8bit
@@ -351,7 +351,7 @@ cmake -G "Unix Makefiles" ../../../source -DENABLE_ASSEMBLY=ON -DENABLE_SHARED=O
 		-DLINKED_10BIT=ON -DLINKED_12BIT=ON \
 		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
 make -j$(nproc)
-make install
+sudo make install
 mv -fv "./libx265.a" "./libx265_main.a"
 #
 #cp -fv "../8bit/libx265_main.a"         ./libx265_main.a
@@ -368,7 +368,7 @@ SAVE
 END
 EOF
 #sudo cp -fv ./libx265.a /usr/local/lib/libx265.a
-make install
+sudo make install
 export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
