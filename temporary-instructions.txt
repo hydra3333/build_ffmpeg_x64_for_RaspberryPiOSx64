@@ -218,44 +218,27 @@ export -n CPPFLAGS
 export -n LDFLAGS
 
 
-### SQLITE3
+### SQLITE3 FAILS TO BUILD
 # SQLITE3is a software library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine
 #
-{
-	'repo_type' : 'archive',
-	'download_locations' : [ # https://fossies.org/linux/misc/
-		#{ 'url' : 'https://www.sqlite.org/2021/sqlite-autoconf-3370100.tar.gz', 'hashes' : [ { 'type' : 'sha256', 'sum' : '40f22a13bf38bbcd4c7ac79bcfb42a72d5aa40930c1f3f822e30ccce295f0f2e' }, ], },
-		#{ 'url' : 'https://fossies.org/linux/misc/sqlite-autoconf-3370100.tar.gz', 'hashes' : [ { 'type' : 'sha256', 'sum' : '40f22a13bf38bbcd4c7ac79bcfb42a72d5aa40930c1f3f822e30ccce295f0f2e' }, ], },
-		{ 'url' : 'https://www.sqlite.org/2021/sqlite-autoconf-3370200.tar.gz', 'hashes' : [ { 'type' : 'sha256', 'sum' : '4089a8d9b467537b3f246f217b84cd76e00b1d1a971fe5aca1e30e230e46b2d8' }, ], },
-		{ 'url' : 'https://fossies.org/linux/misc/sqlite-autoconf-3370200.tar.gz', 'hashes' : [ { 'type' : 'sha256', 'sum' : '4089a8d9b467537b3f246f217b84cd76e00b1d1a971fe5aca1e30e230e46b2d8' }, ], },
-	],
-	'cflag_addition' : '-fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing',
-	'strip_cflags': ['-ffast-math', ],
-	'configure_options': '{autoconf_prefix_options} --enable-threadsafe --disable-editline --enable-readline --enable-json1 --enable-fts5 --enable-session',
-	'depends_on': (
-		'zlib',
-	),
-	'update_check' : { 'url' : 'https://www.sqlite.org/index.html', 'type' : 'httpregex', 'regex' : r'<a href="releaselog/.*\.html">Version (?P<version_num>[\d.]+)<\/a>' },
-	'_info' : { 'version' : '3.37.2', 'fancy_name' : 'libsqlite3' },
-}
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
-cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/sqlite-autoconf-3370200
-wget https://fossies.org/linux/misc/sqlite-autoconf-3370200.tar.gz
-tar -xf sqlite-autoconf-3370200.tar.gz
-cd ~/Desktop/ffmpeg_libraries/sqlite-autoconf-3370200
-export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
-export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
-export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
-export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
-./configure --disable-shared --enable-static --enable-threadsafe --disable-editline --enable-readline --enable-json1 --enable-fts5 --enable-session
-make -j$(nproc)
-sudo make install
-export -n CFLAGS
-export -n CXXFLAGS
-export -n CPPFLAGS
-export -n LDFLAGS
+#cd ~/Desktop
+#mkdir -pv ~/Desktop/ffmpeg_libraries
+#cd ~/Desktop/ffmpeg_libraries
+#rm -fvR ~/Desktop/ffmpeg_libraries/sqlite-autoconf-3370200
+#wget https://fossies.org/linux/misc/sqlite-autoconf-3370200.tar.gz
+#tar -xf sqlite-autoconf-3370200.tar.gz
+#cd ~/Desktop/ffmpeg_libraries/sqlite-autoconf-3370200
+#export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
+#export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
+#export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
+#export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
+#./configure --disable-shared --enable-static --enable-threadsafe --disable-editline --enable-readline --enable-json1 --enable-fts5 --enable-session
+#make -j$(nproc)
+#sudo make install
+#export -n CFLAGS
+#export -n CXXFLAGS
+#export -n CPPFLAGS
+#export -n LDFLAGS
 
 
 ### LIBOPUS
