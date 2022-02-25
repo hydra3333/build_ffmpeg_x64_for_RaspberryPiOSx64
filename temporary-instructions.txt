@@ -11,6 +11,9 @@
 # Those we do build is because it is the LATEST rather than 
 # whatever old version may be in Raspberry Pi debian bullseye x64 repositories
 # NOTE NOTE NOTE NOTE we need to 64-bit-ize all of the builds  !!!
+# example use:
+#/home/pi/FFmpeg/ffmpeg -i /home/pi/final.mp4 -c:v h264_v4l2m2m -b:v 8M -c:a copy test.mp4
+
 
 
 ### PREPARE
@@ -89,7 +92,33 @@ sudo apt -y install yasm
 sudo apt -y install zlib1g-dev
 
 
-#/home/pi/FFmpeg/ffmpeg -i /home/pi/final.mp4 -c:v h264_v4l2m2m -b:v 8M -c:a copy test.mp4
+# FFTW
+# FFTW is a free collection of fast C routines for computing the Discrete Fourier Transform in one or more dimensions.
+#
+cd ~/Desktop
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
+rm -fv fftw-3.3.10.tar.gz
+rm -fvR ~/Desktop/ffmpeg_libraries/fftw-3.3.10
+wget https://fossies.org/linux/misc/fftw-3.3.10.tar.gz
+tar -xf fftw-3.3.10.tar.gz
+cd ~/Desktop/ffmpeg_libraries/fftw-3.3.10
+export CFLAGS=" -D_FORTIFY_SOURCE=2 "
+export CXXFLAGS=" -D_FORTIFY_SOURCE=2 "
+export CPPFLAGS=" -D_FORTIFY_SOURCE=2 "
+export LDFLAGS=" -D_FORTIFY_SOURCE=2 "
+# The Raspberry Pi 4, like the Pi3/3+ it contains an Armv8 CPU.  TEST: assume an Arm8 operating system (64bit) and use ARM8 instructions
+./configure --disable-shared --enable-static --disable-silent-rules --disable-doc --disable-alloca --with-our-malloc --disable-fortran \
+			--disable-sse --disable-sse2 --disable-avx --disable-avx2 --disable-avx512 --disable-avx-128-fma --disable-altivec --disable-vsx \
+			--enable-neon --with-pic \
+			--enable-threads --with-combined-threads --disable-float --disable-long-double -disable-quad-precision \
+			--enable-armv8-pmccntr-el0 --enable-armv8-cntvct-el0
+make -j$(nproc)
+sudo make install
+export -n CFLAGS
+export -n CXXFLAGS
+export -n CPPFLAGS
+export -n LDFLAGS
 
 
 ### ICONV
@@ -375,7 +404,6 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries/libx265
-
 
 
 # LIBVPX
