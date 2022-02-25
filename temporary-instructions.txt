@@ -20,8 +20,8 @@
 # Before we get started, let’s create a directory where we will store the code for each of the libraries.
 #
 cd ~/Desktop
-mkdir ~/Desktop/ffmpeg_libraries
-
+sudo rm -fvR ffmpeg_libraries
+mkdir ffmpeg_libraries
 
 ### Install the ffmpeg and dependency build prerequisites
 #
@@ -91,18 +91,18 @@ sudo apt -y install wget
 sudo apt -y install yasm
 sudo apt -y install zlib1g-dev
 
+#
+
 
 # FFTW3
 # FFTW3 is a free collection of fast C routines for computing the Discrete Fourier Transform in one or more dimensions.
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fv fftw-3.3.10.tar.gz
-rm -fvR ~/Desktop/ffmpeg_libraries/fftw-3.3.10
+rm -fvR fftw-3.3.10
 wget https://fossies.org/linux/misc/fftw-3.3.10.tar.gz
 tar -xf fftw-3.3.10.tar.gz
-cd ~/Desktop/ffmpeg_libraries/fftw-3.3.10
+cd fftw-3.3.10
 export CFLAGS=" -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -D_FORTIFY_SOURCE=2 "
@@ -119,19 +119,18 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
 
 
 ### ICONV
 # used to convert between different character encodings. 
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fv libiconv-1.16.tar.gz
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/libiconv-1.16
+sudo rm -fvR libiconv-1.16
 wget https://fossies.org/linux/misc/libiconv-1.16.tar.gz
 tar -xf libiconv-1.16.tar.gz
-cd ~/Desktop/ffmpeg_libraries/libiconv-1.16
+cd libiconv-1.16
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -143,18 +142,17 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
 
 
 # XZ
 # XZ Utils provide a general-purpose data-compression library
 # xz depends on iconv
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/xz
+sudo rm -fvR xz
 git clone --depth 1 https://github.com/xz-mirror/xz ~/Desktop/ffmpeg_libraries/xz
-cd ~/Desktop/ffmpeg_libraries/xz
+cd xz
 export CFLAGS=" -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -D_FORTIFY_SOURCE=2 "
@@ -167,18 +165,17 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
 
 
 ### ZIMG
 # This library implements a range of image processing features, dealing with the basics of scaling, colorspace, and depth.
 # Clone and compile the code by running the command below.
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/zimg
+sudo rm -fvR zimg
 git clone --depth 1 https://github.com/sekrit-twc/zimg.git ~/Desktop/ffmpeg_libraries/zimg
-cd ~/Desktop/ffmpeg_libraries/zimg
+cd zimg
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -191,19 +188,18 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
 
 
 ### LIBFLAC
 # libFLAC is an Open Source lossless audio codec 
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/libflac
+sudo rm -fvR libflac
 git clone --depth 1 https://github.com/xiph/flac.git ~/Desktop/ffmpeg_libraries/libflac
-cd ~/Desktop/ffmpeg_libraries/libflac
-mkdir -pv ~/Desktop/ffmpeg_libraries/libflac/_build
-cd ~/Desktop/ffmpeg_libraries/libflac/_build
+cd libflac
+mkdir -pv _build
+cd _build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -216,18 +212,17 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
 
 
 ### SQLITE3 FAILS TO BUILD FOR THE RASPBERRY PI
 # SQLITE3is a software library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine
 #
-#cd ~/Desktop
-#mkdir -pv ~/Desktop/ffmpeg_libraries
 #cd ~/Desktop/ffmpeg_libraries
-#sudo rm -fvR ~/Desktop/ffmpeg_libraries/sqlite-autoconf-3370200
+#sudo rm -fvR sqlite-autoconf-3370200
 #wget https://fossies.org/linux/misc/sqlite-autoconf-3370200.tar.gz
 #tar -xf sqlite-autoconf-3370200.tar.gz
-#cd ~/Desktop/ffmpeg_libraries/sqlite-autoconf-3370200
+#cd sqlite-autoconf-3370200
 #export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
 #export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
 #export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
@@ -239,20 +234,19 @@ export -n LDFLAGS
 #export -n CXXFLAGS
 #export -n CPPFLAGS
 #export -n LDFLAGS
+#cd ~/Desktop/ffmpeg_libraries
 
 
 
 ### LIBOPUS
 # Opus is a codec for interactive speech and audio transmission over the Internet.
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/libopus
+sudo rm -fvR libopus
 git clone --depth 1 https://github.com/xiph/opus.git ~/Desktop/ffmpeg_libraries/libopus
-cd ~/Desktop/ffmpeg_libraries/libopus
-mkdir -pv ~/Desktop/ffmpeg_libraries/libopus/_build
-cd ~/Desktop/ffmpeg_libraries/libopus/_build
+cd libopus
+mkdir -pv _build
+cd _build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -265,20 +259,19 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
 
 
 
 ### LIBOGG
 # Ogg project codecs use the Ogg bitstream format to arrange the raw, compressed bitstream into a more robust, useful form
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/libogg
+sudo rm -fvR libogg
 git clone --depth 1 https://github.com/xiph/ogg.git ~/Desktop/ffmpeg_libraries/libogg
-cd ~/Desktop/ffmpeg_libraries/libogg
-mkdir -pv ~/Desktop/ffmpeg_libraries/libogg/_build
-cd ~/Desktop/ffmpeg_libraries/libogg/_build
+cd libogg
+mkdir -pv _build
+cd _build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -291,6 +284,7 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
 
 
 
@@ -299,14 +293,12 @@ export -n LDFLAGS
 # MPEG-4's AAC and TwinVQ, the next generation beyond MPEG audio layer 3. 
 # depends_on 'libogg'
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/libvorbis
+sudo rm -fvR libvorbis
 git clone --depth 1 https://github.com/xiph/vorbis ~/Desktop/ffmpeg_libraries/libvorbis
-cd ~/Desktop/ffmpeg_libraries/libvorbis
-mkdir -pv ~/Desktop/ffmpeg_libraries/libvorbis/_build
-cd ~/Desktop/ffmpeg_libraries/libvorbis/_build
+cd libvorbis
+mkdir -pv _build
+cd _build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -319,6 +311,7 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
 
 
 
@@ -326,14 +319,12 @@ export -n LDFLAGS
 # libsamplerate (also known as Secret Rabbit Code) is a library for performing sample rate conversion of audio data.
 # depends_on 'libflac', 'fftw3', 'libopus'
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/libsamplerate
+sudo rm -fvR libsamplerate
 git clone --depth 1 https://github.com/erikd/libsamplerate.git ~/Desktop/ffmpeg_libraries/libsamplerate
-cd ~/Desktop/ffmpeg_libraries/libsamplerate
-mkdir -pv ~/Desktop/ffmpeg_libraries/libsamplerate/_build
-cd ~/Desktop/ffmpeg_libraries/libsamplerate/_build
+cd libsamplerate
+mkdir -pv _build
+cd _build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -346,20 +337,19 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
 
 
 
 ### LIBSNDFILE
 # libsndfile is a C library for reading and writing files containing sampled audio data
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/libsndfile
+sudo rm -fvR libsndfile
 git clone --depth 1 https://github.com/libsndfile/libsndfile.git ~/Desktop/ffmpeg_libraries/libsndfile
-cd ~/Desktop/ffmpeg_libraries/libsndfile
-mkdir -pv ~/Desktop/ffmpeg_libraries/libsndfile/_build
-cd ~/Desktop/ffmpeg_libraries/libsndfile/_build
+cd libsndfile
+mkdir -pv _build
+cd _build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -372,6 +362,7 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
 
 
 
@@ -415,16 +406,14 @@ export -n LDFLAGS
 # An audio time-stretching and pitch-shifting library and utility program.
 # depends on 'libsamplerate', 'libopus', 'libogg', 'libvorbis', 'libflac', 'libsndfile', 'vamp_plugin', 'fftw3'
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/rubberband
+sudo rm -fvR rubberband
 wget https://raw.githubusercontent.com/hydra3333/h3333_python_cross_compile_script_v100/master/additional_headers/ladspa.h
 sudo mv -fv ladspa.h /usr/local/include/ladspa.h
 git clone --depth 1 https://github.com/breakfastquay/rubberband.git ~/Desktop/ffmpeg_libraries/rubberband
-cd ~/Desktop/ffmpeg_libraries/rubberband
-mkdir -pv ~/Desktop/ffmpeg_libraries/rubberband/build
-cd ~/Desktop/ffmpeg_libraries/rubberband/build
+cd rubberband
+mkdir -pv build
+cd build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -436,8 +425,7 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
-
-
+cd ~/Desktop/ffmpeg_libraries
 
 
 
@@ -446,12 +434,10 @@ export -n LDFLAGS
 # Compile the Fraunhofer FDK AAC library.
 # Compiling this library will allow FFmpeg to have support for the AAC sound format.
 #
-cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
-cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/fdk-aac
+sudo rm -fvR fdk-aac
 git clone --depth 1 https://github.com/mstorsjo/fdk-aac.git ~/Desktop/ffmpeg_libraries/fdk-aac
-cd ~/Desktop/ffmpeg_libraries/fdk-aac
+cd fdk-aac
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -464,19 +450,19 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
+
 
 
 ### LAME
 # For mp3 encoding
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fv lame-3.100.tar.gz
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/lame-3.100
+sudo rm -fvR lame-3.100
 wget https://fossies.org/linux/misc/lame-3.100.tar.gz
 tar -xf lame-3.100.tar.gz
-cd ~/Desktop/ffmpeg_libraries/lame-3.100
+cd lame-3.100
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -489,19 +475,19 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
+
 
 
 ### TWOLAME
 # TwoLAME is an optimized MPEG Audio Layer 2 (MP2) encoder
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fv twolame-0.4.0.tar.gz
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/twolame-0.4.0
+sudo rm -fvR twolame-0.4.0
 wget https://github.com/njh/twolame/releases/download/0.4.0/twolame-0.4.0.tar.gz
 tar -xf twolame-0.4.0.tar.gz
-cd ~/Desktop/ffmpeg_libraries/twolame-0.4.0
+cd twolame-0.4.0
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -514,20 +500,20 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
+
 
 
 ### DAV1D
 # This library will add support for decoding the AV1 video format into FFmpeg. 
 # This codec is considered the successor of the VP9 codec and as a competitor to the x265 codec.
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/dav1d
+sudo rm -fvR dav1d
 git clone --depth 1 https://code.videolan.org/videolan/dav1d.git ~/Desktop/ffmpeg_libraries/dav1d
-cd ~/Desktop/ffmpeg_libraries/dav1d
-mkdir -pv ~/Desktop/ffmpeg_libraries/dav1d/build
-cd ~/Desktop/ffmpeg_libraries/dav1d/build
+cd dav1d
+mkdir -pv build
+cd build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -539,18 +525,18 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
+
 
 
 ### LIBX264 multibit
 # This library will add support for libx264 encoding 
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/libx264
+sudo rm -fvR libx264
 git clone --depth 1 https://code.videolan.org/videolan/x264.git ~/Desktop/ffmpeg_libraries/libx264
-mkdir -pv ~/Desktop/ffmpeg_libraries/libx264
-cd ~/Desktop/ffmpeg_libraries/libx264
+mkdir -pv libx264
+cd libx264
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -562,26 +548,27 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
+
 
 
 ### LIBX265 multibit
 # This library will add support for libx265 encoding 
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/libx265
+sudo rm -fvR libx265
 git clone --depth 1 https://bitbucket.org/multicoreware/x265_git ~/Desktop/ffmpeg_libraries/libx265
+cd libx265
+cd build/linux
+#
+mkdir -pv 8bit_multibit
+mkdir -pv 10bit
+mkdir -pv 12bit
 #
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-#
-cd ~/Desktop/ffmpeg_libraries/libx265/build/linux
-mkdir -pv 8bit
-mkdir -pv 10bit
-mkdir -pv 12bit
 #
 cd 12bit
 cmake -G "Unix Makefiles" ../../../source -DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF -DMAIN12=ON \
@@ -597,7 +584,7 @@ make -j$(nproc)
 sudo make install
 mv -fv "./libx265.a" "./libx265_main10.a"
 #
-cd ../8bit
+cd ../8bit_multibit
 #ln -sf ../10bit/libx265.a libx265_main10.a
 #ln -sf ../12bit/libx265.a libx265_main12.a
 #-DEXTRA_LIB="x265_main10.a;x265_main12.a" -DEXTRA_LINK_FLAGS=-L.
@@ -610,9 +597,9 @@ make -j$(nproc)
 sudo make install
 mv -fv "./libx265.a" "./libx265_main.a"
 #
-#cp -fv "../8bit/libx265_main.a"        ./libx265_main.a
-cp -fv "../10bit/libx265_main10.a"      ./libx265_main10.a
-cp -fv "../12bit/libx265_main12.a"      ./libx265_main12.a
+#cp -fv "../8bit_multibit/libx265_main.a" ./libx265_main.a
+cp -fv "../10bit/libx265_main10.a"        ./libx265_main10.a
+cp -fv "../12bit/libx265_main12.a"        ./libx265_main12.a
 rm -fv ./libx265.a
 ls -al
 ar -M <<EOF
@@ -630,19 +617,18 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
-cd ~/Desktop/ffmpeg_libraries/libx265
+cd ~/Desktop/ffmpeg_libraries
+
 
 
 # LIBVPX
 # Support for the VP8 and VP9 video codecs on our Raspberry Pi.
 # This library we are compiling is called LibVPX and is developed by Google.
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/libvpx
+sudo rm -fvR libvpx
 git clone --depth 1 https://chromium.googlesource.com/webm/libvpx ~/Desktop/ffmpeg_libraries/libvpx
-cd ~/Desktop/ffmpeg_libraries/libvpx
+cd libvpx
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -654,15 +640,17 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
+
 
 
 ### kvazaar
 # This library that we are going to compile next is an HEVC encoder called “kvazaar“.
 #
 #cd ~/Desktop
-#sudo rm -fvR ~/Desktop/ffmpeg_libraries/kvazaar
+#sudo rm -fvR kvazaar
 #git clone --depth 1 https://github.com/ultravideo/kvazaar.git ~/Desktop/ffmpeg_libraries/kvazaar
-#cd ~/Desktop/ffmpeg_libraries/kvazaar
+#cd kvazaar
 #export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -675,19 +663,18 @@ export -n LDFLAGS
 #export -n CXXFLAGS
 #export -n CPPFLAGS
 #export -n LDFLAGS
+#cd ~/Desktop/ffmpeg_libraries
 
 
 # LIBAOM
 # This library will allow us to add support for encoding to the AP1 video codec on your Raspberry Pi.
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/aom
+sudo rm -fvR aom
 git clone --depth 1 https://aomedia.googlesource.com/aom ~/Desktop/ffmpeg_libraries/aom
-cd ~/Desktop/ffmpeg_libraries/aom
-mkdir -pv ~/Desktop/ffmpeg_libraries/aom/aom_build
-cd ~/Desktop/ffmpeg_libraries/aom/aom_build
+cd aom
+mkdir -pv aom_build
+cd aom_build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -707,6 +694,9 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
+
+
 
 
 ### UPDATE THE LINK CACHE
@@ -722,9 +712,9 @@ sudo ldconfig
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-sudo rm -fvR ~/Desktop/ffmpeg_libraries/FFmpeg
+sudo rm -fvR FFmpeg
 git clone --branch release/4.4 --depth 1 https://github.com/FFmpeg/FFmpeg.git ~/Desktop/ffmpeg_libraries/FFmpeg
-cd ~/Desktop/ffmpeg_libraries/FFmpeg
+cd FFmpeg
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
