@@ -201,8 +201,8 @@ mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fvR ~/Desktop/ffmpeg_libraries/libflac
 git clone --depth 1 https://github.com/xiph/flac.git ~/Desktop/ffmpeg_libraries/libflac
-mkdir -pv ~/Desktop/ffmpeg_libraries/libflac/_build
 cd ~/Desktop/ffmpeg_libraries/libflac
+mkdir -pv ~/Desktop/ffmpeg_libraries/libflac/_build
 cd ~/Desktop/ffmpeg_libraries/libflac/_build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -258,16 +258,9 @@ export -n CPPFLAGS
 export -n LDFLAGS
 
 
-
-
-
-
-
-
-
-
-
 ### LIBOPUS
+# Opus is a codec for interactive speech and audio transmission over the Internet.
+#
 {
 	'repo_type' : 'git',
 	'url' : 'https://github.com/xiph/opus.git',
@@ -288,6 +281,33 @@ export -n LDFLAGS
 	'update_check' : { 'type' : 'git', },
 	'_info' : { 'version' : 'git (master)', 'fancy_name' : 'opus' },
 }
+#
+cd ~/Desktop
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
+rm -fvR ~/Desktop/ffmpeg_libraries/libopus
+git clone --depth 1 https://github.com/xiph/opus.git ~/Desktop/ffmpeg_libraries/libopus
+cd ~/Desktop/ffmpeg_libraries/libopus
+mkdir -pv ~/Desktop/ffmpeg_libraries/libopus/_build
+cd ~/Desktop/ffmpeg_libraries/libopus/_build
+export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+#-DHAVE_SQLITE3=ON 
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX={target_prefix} -DOPUS_X86_MAY_HAVE_SSE=1 -DOPUS_X86_MAY_HAVE_SSE2=1 -DOPUS_X86_MAY_HAVE_SSE4_1=1 -DOPUS_X86_MAY_HAVE_AVX=1 -DOPUS_X86_PRESUME_SSE=1 -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -DBUILD_TESTING=0 -DOPUS_CUSTOM_MODES=1 -DOPUS_BUILD_PROGRAMS=0 -DOPUS_INSTALL_PKG_CONFIG_MODULE=1
+make -j$(nproc)
+sudo make install
+export -n CFLAGS
+export -n CXXFLAGS
+export -n CPPFLAGS
+export -n LDFLAGS
+
+
+
+
+
+
 
 
 ### LIBSAMPLERATE
@@ -404,6 +424,7 @@ mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fvR ~/Desktop/ffmpeg_libraries/libsndfile
 git clone --depth 1 https://github.com/libsndfile/libsndfile.git ~/Desktop/ffmpeg_libraries/libsndfile
+cd ~/Desktop/ffmpeg_libraries/libsndfile
 mkdir -pv ~/Desktop/ffmpeg_libraries/libsndfile/_build
 cd ~/Desktop/ffmpeg_libraries/libsndfile/_build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -433,8 +454,8 @@ rm -fvR ~/Desktop/ffmpeg_libraries/rubberband
 wget https://raw.githubusercontent.com/hydra3333/h3333_python_cross_compile_script_v100/master/additional_headers/ladspa.h
 sudo mv -fv ladspa.h /usr/local/include/ladspa.h
 git clone --depth 1 https://github.com/breakfastquay/rubberband.git ~/Desktop/ffmpeg_libraries/rubberband
-mkdir -pv ~/Desktop/ffmpeg_libraries/rubberband/build
 cd ~/Desktop/ffmpeg_libraries/rubberband
+mkdir -pv ~/Desktop/ffmpeg_libraries/rubberband/build
 cd ~/Desktop/ffmpeg_libraries/rubberband/build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -536,6 +557,7 @@ mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fvR ~/Desktop/ffmpeg_libraries/dav1d
 git clone --depth 1 https://code.videolan.org/videolan/dav1d.git ~/Desktop/ffmpeg_libraries/dav1d
+cd ~/Desktop/ffmpeg_libraries/dav1d
 mkdir -pv ~/Desktop/ffmpeg_libraries/dav1d/build
 cd ~/Desktop/ffmpeg_libraries/dav1d/build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -695,6 +717,7 @@ mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fvR ~/Desktop/ffmpeg_libraries/aom
 git clone --depth 1 https://aomedia.googlesource.com/aom ~/Desktop/ffmpeg_libraries/aom
+cd ~/Desktop/ffmpeg_libraries/aom
 mkdir -pv ~/Desktop/ffmpeg_libraries/aom/aom_build
 cd ~/Desktop/ffmpeg_libraries/aom/aom_build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
