@@ -218,10 +218,9 @@ export -n CPPFLAGS
 export -n LDFLAGS
 
 
-
-
-
-###SQLITE3
+### SQLITE3
+# SQLITE3is a software library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine
+#
 {
 	'repo_type' : 'archive',
 	'download_locations' : [ # https://fossies.org/linux/misc/
@@ -239,6 +238,31 @@ export -n LDFLAGS
 	'update_check' : { 'url' : 'https://www.sqlite.org/index.html', 'type' : 'httpregex', 'regex' : r'<a href="releaselog/.*\.html">Version (?P<version_num>[\d.]+)<\/a>' },
 	'_info' : { 'version' : '3.37.2', 'fancy_name' : 'libsqlite3' },
 }
+cd ~/Desktop
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
+rm -fvR ~/Desktop/ffmpeg_libraries/sqlite-autoconf-3370200
+wget https://fossies.org/linux/misc/sqlite-autoconf-3370200.tar.gz
+tar -xf sqlite-autoconf-3370200.tar.gz
+cd ~/Desktop/ffmpeg_libraries/sqlite-autoconf-3370200
+export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
+export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
+export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
+export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
+./configure --disable-shared --enable-static --enable-threadsafe --disable-editline --enable-readline --enable-json1 --enable-fts5 --enable-session
+make -j$(nproc)
+sudo make install
+export -n CFLAGS
+export -n CXXFLAGS
+export -n CPPFLAGS
+export -n LDFLAGS
+
+
+
+
+
+
+
 
 
 
