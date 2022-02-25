@@ -331,6 +331,7 @@ cd 12bit
 cmake -G "Unix Makefiles" ../../../source -DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF -DMAIN12=ON \
 		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
 make -j$(nproc)
+make install
 mv -fv "./libx265.a" "./libx265_main12.a"
 #
 cd ../10bit
@@ -366,7 +367,7 @@ ADDLIB libx265_main12.a
 SAVE
 END
 EOF
-sudo cp -fv ./libx265.a /usr/local/lib/libx265.a
+#sudo cp -fv ./libx265.a /usr/local/lib/libx265.a
 make install
 export -n CFLAGS
 export -n CXXFLAGS
