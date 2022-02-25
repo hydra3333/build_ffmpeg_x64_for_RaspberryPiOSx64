@@ -1,9 +1,8 @@
-On that note, is the Pi foundation (or anyone !) able to share a build script for x64 ffmpeg on the Pi4 with 64-bit OS which enables h264_v4l2m2m  ?
+# build script for x64 ffmpeg on the Pi4 with 64-bit OS which enables h264_v4l2m2m  ?
 
-
-perhaps this ---
-https://forums.raspberrypi.com/viewtopic.php?p=1776531#p1776531
-https://gist.github.com/wildrun0/86a890585857a36c90110cee275c45fd
+# perhaps see these
+# https://forums.raspberrypi.com/viewtopic.php?p=1776531#p1776531
+# https://gist.github.com/wildrun0/86a890585857a36c90110cee275c45fd
 
 
 ### NOTES
@@ -273,6 +272,30 @@ export -n LDFLAGS
 #export -n CXXFLAGS
 #export -n CPPFLAGS
 #export -n LDFLAGS
+
+
+### LIBX264 multibit
+# This library will add support for libx264 encoding 
+#
+cd ~/Desktop
+rm -fvR ~/Desktop/ffmpeg_libraries/libx264
+git clone --depth 1 https://code.videolan.org/videolan/x264.git ~/Desktop/ffmpeg_libraries/libx264
+mkdir ~/Desktop/ffmpeg_libraries/libx264
+cd ~/Desktop/ffmpeg_libraries/libx264/build
+export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+./configure --enable-static --enable-strip --enable-lto --enable-pic --bit-depth=all --chroma-format=all --disable-win32thread --extra-cflags="-DLIBXML_STATIC" --extra-cflags="-DGLIB_STATIC_COMPILATION" --disable-cli --disable-lavf --disable-avs --disable-ffms --disable-gpac --disable-lsmash --disable-opencl
+make -j$(nproc)
+sudo make install
+export -n CFLAGS
+export -n CXXFLAGS
+export -n CPPFLAGS
+export -n LDFLAGS
+
+
+
 
 
 # LIBVPX
