@@ -351,12 +351,12 @@ cmake -G "Unix Makefiles" ../../../source -DENABLE_ASSEMBLY=ON -DENABLE_SHARED=O
 		-DLINKED_10BIT=ON -DLINKED_12BIT=ON \
 		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
 make -j$(nproc)
-#sudo make install
+sudo make install
 mv -fv "./libx265.a" "./libx265_main.a"
 #
-#cp -fv "../8bit/libx265_main.a"         ./libx265_main.a
-cp -fv "../10bit/libx265_main10.a"      ./libx265_main_10.a
-cp -fv "../12bit/libx265_main10.a"      ./libx265_main_12.a
+#cp -fv "../8bit/libx265_main.a"        ./libx265_main.a
+cp -fv "../10bit/libx265_main10.a"      ./libx265_main10.a
+cp -fv "../12bit/libx265_main12.a"      ./libx265_main12.a
 rm -fv ./libx265.a
 ls -al
 ar -M <<EOF
@@ -368,6 +368,7 @@ SAVE
 END
 EOF
 #sudo cp -fv ./libx265.a /usr/local/lib/libx265.a
+# re-install the new composite libx265.a created by "ar"
 sudo make install
 export -n CFLAGS
 export -n CXXFLAGS
