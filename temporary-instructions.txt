@@ -128,7 +128,7 @@ cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fv libiconv-1.16.tar.gz
-rm -fvR ~/Desktop/ffmpeg_libraries/libiconv-1.16
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/libiconv-1.16
 wget https://fossies.org/linux/misc/libiconv-1.16.tar.gz
 tar -xf libiconv-1.16.tar.gz
 cd ~/Desktop/ffmpeg_libraries/libiconv-1.16
@@ -152,7 +152,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/xz
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/xz
 git clone --depth 1 https://github.com/xz-mirror/xz ~/Desktop/ffmpeg_libraries/xz
 cd ~/Desktop/ffmpeg_libraries/xz
 export CFLAGS=" -D_FORTIFY_SOURCE=2 "
@@ -176,7 +176,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/zimg
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/zimg
 git clone --depth 1 https://github.com/sekrit-twc/zimg.git ~/Desktop/ffmpeg_libraries/zimg
 cd ~/Desktop/ffmpeg_libraries/zimg
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -199,7 +199,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/libflac
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/libflac
 git clone --depth 1 https://github.com/xiph/flac.git ~/Desktop/ffmpeg_libraries/libflac
 cd ~/Desktop/ffmpeg_libraries/libflac
 mkdir -pv ~/Desktop/ffmpeg_libraries/libflac/_build
@@ -224,7 +224,7 @@ export -n LDFLAGS
 #cd ~/Desktop
 #mkdir -pv ~/Desktop/ffmpeg_libraries
 #cd ~/Desktop/ffmpeg_libraries
-#rm -fvR ~/Desktop/ffmpeg_libraries/sqlite-autoconf-3370200
+#sudo rm -fvR ~/Desktop/ffmpeg_libraries/sqlite-autoconf-3370200
 #wget https://fossies.org/linux/misc/sqlite-autoconf-3370200.tar.gz
 #tar -xf sqlite-autoconf-3370200.tar.gz
 #cd ~/Desktop/ffmpeg_libraries/sqlite-autoconf-3370200
@@ -248,7 +248,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/libopus
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/libopus
 git clone --depth 1 https://github.com/xiph/opus.git ~/Desktop/ffmpeg_libraries/libopus
 cd ~/Desktop/ffmpeg_libraries/libopus
 mkdir -pv ~/Desktop/ffmpeg_libraries/libopus/_build
@@ -274,7 +274,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/libogg
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/libogg
 git clone --depth 1 https://github.com/xiph/ogg.git ~/Desktop/ffmpeg_libraries/libogg
 cd ~/Desktop/ffmpeg_libraries/libogg
 mkdir -pv ~/Desktop/ffmpeg_libraries/libogg/_build
@@ -284,7 +284,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #-DHAVE_SQLITE3=ON 
-cmake -G "Unix Makefiles" ..  -DBUILD_SHARED_LIBS=0 -DCMAKE_BUILD_TYPE=Release
+cmake -G "Unix Makefiles" .. -DBUILD_SHARED_LIBS=0 -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -302,7 +302,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/libvorbis
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/libvorbis
 git clone --depth 1 https://github.com/xiph/vorbis ~/Desktop/ffmpeg_libraries/libvorbis
 cd ~/Desktop/ffmpeg_libraries/libvorbis
 mkdir -pv ~/Desktop/ffmpeg_libraries/libvorbis/_build
@@ -312,7 +312,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #-DHAVE_SQLITE3=ON 
-cmake -G "Unix Makefiles" ..  -DBUILD_SHARED_LIBS=0 -DCMAKE_BUILD_TYPE=Release
+cmake -G "Unix Makefiles" .. -DBUILD_SHARED_LIBS=0 -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -323,16 +323,29 @@ export -n LDFLAGS
 
 
 ### LIBSAMPLERATE
-{
-	'repo_type' : 'git',
-	'url' : 'https://github.com/erikd/libsamplerate.git',
-	'conf_system' : 'cmake',
-	'source_subfolder' : '_build',
-	'configure_options' : '.. {cmake_prefix_options} -DCMAKE_INSTALL_PREFIX={target_prefix} -DLIBSAMPLERATE_EXAMPLES=OFF -DLIBSAMPLERATE_TESTS=OFF -DBUILD_SHARED_LIBS=0 -DCMAKE_BUILD_TYPE=Release',
-	'depends_on' : ['libflac', 'fftw3', 'libopus',], # 2019.12.13 chanaged fftw to fftw3
-	'update_check' : { 'type' : 'git', },
-	'_info' : { 'version' : 'git (master)', 'fancy_name' : 'libsamplerate' },
-}
+# libsamplerate (also known as Secret Rabbit Code) is a library for performing sample rate conversion of audio data.
+# depends_on 'libflac', 'fftw3', 'libopus'
+#
+cd ~/Desktop
+mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/libsamplerate
+git clone --depth 1 https://github.com/erikd/libsamplerate.git ~/Desktop/ffmpeg_libraries/libsamplerate
+cd ~/Desktop/ffmpeg_libraries/libsamplerate
+mkdir -pv ~/Desktop/ffmpeg_libraries/libsamplerate/_build
+cd ~/Desktop/ffmpeg_libraries/libsamplerate/_build
+export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+#-DHAVE_SQLITE3=ON 
+cmake -G "Unix Makefiles" .. -DLIBSAMPLERATE_EXAMPLES=OFF -DLIBSAMPLERATE_TESTS=OFF -DBUILD_SHARED_LIBS=0 -DCMAKE_BUILD_TYPE=Release
+make -j$(nproc)
+sudo make install
+export -n CFLAGS
+export -n CXXFLAGS
+export -n CPPFLAGS
+export -n LDFLAGS
 
 
 
@@ -342,7 +355,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/libsndfile
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/libsndfile
 git clone --depth 1 https://github.com/libsndfile/libsndfile.git ~/Desktop/ffmpeg_libraries/libsndfile
 cd ~/Desktop/ffmpeg_libraries/libsndfile
 mkdir -pv ~/Desktop/ffmpeg_libraries/libsndfile/_build
@@ -405,7 +418,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/rubberband
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/rubberband
 wget https://raw.githubusercontent.com/hydra3333/h3333_python_cross_compile_script_v100/master/additional_headers/ladspa.h
 sudo mv -fv ladspa.h /usr/local/include/ladspa.h
 git clone --depth 1 https://github.com/breakfastquay/rubberband.git ~/Desktop/ffmpeg_libraries/rubberband
@@ -436,7 +449,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/fdk-aac
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/fdk-aac
 git clone --depth 1 https://github.com/mstorsjo/fdk-aac.git ~/Desktop/ffmpeg_libraries/fdk-aac
 cd ~/Desktop/ffmpeg_libraries/fdk-aac
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -460,7 +473,7 @@ cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fv lame-3.100.tar.gz
-rm -fvR ~/Desktop/ffmpeg_libraries/lame-3.100
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/lame-3.100
 wget https://fossies.org/linux/misc/lame-3.100.tar.gz
 tar -xf lame-3.100.tar.gz
 cd ~/Desktop/ffmpeg_libraries/lame-3.100
@@ -485,7 +498,7 @@ cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 rm -fv twolame-0.4.0.tar.gz
-rm -fvR ~/Desktop/ffmpeg_libraries/twolame-0.4.0
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/twolame-0.4.0
 wget https://github.com/njh/twolame/releases/download/0.4.0/twolame-0.4.0.tar.gz
 tar -xf twolame-0.4.0.tar.gz
 cd ~/Desktop/ffmpeg_libraries/twolame-0.4.0
@@ -510,7 +523,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/dav1d
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/dav1d
 git clone --depth 1 https://code.videolan.org/videolan/dav1d.git ~/Desktop/ffmpeg_libraries/dav1d
 cd ~/Desktop/ffmpeg_libraries/dav1d
 mkdir -pv ~/Desktop/ffmpeg_libraries/dav1d/build
@@ -534,7 +547,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/libx264
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/libx264
 git clone --depth 1 https://code.videolan.org/videolan/x264.git ~/Desktop/ffmpeg_libraries/libx264
 mkdir -pv ~/Desktop/ffmpeg_libraries/libx264
 cd ~/Desktop/ffmpeg_libraries/libx264
@@ -557,7 +570,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/libx265
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/libx265
 git clone --depth 1 https://bitbucket.org/multicoreware/x265_git ~/Desktop/ffmpeg_libraries/libx265
 #
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -627,7 +640,7 @@ cd ~/Desktop/ffmpeg_libraries/libx265
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/libvpx
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/libvpx
 git clone --depth 1 https://chromium.googlesource.com/webm/libvpx ~/Desktop/ffmpeg_libraries/libvpx
 cd ~/Desktop/ffmpeg_libraries/libvpx
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -647,7 +660,7 @@ export -n LDFLAGS
 # This library that we are going to compile next is an HEVC encoder called “kvazaar“.
 #
 #cd ~/Desktop
-#rm -fvR ~/Desktop/ffmpeg_libraries/kvazaar
+#sudo rm -fvR ~/Desktop/ffmpeg_libraries/kvazaar
 #git clone --depth 1 https://github.com/ultravideo/kvazaar.git ~/Desktop/ffmpeg_libraries/kvazaar
 #cd ~/Desktop/ffmpeg_libraries/kvazaar
 #export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -670,7 +683,7 @@ export -n LDFLAGS
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/aom
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/aom
 git clone --depth 1 https://aomedia.googlesource.com/aom ~/Desktop/ffmpeg_libraries/aom
 cd ~/Desktop/ffmpeg_libraries/aom
 mkdir -pv ~/Desktop/ffmpeg_libraries/aom/aom_build
@@ -709,7 +722,7 @@ sudo ldconfig
 cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
-rm -fvR ~/Desktop/ffmpeg_libraries/FFmpeg
+sudo rm -fvR ~/Desktop/ffmpeg_libraries/FFmpeg
 git clone --branch release/4.4 --depth 1 https://github.com/FFmpeg/FFmpeg.git ~/Desktop/ffmpeg_libraries/FFmpeg
 cd ~/Desktop/ffmpeg_libraries/FFmpeg
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
