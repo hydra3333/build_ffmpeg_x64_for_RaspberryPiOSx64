@@ -351,7 +351,7 @@ cmake -G "Unix Makefiles" ../../../source -DENABLE_ASSEMBLY=ON -DENABLE_SHARED=O
 		-DLINKED_10BIT=ON -DLINKED_12BIT=ON \
 		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
 make -j$(nproc)
-sudo make install
+#sudo make install
 mv -fv "./libx265.a" "./libx265_main.a"
 #
 #cp -fv "../8bit/libx265_main.a"         ./libx265_main.a
