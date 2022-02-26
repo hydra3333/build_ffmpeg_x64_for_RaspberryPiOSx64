@@ -581,9 +581,17 @@ export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #
 cd ./12bit
-cmake -G "Unix Makefiles" ../../../source  -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
-		-DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF -DMAIN12=ON \
-		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
+cmake -G "Unix Makefiles" ../../../source  \
+			-DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
+			-DENABLE_ASSEMBLY=ON \
+			-DHIGH_BIT_DEPTH=ON \
+			-DENABLE_HDR10_PLUS=ON \
+			-DENABLE_SHARED=OFF \
+			-DEXPORT_C_API=OFF \
+			-DENABLE_CLI=OFF \
+			-DMAIN12=ON \
+			-DLIBXML_STATIC=ON \
+			-DGLIB_STATIC_COMPILATION=ON
 make -j$(nproc)
 ls -al
 sudo make install
@@ -591,9 +599,16 @@ mv -fv "./libx265.a" "./libx265_main12.a"
 #
 cd ..
 cd ./10bit
-cmake -G "Unix Makefiles" ../../../source -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
-		-DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF \
-		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
+cmake -G "Unix Makefiles" ../../../source \
+			-DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
+			-DENABLE_ASSEMBLY=ON \
+			-DHIGH_BIT_DEPTH=ON \
+			-DENABLE_HDR10_PLUS=ON \
+			-DENABLE_SHARED=OFF \
+			-DEXPORT_C_API=OFF \
+			-DENABLE_CLI=OFF \
+			-DLIBXML_STATIC=ON \
+			-DGLIB_STATIC_COMPILATION=ON
 make -j$(nproc)
 ls -al
 sudo make install
@@ -609,14 +624,19 @@ cd ./8bit_multibit
 cp -fv "../10bit/libx265_main10.a"        ./libx265_main10.a
 cp -fv "../12bit/libx265_main12.a"        ./libx265_main12.a
 #
-cmake -G "Unix Makefiles" ../../../source -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
-		-DENABLE_ASSEMBLY=ON -DENABLE_SHARED=OFF -DENABLE_CLI:BOOL=OFF \
-		-DEXTRA_LIB="x265_main10.a;x265_main12.a" \
-		-DEXTRA_LINK_FLAGS="-L.;-L../10bit;-L../12bit" \
-		-DLINKED_10BIT=ON -DLINKED_12BIT=ON \
-		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
+cmake -G "Unix Makefiles" ../../../source \
+			-DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
+			-DENABLE_ASSEMBLY=ON \
+			-DENABLE_HDR10_PLUS=ON
+			-DENABLE_SHARED=OFF \
+			-DENABLE_CLI:BOOL=OFF \
+			-DEXTRA_LIB="x265_main10.a;x265_main12.a" \
+			-DEXTRA_LINK_FLAGS="-L.;-L../10bit;-L../12bit" \
+			-DLINKED_10BIT=ON \
+			-DLINKED_12BIT=ON \
+			-DLIBXML_STATIC=ON \
+			-DGLIB_STATIC_COMPILATION=ON
 make -j$(nproc)
-ls -al
 mv -fv "./libx265.a" "./libx265_main.a"
 ls -al
 ar -M <<EOF
@@ -630,14 +650,32 @@ EOF
 ls -al
 # re-install the new composite libx265.a created by "ar"
 sudo make install
-sudo cp -fv ./libx265_main.a		/usr/local/lib/
+sudo cp -fv ./libx265_main.a	/usr/local/lib/
 sudo cp -fv ./libx265_main10.a	/usr/local/lib/
 sudo cp -fv ./libx265_main12.a	/usr/local/lib/
+
+???? where is x265.pc ????
+
 export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+#---------------------------------------- x265.pc
+prefix=/home/u/Desktop/_working/workdir/toolchain/x86_64-w64-mingw32/x86_64-w64-mingw32
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: x265
+Description: H.265/HEVC video encoder
+Version: 3.5
+Libs: -L${libdir} -lx265
+Libs.private: -lstdc++ -lssp_nonshared -lssp -lgcc -lgcc
+Cflags: -I${includedir}
+#---------------------------------------- x265.pc
+
+
 #
 #
 # LIBVPX
