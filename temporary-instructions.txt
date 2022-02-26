@@ -638,7 +638,6 @@ cmake -G "Unix Makefiles" ../../../source \
 			-DGLIB_STATIC_COMPILATION=ON
 make -j$(nproc)
 mv -fv "./libx265.a" "./libx265_main.a"
-ls -al
 ar -M <<EOF
 CREATE libx265.a
 ADDLIB libx265_main.a
@@ -647,35 +646,28 @@ ADDLIB libx265_main12.a
 SAVE
 END
 EOF
-ls -al
+# Create a new x265.pc ... somehow it is not created on Raspberry Pi
+#cp ../../../source/x265.pc.in ./x265.pc
+#sed -i 's|\@CMAKE_INSTALL_PREFIX\@|/usr/local|' ./x265.pc
+#sed -i 's|\@LIB_INSTALL_DIR\@|lib|' ./x265.pc
+#sed -i 's|\@CMAKE_PROJECT_NAME\@|x265|' ./x265.pc
+#sed -i 's|\@X265_LATEST_TAG\@|3.5|' ./x265.pc
+#sed -i 's|\@PRIVATE_LIBS\@|-lstdc++ -lssp_nonshared -lssp -lgcc -lgcc|' ./x265.pc
+sudo apt -y install libx265-dev
+cp -fv /usr/lib/aarch64-linux-gnu/pkgconfig/x265.pc ./x265.pc
+sed -i 's|prefix=\/usr|prefix=\/usr\/local|' ./x265.pc
+sed -i 's|\/aarch64-linux-gnu||' ./x265.pc
+sed -i 's|Version: 3.4|Version: 3.5|' ./x265.pc
 # re-install the new composite libx265.a created by "ar"
 sudo make install
 sudo cp -fv ./libx265_main.a	/usr/local/lib/
 sudo cp -fv ./libx265_main10.a	/usr/local/lib/
 sudo cp -fv ./libx265_main12.a	/usr/local/lib/
-
-???? where is x265.pc ????
-
 export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-#---------------------------------------- x265.pc
-prefix=/home/u/Desktop/_working/workdir/toolchain/x86_64-w64-mingw32/x86_64-w64-mingw32
-exec_prefix=${prefix}
-libdir=${exec_prefix}/lib
-includedir=${prefix}/include
-
-Name: x265
-Description: H.265/HEVC video encoder
-Version: 3.5
-Libs: -L${libdir} -lx265
-Libs.private: -lstdc++ -lssp_nonshared -lssp -lgcc -lgcc
-Cflags: -I${includedir}
-#---------------------------------------- x265.pc
-
-
 #
 #
 # LIBVPX
