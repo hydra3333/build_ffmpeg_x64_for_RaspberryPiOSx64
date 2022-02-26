@@ -97,6 +97,7 @@ sudo apt -y install texinfo
 sudo apt -y install wget
 sudo apt -y install yasm
 sudo apt -y install zlib1g-dev
+sudo apt -y install perl
 #
 #
 # FFTW3
@@ -156,7 +157,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR xz
-git clone --depth 1 https://github.com/xz-mirror/xz ~/Desktop/ffmpeg_libraries/xz
+git clone --depth 1 https://github.com/xz-mirror/xz ./xz
 cd xz
 export CFLAGS=" -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -D_FORTIFY_SOURCE=2 "
@@ -179,7 +180,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR zimg
-git clone --depth 1 https://github.com/sekrit-twc/zimg.git ~/Desktop/ffmpeg_libraries/zimg
+git clone --depth 1 https://github.com/sekrit-twc/zimg.git ./zimg
 cd zimg
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -201,7 +202,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR libflac
-git clone --depth 1 https://github.com/xiph/flac.git ~/Desktop/ffmpeg_libraries/libflac
+git clone --depth 1 https://github.com/xiph/flac.git ./libflac
 cd libflac
 mkdir -pv _build
 cd _build
@@ -247,7 +248,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR libopus
-git clone --depth 1 https://github.com/xiph/opus.git ~/Desktop/ffmpeg_libraries/libopus
+git clone --depth 1 https://github.com/xiph/opus.git ./libopus
 cd libopus
 mkdir -pv _build
 cd _build
@@ -271,7 +272,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR libogg
-git clone --depth 1 https://github.com/xiph/ogg.git ~/Desktop/ffmpeg_libraries/libogg
+git clone --depth 1 https://github.com/xiph/ogg.git ./libogg
 cd libogg
 mkdir -pv _build
 cd _build
@@ -297,7 +298,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR libvorbis
-git clone --depth 1 https://github.com/xiph/vorbis ~/Desktop/ffmpeg_libraries/libvorbis
+git clone --depth 1 https://github.com/xiph/vorbis ./libvorbis
 cd libvorbis
 mkdir -pv _build
 cd _build
@@ -322,7 +323,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR libsamplerate
-git clone --depth 1 https://github.com/erikd/libsamplerate.git ~/Desktop/ffmpeg_libraries/libsamplerate
+git clone --depth 1 https://github.com/erikd/libsamplerate.git ./libsamplerate
 cd libsamplerate
 mkdir -pv _build
 cd _build
@@ -346,7 +347,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR libsndfile
-git clone --depth 1 https://github.com/libsndfile/libsndfile.git ~/Desktop/ffmpeg_libraries/libsndfile
+git clone --depth 1 https://github.com/libsndfile/libsndfile.git ./libsndfile
 cd libsndfile
 mkdir -pv _build
 cd _build
@@ -413,7 +414,7 @@ cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR rubberband
 wget https://raw.githubusercontent.com/hydra3333/h3333_python_cross_compile_script_v100/master/additional_headers/ladspa.h
 sudo mv -fv ladspa.h /usr/local/include/ladspa.h
-git clone --depth 1 https://github.com/breakfastquay/rubberband.git ~/Desktop/ffmpeg_libraries/rubberband
+git clone --depth 1 https://github.com/breakfastquay/rubberband.git ./rubberband
 cd rubberband
 mkdir -pv build
 cd build
@@ -439,7 +440,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR fdk-aac
-git clone --depth 1 https://github.com/mstorsjo/fdk-aac.git ~/Desktop/ffmpeg_libraries/fdk-aac
+git clone --depth 1 https://github.com/mstorsjo/fdk-aac.git ./fdk-aac
 cd fdk-aac
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -520,7 +521,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR dav1d
-git clone --depth 1 https://code.videolan.org/videolan/dav1d.git ~/Desktop/ffmpeg_libraries/dav1d
+git clone --depth 1 https://code.videolan.org/videolan/dav1d.git ./dav1d
 cd dav1d
 mkdir -pv build
 cd build
@@ -543,7 +544,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR libx264
-git clone --depth 1 https://code.videolan.org/videolan/x264.git ~/Desktop/ffmpeg_libraries/libx264
+git clone --depth 1 https://code.videolan.org/videolan/x264.git ./libx264
 mkdir -pv libx264
 cd libx264
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -565,7 +566,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR libx265
-git clone --depth 1 https://bitbucket.org/multicoreware/x265_git ~/Desktop/ffmpeg_libraries/libx265
+git clone --depth 1 https://bitbucket.org/multicoreware/x265_git ./libx265
 cd libx265
 cd build/linux
 #
@@ -637,7 +638,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR libvpx
-git clone --depth 1 https://chromium.googlesource.com/webm/libvpx ~/Desktop/ffmpeg_libraries/libvpx
+git clone --depth 1 https://chromium.googlesource.com/webm/libvpx ./libvpx
 cd libvpx
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -658,7 +659,7 @@ cd ~/Desktop/ffmpeg_libraries
 #
 #cd ~/Desktop
 #sudo rm -fvR kvazaar
-#git clone --depth 1 https://github.com/ultravideo/kvazaar.git ~/Desktop/ffmpeg_libraries/kvazaar
+#git clone --depth 1 https://github.com/ultravideo/kvazaar.git ./kvazaar
 #cd kvazaar
 #export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
@@ -676,11 +677,11 @@ cd ~/Desktop/ffmpeg_libraries
 #
 #
 # LIBAOM
-# This library will allow us to add support for encoding to the AP1 video codec on your Raspberry Pi.
-#
+# This library adds support for encoding to the AP1 video codec
+#									
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR aom
-git clone --depth 1 https://aomedia.googlesource.com/aom ~/Desktop/ffmpeg_libraries/aom
+git clone --depth 1 https://aomedia.googlesource.com/aom ./aom
 cd aom
 mkdir -pv aom_build
 cd aom_build
@@ -688,25 +689,39 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-##cmake -G "Unix Makefiles" AOM_SRC -DENABLE_NASM=on -DPYTHON_EXECUTABLE="$(which python3)" -DCMAKE_C_FLAGS="-mfpu=vfp -mfloat-abi=hard" ..
-cmake -G "Unix Makefiles" AOM_SRC -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DPYTHON_EXECUTABLE="$(which python3)" -DBUILD_SHARED_LIBS=OFF -DCONFIG_STATIC=ON -DCONFIG_SHARED=OFF \
--DFORCE_HIGHBITDEPTH_DECODING=ON -DCONFIG_AV1_HIGHBITDEPTH=ON -DHAVE_PTHREAD_H=ON -DCONFIG_LIBYUV=ON -DCONFIG_MULTITHREAD=ON -DCONFIG_PIC=ON \
--DCONFIG_COEFFICIENT_RANGE_CHECKING=ON -DCONFIG_DENOISE=ON -DCONFIG_WEBM_IO=ON -DCONFIG_SPATIAL_RESAMPLING=ON -DENABLE_NASM=ON \
--DCONFIG_AV1_DECODER=ON -DCONFIG_AV1_ENCODER=ON -DENABLE_TOOLS=OFF -DENABLE_EXAMPLES=OFF -DENABLE_DOCS=OFF -DENABLE_TESTS=OFF -DENABLE_TESTDATA=OFF \
+cmake -G "Unix Makefiles" AOM_SRC -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
+-DCMAKE_BUILD_TYPE=Release \
+-DPYTHON_EXECUTABLE="$(which python3)" \
+-DBUILD_SHARED_LIBS=0 \
+-DCONFIG_STATIC=1 \
+-DCONFIG_SHARED=0 \
+-DFORCE_HIGHBITDEPTH_DECODING=1 \
+-DCONFIG_AV1_HIGHBITDEPTH=1 \
+-DHAVE_PTHREAD_H=1 \
+-DCONFIG_LIBYUV=1 \
+-DCONFIG_MULTITHREAD=1 \
+-DCONFIG_PIC=1 \
+-DCONFIG_COEFFICIENT_RANGE_CHECKING=1 \
+-DCONFIG_DENOISE=1 \
+-DCONFIG_WEBM_IO=1 \
+-DCONFIG_SPATIAL_RESAMPLING=1 \
+-DENABLE_NASM=1 \
+-DCONFIG_AV1_DECODER=1 \
+-DCONFIG_AV1_ENCODER=1 \
+-DENABLE_TOOLS=0 \
+-DENABLE_EXAMPLES=0 \
+-DENABLE_DOCS=0 \
+-DENABLE_TESTS=0 \
+-DENABLE_TESTDATA=0 \
 -DAOM_EXTRA_C_FLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 " \
--DAOM_EXTRA_CXX_FLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 " -DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON  \
+-DAOM_EXTRA_CXX_FLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 " \
+-DLIBXML_STATIC=1 \
+-DGLIB_STATIC_COMPILATION=1 \
 ..
 make -j$(nproc)
 sudo make install
-export -n CFLAGS
-export -n CXXFLAGS
-export -n CPPFLAGS
-export -n LDFLAGS
-cd ~/Desktop/ffmpeg_libraries
-
-
-
-
+#
+#
 ### UPDATE THE LINK CACHE
 # This command ensures we won’t run into linking issues because the compiler can’t find a library.
 #
@@ -721,7 +736,7 @@ cd ~/Desktop
 mkdir -pv ~/Desktop/ffmpeg_libraries
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR FFmpeg
-git clone --branch release/4.4 --depth 1 https://github.com/FFmpeg/FFmpeg.git ~/Desktop/ffmpeg_libraries/FFmpeg
+git clone --branch release/4.4 --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
 cd FFmpeg
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
