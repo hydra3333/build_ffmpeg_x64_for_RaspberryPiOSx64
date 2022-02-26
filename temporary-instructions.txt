@@ -618,17 +618,19 @@ ADDLIB libx265_main12.a
 SAVE
 END
 EOF
-#sudo cp -fv ./libx265.a /usr/local/lib/libx265.a
+ls -al
 # re-install the new composite libx265.a created by "ar"
 sudo make install
+sudo cp -fv ./libx265_main.a		/usr/local/lib/
+sudo cp -fv ./libx265_main10.a	/usr/local/lib/
+sudo cp -fv ./libx265_main12.a	/usr/local/lib/
 export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
-
+#
+#
 # LIBVPX
 # Support for the VP8 and VP9 video codecs on our Raspberry Pi.
 # This library we are compiling is called LibVPX and is developed by Google.
@@ -641,7 +643,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-./configure --disable-shared --enable-static --enable-webm-io --enable-libyuv --enable-vp9 --enable-vp8 --enable-postproc --enable-vp9-highbitdepth --enable-vp9-postproc --enable-postproc-visualizer --enable-error-concealment --enable-better-hw-compatibility --enable-multi-res-encoding --enable-vp9-temporal-denoising --disable-tools --disable-docs --disable-examples --disable-install-docs --disable-unit-tests --disable-decode-perf-tests --disable-encode-perf-tests
+./configure --prefix=/usr/local --disable-shared --enable-static --enable-webm-io --enable-libyuv --enable-vp9 --enable-vp8 --enable-postproc --enable-vp9-highbitdepth --enable-vp9-postproc --enable-postproc-visualizer --enable-error-concealment --enable-better-hw-compatibility --enable-multi-res-encoding --enable-vp9-temporal-denoising --disable-tools --disable-docs --disable-examples --disable-install-docs --disable-unit-tests --disable-decode-perf-tests --disable-encode-perf-tests
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -649,11 +651,10 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
-
+#
+#
 ### kvazaar
-# This library that we are going to compile next is an HEVC encoder called “kvazaar“.
+# This is an HEVC encoder called “kvazaar“.
 #
 #cd ~/Desktop
 #sudo rm -fvR kvazaar
@@ -664,7 +665,7 @@ cd ~/Desktop/ffmpeg_libraries
 #export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #sh ./autogen.sh
-#./configure
+#./configure --prefix=/usr/local --disable-shared --enable-static 
 #make -j$(nproc)
 #sudo make install
 #export -n CFLAGS
@@ -672,8 +673,8 @@ cd ~/Desktop/ffmpeg_libraries
 #export -n CPPFLAGS
 #export -n LDFLAGS
 #cd ~/Desktop/ffmpeg_libraries
-
-
+#
+#
 # LIBAOM
 # This library will allow us to add support for encoding to the AP1 video codec on your Raspberry Pi.
 #
@@ -688,8 +689,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 ##cmake -G "Unix Makefiles" AOM_SRC -DENABLE_NASM=on -DPYTHON_EXECUTABLE="$(which python3)" -DCMAKE_C_FLAGS="-mfpu=vfp -mfloat-abi=hard" ..
-##sed -i 's/ENABLE_NEON:BOOL=ON/ENABLE_NEON:BOOL=OFF/' CMakeCache.txt
-cmake -G "Unix Makefiles" AOM_SRC -DPYTHON_EXECUTABLE="$(which python3)" -DBUILD_SHARED_LIBS=OFF -DCONFIG_STATIC=ON -DCONFIG_SHARED=OFF \
+cmake -G "Unix Makefiles" AOM_SRC -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DPYTHON_EXECUTABLE="$(which python3)" -DBUILD_SHARED_LIBS=OFF -DCONFIG_STATIC=ON -DCONFIG_SHARED=OFF \
 -DFORCE_HIGHBITDEPTH_DECODING=ON -DCONFIG_AV1_HIGHBITDEPTH=ON -DHAVE_PTHREAD_H=ON -DCONFIG_LIBYUV=ON -DCONFIG_MULTITHREAD=ON -DCONFIG_PIC=ON \
 -DCONFIG_COEFFICIENT_RANGE_CHECKING=ON -DCONFIG_DENOISE=ON -DCONFIG_WEBM_IO=ON -DCONFIG_SPATIAL_RESAMPLING=ON -DENABLE_NASM=ON \
 -DCONFIG_AV1_DECODER=ON -DCONFIG_AV1_ENCODER=ON -DENABLE_TOOLS=OFF -DENABLE_EXAMPLES=OFF -DENABLE_DOCS=OFF -DENABLE_TESTS=OFF -DENABLE_TESTDATA=OFF \
