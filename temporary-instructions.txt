@@ -558,9 +558,8 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
-
+#
+#
 ### LIBX265 multibit
 # This library will add support for libx265 encoding 
 #
@@ -580,14 +579,14 @@ export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #
 cd 12bit
-cmake -G "Unix Makefiles" ../../../source -DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF -DMAIN12=ON \
+cmake -G "Unix Makefiles" ../../../source  -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF -DMAIN12=ON \
 		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
 make -j$(nproc)
 sudo make install
 mv -fv "./libx265.a" "./libx265_main12.a"
 #
 cd ../10bit
-cmake -G "Unix Makefiles" ../../../source -DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF \
+cmake -G "Unix Makefiles" ../../../source  -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF \
 		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
 make -j$(nproc)
 sudo make install
@@ -596,7 +595,7 @@ mv -fv "./libx265.a" "./libx265_main10.a"
 cd ../8bit_multibit
 #ln -sf ../10bit/libx265.a libx265_main10.a
 #ln -sf ../12bit/libx265.a libx265_main12.a
-#-DEXTRA_LIB="x265_main10.a;x265_main12.a" -DEXTRA_LINK_FLAGS=-L.
+#-DEXTRA_LIB="x265_main10.a;x265_main12.a"  -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DEXTRA_LINK_FLAGS=-L.
 cmake -G "Unix Makefiles" ../../../source -DENABLE_ASSEMBLY=ON -DENABLE_SHARED=OFF -DENABLE_CLI:BOOL=OFF \
 		-DEXTRA_LIB="x265_main10.a;x265_main12.a" \
 		-DEXTRA_LINK_FLAGS="-L.;-L../10bit;-L../12bit" \
