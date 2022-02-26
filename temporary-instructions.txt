@@ -186,7 +186,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 sh ./autogen.sh 
-./configure --prefix=/usr/local --disable-shared --enable-static --disable-testapp --disable-example --disable-unit-test --disable-debug
+./configure --prefix=/usr/local --disable-shared --enable-static --disable-testapp --disable-example --disable-unit-test --disable-debug 
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -232,7 +232,7 @@ cd ~/Desktop/ffmpeg_libraries
 #export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=ON -DSQLITE_USE_MALLOC_H=ON -DSQLITE_USE_MSIZE=ON -DSQLITE_DISABLE_DIRSYNC=ON -DSQLITE_ENABLE_RTREE=ON -fno-strict-aliasing "
 #export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=ON -DSQLITE_USE_MALLOC_H=ON -DSQLITE_USE_MSIZE=ON -DSQLITE_DISABLE_DIRSYNC=ON -DSQLITE_ENABLE_RTREE=ON -fno-strict-aliasing "
 #export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=ON -DSQLITE_USE_MALLOC_H=ON -DSQLITE_USE_MSIZE=ON -DSQLITE_DISABLE_DIRSYNC=ON -DSQLITE_ENABLE_RTREE=ON -fno-strict-aliasing "
-#./configure --disable-shared --enable-static --enable-threadsafe --disable-editline --enable-readline --enable-json1 --enable-fts5 --enable-session
+#./configure --prefix=/usr/local --disable-shared --enable-static --enable-threadsafe --disable-editline --enable-readline --enable-json1 --enable-fts5 --enable-session
 #make -j$(nproc)
 #sudo make install
 #export -n CFLAGS
