@@ -447,9 +447,6 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 autoreconf -fiv
-#./configure --disable-shared --enable-static
-#make -j$(nproc)
-#sudo make installmkdir -pv build
 cd build
 cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=OFF -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
@@ -459,9 +456,8 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
-
+#
+#
 ### LAME
 # For mp3 encoding
 #
@@ -476,7 +472,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 autoreconf -fiv
-./configure --disable-shared --enable-static --enable-nasm --disable-frontend
+./configure --prefix=/usr/local --disable-shared --enable-static --enable-nasm --disable-frontend --disable-rpath --disable-cpml --disable-gtktest --disable-mp3x --disable-mp3rtp --disable-dynamic-frontends --disable-expopt --disable-debug
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
