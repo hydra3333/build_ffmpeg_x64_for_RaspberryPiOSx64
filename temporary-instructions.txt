@@ -569,47 +569,55 @@ sudo rm -fvR libx265
 git clone --depth 1 https://bitbucket.org/multicoreware/x265_git ./libx265
 cd libx265
 cd build/linux
+ls -al
 #
-mkdir -pv 8bit_multibit
-mkdir -pv 10bit
-mkdir -pv 12bit
+mkdir -pv ./8bit_multibit
+mkdir -pv ./10bit
+mkdir -pv ./12bit
 #
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #
-cd 12bit
-cmake -G "Unix Makefiles" ../../../source  -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF -DMAIN12=ON \
+cd ./12bit
+cmake -G "Unix Makefiles" ../../../source  -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
+		-DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF -DMAIN12=ON \
 		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
 make -j$(nproc)
+ls -al
 sudo make install
 mv -fv "./libx265.a" "./libx265_main12.a"
 #
-cd ../10bit
-cmake -G "Unix Makefiles" ../../../source  -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF \
+cd ..
+cd ./10bit
+cmake -G "Unix Makefiles" ../../../source -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
+		-DENABLE_ASSEMBLY=ON -DHIGH_BIT_DEPTH=ON -DENABLE_HDR10_PLUS=ON -DEXPORT_C_API=OFF -DENABLE_SHARED=OFF -DENABLE_CLI=OFF \
 		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
 make -j$(nproc)
+ls -al
 sudo make install
 mv -fv "./libx265.a" "./libx265_main10.a"
 #
-cd ../8bit_multibit
+cd ..
+cd ./8bit_multibit
+#
 #ln -sf ../10bit/libx265.a libx265_main10.a
 #ln -sf ../12bit/libx265.a libx265_main12.a
 #-DEXTRA_LIB="x265_main10.a;x265_main12.a"  -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DEXTRA_LINK_FLAGS=-L.
-cmake -G "Unix Makefiles" ../../../source -DENABLE_ASSEMBLY=ON -DENABLE_SHARED=OFF -DENABLE_CLI:BOOL=OFF \
+#
+cp -fv "../10bit/libx265_main10.a"        ./libx265_main10.a
+cp -fv "../12bit/libx265_main12.a"        ./libx265_main12.a
+#
+cmake -G "Unix Makefiles" ../../../source -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
+		-DENABLE_ASSEMBLY=ON -DENABLE_SHARED=OFF -DENABLE_CLI:BOOL=OFF \
 		-DEXTRA_LIB="x265_main10.a;x265_main12.a" \
 		-DEXTRA_LINK_FLAGS="-L.;-L../10bit;-L../12bit" \
 		-DLINKED_10BIT=ON -DLINKED_12BIT=ON \
 		-DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON -DENABLE_HDR10_PLUS=ON
 make -j$(nproc)
-sudo make install
+ls -al
 mv -fv "./libx265.a" "./libx265_main.a"
-#
-#cp -fv "../8bit_multibit/libx265_main.a" ./libx265_main.a
-cp -fv "../10bit/libx265_main10.a"        ./libx265_main10.a
-cp -fv "../12bit/libx265_main12.a"        ./libx265_main12.a
-rm -fv ./libx265.a
 ls -al
 ar -M <<EOF
 CREATE libx265.a
@@ -758,6 +766,7 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 	--extra-version="ffmpeg_for_RPi4B_having_h264_v4l2m2m" \
 	--disable-shared --enable-static --enable-pic --enable-neon --disable-w32threads \
 	--enable-gpl --enable-version3 --enable-nonfree \
+	--prefix=/usr/local \
 	--libdir=/usr/local/lib \
 	--bindir=/usr/local/bin \
 	--extra-cflags="-I/usr/local/include" \
