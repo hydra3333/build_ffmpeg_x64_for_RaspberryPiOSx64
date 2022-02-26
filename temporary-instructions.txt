@@ -627,7 +627,7 @@ cp -fv "../12bit/libx265_main12.a"        ./libx265_main12.a
 cmake -G "Unix Makefiles" ../../../source \
 			-DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
 			-DENABLE_ASSEMBLY=ON \
-			-DENABLE_HDR10_PLUS=ON
+			-DENABLE_HDR10_PLUS=ON \
 			-DENABLE_SHARED=OFF \
 			-DENABLE_CLI:BOOL=OFF \
 			-DEXTRA_LIB="x265_main10.a;x265_main12.a" \
