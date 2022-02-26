@@ -1,10 +1,15 @@
-# build script for x64 ffmpeg on the Pi4 with 64-bit OS which enables h264_v4l2m2m  ?
-
-# perhaps see these
+#!/bin/bash
+# to get rid of MSDOS format do this to this file: sudo sed -i s/\\r//g ./filename
+# or, open in nano, control-o and then then alt-M a few times to toggle msdos format off and then save
+#
+# Build script for x64 ffmpeg on the Pi4 with 64-bit OS which enables h264_v4l2m2m  ?
+# as at 2022.02.26
+#
+# perhaps also see these
 # https://forums.raspberrypi.com/viewtopic.php?p=1776531#p1776531
 # https://gist.github.com/wildrun0/86a890585857a36c90110cee275c45fd
-
-
+#
+#
 ### NOTES
 #
 # We build some libraries form source, but not all.
@@ -13,16 +18,16 @@
 # NOTE NOTE NOTE NOTE we need to 64-bit-ize all of the builds  !!!
 # example use:
 #/home/pi/FFmpeg/ffmpeg -i /home/pi/final.mp4 -c:v h264_v4l2m2m -b:v 8M -c:a copy test.mp4
-
-
-
+#
+#
 ### PREPARE
 # Before we get started, let’s create a directory where we will store the code for each of the libraries.
 #
 cd ~/Desktop
 sudo rm -fvR ffmpeg_libraries
 mkdir ffmpeg_libraries
-
+#
+#
 ### Install the ffmpeg and dependency build prerequisites
 #
 sudo apt -y update
@@ -90,10 +95,8 @@ sudo apt -y install texinfo
 sudo apt -y install wget
 sudo apt -y install yasm
 sudo apt -y install zlib1g-dev
-
 #
-
-
+#
 # FFTW3
 # FFTW3 is a free collection of fast C routines for computing the Discrete Fourier Transform in one or more dimensions.
 #
@@ -120,8 +123,8 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
+#
+#
 ### ICONV
 # used to convert between different character encodings. 
 #
@@ -143,8 +146,8 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
+#
+#
 # XZ
 # XZ Utils provide a general-purpose data-compression library
 # xz depends on iconv
@@ -166,8 +169,8 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
+#
+#
 ### ZIMG
 # This library implements a range of image processing features, dealing with the basics of scaling, colorspace, and depth.
 # Clone and compile the code by running the command below.
@@ -189,8 +192,8 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
+#
+#
 ### LIBFLAC
 # libFLAC is an Open Source lossless audio codec 
 #
@@ -205,7 +208,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #-DHAVE_SQLITE3=ON 
-cmake -G "Unix Makefiles" .. -DENABLE_64_BIT_WORDS=ON -DBUILD_PROGRAMS=OFF -DINSTALL_PKGCONFIG_MODULES=ON -DINSTALL_MANPAGES=OFF -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DVERSION=1.3.4 -DCMAKE_BUILD_TYPE=Release
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DWITH_OGG=ON -DBUILD_DOCS=OFF -DWITH_STACK_PROTECTOR=ON -DENABLE_64_BIT_WORDS=ON -DBUILD_PROGRAMS=OFF -DINSTALL_PKGCONFIG_MODULES=ON -DINSTALL_MANPAGES=OFF -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DVERSION=1.3.4 -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -213,8 +216,8 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
+#
+#
 ### SQLITE3 FAILS TO BUILD FOR THE RASPBERRY PI
 # SQLITE3is a software library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine
 #
@@ -223,10 +226,10 @@ cd ~/Desktop/ffmpeg_libraries
 #wget https://fossies.org/linux/misc/sqlite-autoconf-3370200.tar.gz
 #tar -xf sqlite-autoconf-3370200.tar.gz
 #cd sqlite-autoconf-3370200
-#export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
-#export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
-#export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
-#export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_USE_MALLOC_H=1 -DSQLITE_USE_MSIZE=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_RTREE=1 -fno-strict-aliasing "
+#export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=ON -DSQLITE_USE_MALLOC_H=ON -DSQLITE_USE_MSIZE=ON -DSQLITE_DISABLE_DIRSYNC=ON -DSQLITE_ENABLE_RTREE=ON -fno-strict-aliasing "
+#export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=ON -DSQLITE_USE_MALLOC_H=ON -DSQLITE_USE_MSIZE=ON -DSQLITE_DISABLE_DIRSYNC=ON -DSQLITE_ENABLE_RTREE=ON -fno-strict-aliasing "
+#export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=ON -DSQLITE_USE_MALLOC_H=ON -DSQLITE_USE_MSIZE=ON -DSQLITE_DISABLE_DIRSYNC=ON -DSQLITE_ENABLE_RTREE=ON -fno-strict-aliasing "
+#export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=ON -DSQLITE_USE_MALLOC_H=ON -DSQLITE_USE_MSIZE=ON -DSQLITE_DISABLE_DIRSYNC=ON -DSQLITE_ENABLE_RTREE=ON -fno-strict-aliasing "
 #./configure --disable-shared --enable-static --enable-threadsafe --disable-editline --enable-readline --enable-json1 --enable-fts5 --enable-session
 #make -j$(nproc)
 #sudo make install
@@ -235,9 +238,8 @@ cd ~/Desktop/ffmpeg_libraries
 #export -n CPPFLAGS
 #export -n LDFLAGS
 #cd ~/Desktop/ffmpeg_libraries
-
-
-
+#
+#
 ### LIBOPUS
 # Opus is a codec for interactive speech and audio transmission over the Internet.
 #
@@ -252,7 +254,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #-DHAVE_SQLITE3=ON 
-cmake -G "Unix Makefiles" .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -DBUILD_TESTING=0 -DOPUS_CUSTOM_MODES=1 -DOPUS_BUILD_PROGRAMS=0 -DOPUS_INSTALL_PKG_CONFIG_MODULE=1
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DOPUS_CUSTOM_MODES=ON -DOPUS_BUILD_PROGRAMS=OFF -DOPUS_INSTALL_PKG_CONFIG_MODULE=ON
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -260,9 +262,8 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
-
+#
+#
 ### LIBOGG
 # Ogg project codecs use the Ogg bitstream format to arrange the raw, compressed bitstream into a more robust, useful form
 #
@@ -277,7 +278,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #-DHAVE_SQLITE3=ON 
-cmake -G "Unix Makefiles" .. -DBUILD_SHARED_LIBS=0 -DCMAKE_BUILD_TYPE=Release
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DINSTALL_DOCS=OFF -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -285,9 +286,8 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
-
+#
+#
 ### LIBVORBIS
 # Vorbis is a general purpose audio and music encoding format contemporary to 
 # MPEG-4's AAC and TwinVQ, the next generation beyond MPEG audio layer 3. 
@@ -304,7 +304,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #-DHAVE_SQLITE3=ON 
-cmake -G "Unix Makefiles" .. -DBUILD_SHARED_LIBS=0 -DCMAKE_BUILD_TYPE=Release
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -312,9 +312,8 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
-
+#
+#
 ### LIBSAMPLERATE
 # libsamplerate (also known as Secret Rabbit Code) is a library for performing sample rate conversion of audio data.
 # depends_on 'libflac', 'fftw3', 'libopus'
@@ -329,8 +328,8 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-#-DHAVE_SQLITE3=ON 
-cmake -G "Unix Makefiles" .. -DLIBSAMPLERATE_EXAMPLES=OFF -DLIBSAMPLERATE_TESTS=OFF -DBUILD_SHARED_LIBS=0 -DCMAKE_BUILD_TYPE=Release
+#-DHAVE_SQLITE3=ON  -DLIBSAMPLERATE_TESTS=OFF 
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DLIBSAMPLERATE_EXAMPLES=OFF -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF -DLIBSAMPLERATE_ENABLE_SANITIZERS=OFF -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -338,9 +337,8 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
-
+#
+#
 ### LIBSNDFILE
 # libsndfile is a C library for reading and writing files containing sampled audio data
 #
@@ -355,7 +353,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #-DHAVE_SQLITE3=ON 
-cmake -G "Unix Makefiles" .. -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DENABLE_BOW_DOCS=OFF -DENABLE_PACKAGE_CONFIG=ON -DCMAKE_BUILD_TYPE=Release -DENABLE_STATIC_RUNTIME=ON -DHAVE_ALSA_ASOUNDLIB_H=OFF -DENABLE_EXTERNAL_LIBS=ON
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DENABLE_BOW_DOCS=OFF -DENABLE_PACKAGE_CONFIG=ON -DCMAKE_BUILD_TYPE=Release -DENABLE_STATIC_RUNTIME=ON -DHAVE_ALSA_ASOUNDLIB_H=OFF -DENABLE_EXTERNAL_LIBS=ON
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -363,19 +361,13 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
-
+#
+#
 ### VAMP_PLUGIN
-{
-	'repo_type' : 'archive',
-	'download_locations' : [
-		{ 'url' : 'https://raw.githubusercontent.com/hydra3333/h3333_python_cross_compile_script_v100/master/sources/vamp-plugin-sdk-2.9.0.tar.gz', 'hashes' : [ { 'type' : 'sha256', 'sum' : 'b72a78ef8ff8a927dc2ed7e66ecf4c62d23268a5d74d02da25be2b8d00341099' }, ], }, # 2019.12.13
-		{ 'url' : 'https://code.soundsoftware.ac.uk/attachments/download/2588/vamp-plugin-sdk-2.9.0.tar.gz', 'hashes' : [ { 'type' : 'sha256', 'sum' : 'b72a78ef8ff8a927dc2ed7e66ecf4c62d23268a5d74d02da25be2b8d00341099' }, ], },
-	],
-	'run_post_regexreplace' : [
-		'cp -fv build/Makefile.mingw64 Makefile',
-	],
+# Vamp is an easy system to develop plugins for. 
+# It has a standard cross-platform SDK which includes API documentation, example plugins, ready-to-use C++ base classes, the C API header, and a test host.
+# Vamp plugins use a C binary interface for the greatest level of binary compatibility. 
+#
 	'patches' : [
 		('vamp/vamp-plugin-sdk-2.7.1.patch','-p0'), #They rely on M_PI which is gone since c99 or w/e, give them a self defined one and hope for the best.
 	],
@@ -399,6 +391,34 @@ cd ~/Desktop/ffmpeg_libraries
 	# { 'url' : 'https://code.soundsoftware.ac.uk/projects/vamp-plugin-sdk/files/', 'type' : 'httpindex', 'regex' : r'	vamp-plugin-sdk-(?P<version_num>[\d.]+)\.tar\.gz', },
 	'_info' : { 'version' : '2.9.0', 'fancy_name' : 'vamp-plugin-sdk' },
 }
+cd ~/Desktop/ffmpeg_libraries
+rm -fv vamp-plugin-sdk-2.9.0.tar.gz
+sudo rm -fvR vamp-plugin-sdk-2.9.0
+wget https://raw.githubusercontent.com/hydra3333/h3333_python_cross_compile_script_v100/master/sources/vamp-plugin-sdk-2.9.0.tar.gz
+#wget https://code.soundsoftware.ac.uk/attachments/download/2588/vamp-plugin-sdk-2.9.0.tar.gz
+tar -xf vamp-plugin-sdk-2.9.0.tar.gz
+cd vamp-plugin-sdk-2.9.0
+export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+#export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -L/usr/local/lib" ??????????
+#flac ogg vorbis opus
+
+./configure sdkstatic
+make -j$(nproc)
+sudo make install
+export -n CFLAGS
+export -n CXXFLAGS
+export -n CPPFLAGS
+export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
+
+read -p "Press any key to continue"
+
+
+
+
 
 
 
@@ -418,7 +438,10 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-meson ./ .. --backend=ninja --default-library=static --buildtype=release --strip -Dno_shared=true 
+
+?????????????????????????????????? ladspa goes into /usr/local/lib/aarch64-linux-gnu/ladspa ???
+meson ./ .. --backend=ninja --default-library=static --buildtype=release --strip -Dno_shared=true  ????????????? libdir ???????????  it is building non-static !!!!!!!!!!!!!!!!!
+
 ninja
 sudo ninja install
 export -n CFLAGS
@@ -681,12 +704,12 @@ export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 ##cmake -G "Unix Makefiles" AOM_SRC -DENABLE_NASM=on -DPYTHON_EXECUTABLE="$(which python3)" -DCMAKE_C_FLAGS="-mfpu=vfp -mfloat-abi=hard" ..
 ##sed -i 's/ENABLE_NEON:BOOL=ON/ENABLE_NEON:BOOL=OFF/' CMakeCache.txt
-cmake -G "Unix Makefiles" AOM_SRC -DPYTHON_EXECUTABLE="$(which python3)" -DBUILD_SHARED_LIBS=0 -DCONFIG_STATIC=1 -DCONFIG_SHARED=0 \
--DFORCE_HIGHBITDEPTH_DECODING=1 -DCONFIG_AV1_HIGHBITDEPTH=1 -DHAVE_PTHREAD_H=1 -DCONFIG_LIBYUV=1 -DCONFIG_MULTITHREAD=1 -DCONFIG_PIC=1 \
--DCONFIG_COEFFICIENT_RANGE_CHECKING=1 -DCONFIG_DENOISE=1 -DCONFIG_WEBM_IO=1 -DCONFIG_SPATIAL_RESAMPLING=1 -DENABLE_NASM=ON \
--DCONFIG_AV1_DECODER=1 -DCONFIG_AV1_ENCODER=1 -DENABLE_TOOLS=0 -DENABLE_EXAMPLES=0 -DENABLE_DOCS=0 -DENABLE_TESTS=0 -DENABLE_TESTDATA=0 \
+cmake -G "Unix Makefiles" AOM_SRC -DPYTHON_EXECUTABLE="$(which python3)" -DBUILD_SHARED_LIBS=OFF -DCONFIG_STATIC=ON -DCONFIG_SHARED=OFF \
+-DFORCE_HIGHBITDEPTH_DECODING=ON -DCONFIG_AV1_HIGHBITDEPTH=ON -DHAVE_PTHREAD_H=ON -DCONFIG_LIBYUV=ON -DCONFIG_MULTITHREAD=ON -DCONFIG_PIC=ON \
+-DCONFIG_COEFFICIENT_RANGE_CHECKING=ON -DCONFIG_DENOISE=ON -DCONFIG_WEBM_IO=ON -DCONFIG_SPATIAL_RESAMPLING=ON -DENABLE_NASM=ON \
+-DCONFIG_AV1_DECODER=ON -DCONFIG_AV1_ENCODER=ON -DENABLE_TOOLS=OFF -DENABLE_EXAMPLES=OFF -DENABLE_DOCS=OFF -DENABLE_TESTS=OFF -DENABLE_TESTDATA=OFF \
 -DAOM_EXTRA_C_FLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 " \
--DAOM_EXTRA_CXX_FLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 " -DLIBXML_STATIC=1 -DGLIB_STATIC_COMPILATION=1  \
+-DAOM_EXTRA_CXX_FLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 " -DLIBXML_STATIC=ON -DGLIB_STATIC_COMPILATION=ON  \
 ..
 make -j$(nproc)
 sudo make install
