@@ -747,13 +747,16 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 # ????  on make: ARCH=aarch64 CROSS_COMPILE=aarch64-linux-gnu-
 
 #	--arch=aarch64 --target-os=linux \
-#	--enable xvidcore \
-#	--enable-libxvid \
-
+#	--enable xvidcore
+#	--enable-libxvid
+#	--enable-libsoxr
+#	--enable-libv4l2		enable libv4l2/v4l-utils
+#	--enable-encoder=NAME
+#	--enable-libwebp
 
 ./configure \
 	--extra-version="ffmpeg_for_RPi4B_having_h264_v4l2m2m" \
-	--disable-shared --enable-static \
+	--disable-shared --enable-static --enable-pic --enable-neon --disable-w32threads \
 	--enable-gpl --enable-version3 --enable-nonfree \
 	--libdir=/usr/local/lib \
 	--bindir=/usr/local/bin \
@@ -762,9 +765,16 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 	--extra-libs="-lpthread -lm -latomic" \
 	--pkg-config=pkg-config \
 	--pkg-config-flags=--static \
+	--disable-doc --disable-htmlpages --disable-manpages --disable-podpages --disable-txtpages \
+	--disable-avisynth \
+	--disable-vapoursynth \
+	--disable-libkvazaar \
+	--enable-v4l2-m2m \
 	--enable-hardcoded-tables \
+	--enable-gray \
 	--enable-gmp \
 	--enable-gnutls \
+	--enable-iconv \
 	--enable-libaom \
 	--enable-libass \
 	--enable-libdav1d \
@@ -786,17 +796,17 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 	--enable-libwebp \
 	--enable-libx264 \
 	--enable-libx265 \
-	--disable-libkvazaar \
 	--enable-libxml2 \
-	--enable-libxml2 \
-	--enable-openssl \
-	--enable-h264_v4l2m2m \
 	--enable-librubberband \
 	--enable-zlib \
-	--enable-lzma \	
-	--enable-pthreads --disable-w32threads \
+	--enable-lzma \
 	--extra-cflags="-DLIBTWOLAME_STATIC" \
 	--extra-cflags="-DLIBXML_STATIC"
+
+	#--enable-openssl \
+	#--enable-pthreads \
+	
+  
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
