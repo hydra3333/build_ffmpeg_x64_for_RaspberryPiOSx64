@@ -2,6 +2,8 @@
 # to get rid of MSDOS format do this to this file: sudo sed -i s/\\r//g ./filename
 # or, open in nano, control-o and then then alt-M a few times to toggle msdos format off and then save
 #
+set -x
+#
 # Build script for x64 ffmpeg on the Pi4 with 64-bit OS which enables h264_v4l2m2m  ?
 # as at 2022.02.26
 #
@@ -353,7 +355,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 #-DHAVE_SQLITE3=ON 
-cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DENABLE_BOW_DOCS=OFF -DENABLE_PACKAGE_CONFIG=ON -DCMAKE_BUILD_TYPE=Release -DENABLE_STATIC_RUNTIME=ON -DHAVE_ALSA_ASOUNDLIB_H=OFF -DENABLE_EXTERNAL_LIBS=ON
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DENABLE_BOW_DOCS=OFF -DENABLE_PACKAGE_CONFIG=ON -DCMAKE_BUILD_TYPE=Release -DHAVE_ALSA_ASOUNDLIB_H=OFF -DENABLE_EXTERNAL_LIBS=ON
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -368,29 +370,6 @@ cd ~/Desktop/ffmpeg_libraries
 # It has a standard cross-platform SDK which includes API documentation, example plugins, ready-to-use C++ base classes, the C API header, and a test host.
 # Vamp plugins use a C binary interface for the greatest level of binary compatibility. 
 #
-	'patches' : [
-		('vamp/vamp-plugin-sdk-2.7.1.patch','-p0'), #They rely on M_PI which is gone since c99 or w/e, give them a self defined one and hope for the best.
-	],
-	'build_options' : '{make_prefix_options} sdkstatic', # for DLL's add 'sdk rdfgen'
-	'needs_make_install' : False, # doesnt s support xcompile installing
-	'run_post_build' : [ # lets install it manually then I guess?
-		'cp -fv libvamp-sdk.a "{target_prefix}/lib/"',
-		'cp -fv libvamp-hostsdk.a "{target_prefix}/lib/"',
-		'cp -frv vamp-hostsdk/ "{target_prefix}/include/"',
-		'cp -frv vamp-sdk/ "{target_prefix}/include/"',
-		'cp -frv vamp/ "{target_prefix}/include/"',
-		'cp -fv pkgconfig/vamp.pc.in "{target_prefix}/lib/pkgconfig/vamp.pc"',
-		'cp -fv pkgconfig/vamp-hostsdk.pc.in "{target_prefix}/lib/pkgconfig/vamp-hostsdk.pc"',
-		'cp -fv pkgconfig/vamp-sdk.pc.in "{target_prefix}/lib/pkgconfig/vamp-sdk.pc"',
-		'sed -i.bak \'s/\%PREFIX\%/{target_prefix_sed_escaped}/\' "{pkg_config_path}/vamp.pc"',
-		'sed -i.bak \'s/\%PREFIX\%/{target_prefix_sed_escaped}/\' "{pkg_config_path}/vamp-hostsdk.pc"',
-		'sed -i.bak \'s/\%PREFIX\%/{target_prefix_sed_escaped}/\' "{pkg_config_path}/vamp-sdk.pc"',
-	],
-	'depends_on' : ['libsndfile',],
-	'update_check' : { 'url' : 'https://vamp-plugins.org/develop.html', 'type' : 'httpregex', 'regex' : r'.*<ul><li>Download the <b>Vamp plugin SDK<\/b> \(version (?P<version_num>[\d.]+)\):.*' },
-	# { 'url' : 'https://code.soundsoftware.ac.uk/projects/vamp-plugin-sdk/files/', 'type' : 'httpindex', 'regex' : r'	vamp-plugin-sdk-(?P<version_num>[\d.]+)\.tar\.gz', },
-	'_info' : { 'version' : '2.9.0', 'fancy_name' : 'vamp-plugin-sdk' },
-}
 cd ~/Desktop/ffmpeg_libraries
 rm -fv vamp-plugin-sdk-2.9.0.tar.gz
 sudo rm -fvR vamp-plugin-sdk-2.9.0
@@ -401,27 +380,32 @@ cd vamp-plugin-sdk-2.9.0
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-#export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -L/usr/local/lib" ??????????
-#flac ogg vorbis opus
-
-./configure sdkstatic
+export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
+./configure sdkstatic --libdir=/usr/local/lib --disable-programs
+# ?? ./configure sdkstatic --target=aarch64
 make -j$(nproc)
-sudo make install
+# there is no "make install" which works
+sudo cp -fv libvamp-sdk.a /usr/local/lib/
+sudo cp -fv libvamp-hostsdk.a /usr/local/lib/
+sudo cp -fRv vamp-hostsdk/ /usr/local/include/
+sudo cp -fRv vamp-sdk/ /usr/local/include/
+sudo cp -fRv vamp/ /usr/local/include/
+sudo cp -fv pkgconfig/vamp.pc.in /usr/local/lib/pkgconfig/vamp.pc
+sudo cp -fv pkgconfig/vamp-hostsdk.pc.in /usr/local/lib/pkgconfig/vamp-hostsdk.pc
+sudo cp -fv pkgconfig/vamp-sdk.pc.in /usr/local/lib/pkgconfig/vamp-sdk.pc
+sudo sed -i 's|\%PREFIX\%|/usr/local|' /usr/local/lib/pkgconfig/vamp.pc
+sudo sed -i 's|\%PREFIX\%|/usr/local|' /usr/local/lib/pkgconfig/vamp-hostsdk.pc
+sudo sed -i 's|\%PREFIX\%|/usr/local|' /usr/local/lib/pkgconfig/vamp-sdk.pc
+#cat /usr/local/lib/pkgconfig/vamp.pc
+#cat /usr/local/lib/pkgconfig/vamp-hostsdk.pc
+#cat /usr/local/lib/pkgconfig/vamp-sdk.pc
 export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-read -p "Press any key to continue"
-
-
-
-
-
-
-
+#
+#
 ### RUBBERBAND
 # An audio time-stretching and pitch-shifting library and utility program.
 # depends on 'libsamplerate', 'libopus', 'libogg', 'libvorbis', 'libflac', 'libsndfile', 'vamp_plugin', 'fftw3'
@@ -438,10 +422,9 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-
-?????????????????????????????????? ladspa goes into /usr/local/lib/aarch64-linux-gnu/ladspa ???
-meson ./ .. --backend=ninja --default-library=static --buildtype=release --strip -Dno_shared=true  ????????????? libdir ???????????  it is building non-static !!!!!!!!!!!!!!!!!
-
+# building the command-line utility aborts, so do not build it
+sed -i 's|if have_sndfile|#if have_sndfile # building the command-line utility aborts, so do not build it\nif false|' ../meson.build
+meson ./ .. --libdir=/usr/local/lib --backend=ninja --default-library=static --buildtype=release -Dno_shared=true -Dresampler=libsamplerate -DHAVE_LIBSAMPLERATE=true -DUSE_PTHREADS=true -DHAVE_POSIX_MEMALIGN=true -Dfft=fftw -DHAVE_FFTW3=true
 ninja
 sudo ninja install
 export -n CFLAGS
@@ -449,15 +432,13 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
-
-
+#
+#
 ### FDK-AAC
 # Compile the Fraunhofer FDK AAC library.
 # Compiling this library will allow FFmpeg to have support for the AAC sound format.
 #
-mkdir -pv ~/Desktop/ffmpeg_libraries
+cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR fdk-aac
 git clone --depth 1 https://github.com/mstorsjo/fdk-aac.git ~/Desktop/ffmpeg_libraries/fdk-aac
 cd fdk-aac
@@ -466,7 +447,11 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 autoreconf -fiv
-./configure --disable-shared --enable-static
+#./configure --disable-shared --enable-static
+#make -j$(nproc)
+#sudo make installmkdir -pv build
+cd build
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=OFF -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
