@@ -113,7 +113,7 @@ export CXXFLAGS=" -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -D_FORTIFY_SOURCE=2 "
 # The Raspberry Pi 4, like the Pi3/3+ it contains an Armv8 CPU.  TEST: assume an Arm8 operating system (64bit) and use ARM8 instructions
-./configure --disable-shared --enable-static --disable-silent-rules --disable-doc --disable-alloca --with-our-malloc --disable-fortran \
+./configure --prefix=/usr/local --disable-shared --enable-static --disable-silent-rules --disable-doc --disable-alloca --with-our-malloc --disable-fortran \
 			--disable-sse --disable-sse2 --disable-avx --disable-avx2 --disable-avx512 --disable-avx-128-fma --disable-altivec --disable-vsx \
 			--enable-neon --with-pic \
 			--enable-threads --with-combined-threads --disable-float --disable-long-double -disable-quad-precision \
@@ -140,7 +140,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-./configure --disable-shared --enable-static --disable-nls --enable-extra-encodings
+./configure --prefix=/usr/local --disable-shared --enable-static --disable-nls --enable-extra-encodings
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -163,7 +163,7 @@ export CXXFLAGS=" -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -D_FORTIFY_SOURCE=2 "
 sh ./autogen.sh
-./configure --disable-shared --enable-static --disable-xz --disable-xzdec --disable-lzmadec --disable-lzmainfo --disable-doc
+./configure --prefix=/usr/local --disable-shared --enable-static --disable-xz --disable-xzdec --disable-lzmadec --disable-lzmainfo --disable-doc
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -186,7 +186,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 sh ./autogen.sh 
-./configure --disable-shared --enable-static 
+./configure --prefix=/usr/local --disable-shared --enable-static 
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -550,7 +550,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-./configure --enable-static --enable-strip --enable-lto --enable-pic --bit-depth=all --chroma-format=all --disable-win32thread --extra-cflags="-DLIBXML_STATIC" --extra-cflags="-DGLIB_STATIC_COMPILATION" --disable-cli --disable-lavf --disable-avs --disable-ffms --disable-gpac --disable-lsmash --disable-opencl
+./configure --prefix=/usr/local --enable-static --enable-strip --enable-lto --enable-pic --bit-depth=all --chroma-format=all --disable-win32thread --extra-cflags="-DLIBXML_STATIC" --extra-cflags="-DGLIB_STATIC_COMPILATION" --disable-cli --disable-lavf --disable-avs --disable-ffms --disable-gpac --disable-lsmash --disable-opencl
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
