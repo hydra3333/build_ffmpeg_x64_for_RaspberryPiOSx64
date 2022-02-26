@@ -186,7 +186,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 sh ./autogen.sh 
-./configure --prefix=/usr/local --disable-shared --enable-static 
+./configure --prefix=/usr/local --disable-shared --enable-static --disable-testapp --disable-example --disable-unit-test --disable-debug
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
