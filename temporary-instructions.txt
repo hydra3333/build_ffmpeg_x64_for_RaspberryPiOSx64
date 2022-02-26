@@ -528,7 +528,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-meson ./ .. --backend=ninja --default-library=static --strip -Denable_tests=false -Denable_tools=false --buildtype=release
+meson ./ .. --libdir=/usr/local/lib --backend=ninja --default-library=static --strip -Denable_tools=false -Denable_tests=false -Denable_examples=false -Denable_docs=false -Dtestdata_tests=false --buildtype=release
 ninja
 sudo ninja install
 export -n CFLAGS
@@ -536,9 +536,8 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-
-
-
+#
+#
 ### LIBX264 multibit
 # This library will add support for libx264 encoding 
 #
