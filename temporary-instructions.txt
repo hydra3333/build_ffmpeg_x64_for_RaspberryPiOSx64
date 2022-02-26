@@ -664,6 +664,7 @@ sudo make install
 sudo cp -fv ./libx265_main.a	/usr/local/lib/
 sudo cp -fv ./libx265_main10.a	/usr/local/lib/
 sudo cp -fv ./libx265_main12.a	/usr/local/lib/
+sudo cp -fv ./x265.pc			/usr/local/lib/pkgconfig/ 
 export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
