@@ -382,9 +382,8 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 ./configure sdkstatic --libdir=/usr/local/lib --disable-programs
-# ?? ./configure sdkstatic --target=aarch64
 make -j$(nproc)
-# there is no "make install" which works
+# there is no "make install" which works, so do it the hard way
 sudo cp -fv libvamp-sdk.a /usr/local/lib/
 sudo cp -fv libvamp-hostsdk.a /usr/local/lib/
 sudo cp -fRv vamp-hostsdk/ /usr/local/include/
@@ -447,6 +446,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 autoreconf -fiv
+mkdir -pv build
 cd build
 cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=OFF -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
