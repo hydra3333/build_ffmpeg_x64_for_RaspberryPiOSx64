@@ -727,40 +727,44 @@ sudo make install
 #
 cd ~/Desktop
 sudo ldconfig
-
-
-### FFMPEG
-# During the compilation, we will be enabling all the extra libraries that we compiled and installed in the previous two sections.
 #
-cd ~/Desktop
-mkdir -pv ~/Desktop/ffmpeg_libraries
+#
+#
+### FFMPEG
+#
+# Use the extra libraries we compiled and installed previously
+#
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR FFmpeg
-git clone --branch release/4.4 --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
+#git clone --branch release/4.4 --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
+git clone --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
 cd FFmpeg
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-# on configure:
-#	--bindir=/usr/local/bin
-# on make: 
-#	ARCH=aarch64 CROSS_COMPILE=aarch64-linux-gnu-
+
+# ????  on make: ARCH=aarch64 CROSS_COMPILE=aarch64-linux-gnu-
+
+#	--arch=aarch64 --target-os=linux \
+#	--enable xvidcore \
+#	--enable-libxvid \
 
 
 ./configure \
-	--extra-version=hydra3333_RPi4B_for_h264_v4l2m2m \
+	--extra-version="ffmpeg_for_RPi4B_having_h264_v4l2m2m" \
 	--disable-shared --enable-static \
+	--enable-gpl --enable-version3 --enable-nonfree \
+	--libdir=/usr/local/lib \
+	--bindir=/usr/local/bin \
 	--extra-cflags="-I/usr/local/include" \
 	--extra-ldflags="-L/usr/local/lib" \
 	--extra-libs="-lpthread -lm -latomic" \
-	--enable-gpl --enable-version3 --enable-nonfree \
-	--arch=aarch64 --target-os=linux \
 	--pkg-config=pkg-config \
 	--pkg-config-flags=--static \
 	--enable-hardcoded-tables \
 	--enable-gmp \
-	--enable-gnutls
+	--enable-gnutls \
 	--enable-libaom \
 	--enable-libass \
 	--enable-libdav1d \
@@ -769,7 +773,6 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 	--enable-libmp3lame \
 	--enable-libtwolame \
 	--enable-libfreetype \
-	--enable-libkvazaar \
 	--enable-libopencore-amrnb \
 	--enable-libopencore-amrwb \
 	--enable-libopus \
@@ -783,18 +786,18 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 	--enable-libwebp \
 	--enable-libx264 \
 	--enable-libx265 \
+	--disable-libkvazaar \
+	--enable-libxml2 \
 	--enable-libxml2 \
 	--enable-openssl \
 	--enable-h264_v4l2m2m \
 	--enable-librubberband \
 	--enable-zlib \
 	--enable-lzma \	
-	--enable xvidcore \
-	--enable-libxvid \
 	--enable-pthreads --disable-w32threads \
 	--extra-cflags="-DLIBTWOLAME_STATIC" \
 	--extra-cflags="-DLIBXML_STATIC"
-make -j$(nproc) \
+make -j$(nproc)
 sudo make install
 export -n CFLAGS
 export -n CXXFLAGS
@@ -802,12 +805,4 @@ export -n CPPFLAGS
 export -n LDFLAGS
   
 
-
-
-
---------------------------------
-to do
-fftw3
-libx264
-libx265
 
