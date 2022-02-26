@@ -658,6 +658,7 @@ cp -fv /usr/lib/aarch64-linux-gnu/pkgconfig/x265.pc ./x265.pc
 sed -i 's|prefix=\/usr|prefix=\/usr\/local|' ./x265.pc
 sed -i 's|\/aarch64-linux-gnu||' ./x265.pc
 sed -i 's|Version: 3.4|Version: 3.5|' ./x265.pc
+cat ./x265.pc
 # re-install the new composite libx265.a created by "ar"
 sudo make install
 sudo cp -fv ./libx265_main.a	/usr/local/lib/
