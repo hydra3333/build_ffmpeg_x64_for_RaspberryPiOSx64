@@ -41,15 +41,26 @@ mkdir ffmpeg_libraries
 #
 sudo apt -y update
 sudo apt -y full-upgrade
+#
+sudo apt-cache search git
+#
 sudo apt -y install git
 sudo apt -y install autoconf
 sudo apt -y install autopoint
 sudo apt -y install automake
+sudo apt -y install libtool
 sudo apt -y install gettext
 sudo apt -y install build-essential
 sudo apt -y install cmake
 sudo apt -y install cmake-curses-gui
+sudo apt -y install pkg-config
+sudo apt -y install meson
+sudo apt -y install nasm
+sudo apt -y install texinfo
+sudo apt -y install wget
+sudo apt -y install yasm
 sudo apt -y install doxygen
+sudo apt -y install perl
 sudo apt -y install graphviz
 sudo apt -y install imagemagick
 sudo apt -y install libasound2-dev
@@ -78,7 +89,6 @@ sudo apt -y install libsnappy-dev
 sudo apt -y install libsoxr-dev
 sudo apt -y install libssh-dev
 sudo apt -y install libssl-dev
-sudo apt -y install libtool
 sudo apt -y install libv4l-dev
 sudo apt -y install libva-dev
 sudo apt -y install libvdpau-dev
@@ -95,16 +105,10 @@ sudo apt -y install libxcb-xfixes0-dev
 sudo apt -y install libxcb1-dev
 sudo apt -y install libxml2-dev
 sudo apt -y install lzma-dev
-sudo apt -y install meson
-sudo apt -y install nasm
-sudo apt -y install pkg-config
 sudo apt -y install python3-dev
 sudo apt -y install python3-pip
-sudo apt -y install texinfo
-sudo apt -y install wget
-sudo apt -y install yasm
 sudo apt -y install zlib1g-dev
-sudo apt -y install perl
+sudo apt -y install sqlite3 sqlite3-doc sqlite3-pcre libsqlite3-mod-impexp libsqlite3-mod-xpath libsqlite3-dev 
 sudo apt -y install libnuma-dev libnuma1
 if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
 #
