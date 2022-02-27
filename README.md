@@ -14,4 +14,5 @@ Perhaps also see these
 https://forums.raspberrypi.com/viewtopic.php?p=1776531#p1776531
 https://gist.github.com/wildrun0/86a890585857a36c90110cee275c45fd
 
-We do this build is because it uses the LATEST updated source rather than whatever old version may be in Raspberry Pi debian bullseye x64 repositories.
+# We do this build is because:   
+it uses the LATEST updated source rather than whatever old version may be in Raspberry Pi debian bullseye x64 repositories.
