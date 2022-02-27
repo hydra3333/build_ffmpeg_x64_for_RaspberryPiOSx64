@@ -5,6 +5,7 @@ The Raspberry Pi 4, like the Pi3/3+, contains an Armv8 CPU. Here, we assume an A
 OK, I started tinkering with building a "bleeding edge version" [gpl3, non-distributable] static 64-bit ffmpeg under 64-bit bullseye (a work in progress).
 
 It builds some of ffmpeg's dependencies from the latest "bleeding edge" sources (mostly git), so as not to depend too much on what can come from the Raspberry Pi OS repositories (which can sometimes be a few versions behind).   
+
 The rest of the dependencies are pre-installed from Raspberry Pi OS repositories via ```sudo apt-y install``` (usually ```\*-dev```).
 
 Hopefully the resulting x64 ffmpeg enables h264_v4l2m2m gpu hardware accelerated encoding of h.264.
