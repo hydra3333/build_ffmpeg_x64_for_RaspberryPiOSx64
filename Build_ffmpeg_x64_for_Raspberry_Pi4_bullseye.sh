@@ -1187,6 +1187,8 @@ v4l2-ctl -d /dev/video11 --all
 ##yadif:0:0:0 = Output one frame for each frame, incoming is TFF, Deinterlace all frames
 ##yadif:1:0:0 = Output one frame for each field, incoming is TFF, Deinterlace all frames (doubles framerate)
 #
+#mediainfo -full "./some_test_input_file.mp4"
+#
 #/usr/local/bin/ffmpeg -hide_banner -nostats -v verbose \
 #		-i "./some_test_input_file.mp4" \
 #		-vsync cfr \
@@ -1194,16 +1196,51 @@ v4l2-ctl -d /dev/video11 --all
 #		-strict experimental \
 #		-filter_complex "[0:v]yadif=0:0:0,format=pix_fmts=yuv420p" \
 #		-c:v h264_v4l2m2m -pix_fmt yuv420p \
+#		-crf -1 \
 #		-g:v 25 \
 #		-keyint_min 5 \
 #		-b:v 4000000 -minrate:v 500000 -maxrate:v 5000000 -bufsize:v 5000000 \
 #		-level 5.2 \
 #		-movflags +faststart+write_colr \
 #		-an \
-#		-y "./some_test_input_file_transcoded.mp4" 2>&1 | tee ff.log
+#		-y "./some_test_input_file_transcoded_h264_v4l2m2m.mp4" 2>&1 | tee ff.log
 #
-#mediainfo "./some_test_input_file.mp4"
-#mediainfo "./some_test_input_file_transcoded.mp4"
+#mediainfo -full "./some_test_input_file_transcoded_h264_v4l2m2m.mp4"
+#
+# libx264
+#/usr/local/bin/ffmpeg -hide_banner -v verbose \
+#		-i "./some_test_input_file.mp4" \
+#		-preset slow \
+#		-probesize 200M -analyzeduration 200M  \
+#		-filter_complex "[0:v]yadif=0:0:0,setdar=16/9,format=pix_fmts=yuv420p" \
+#		-sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp  \
+#		-strict experimental \
+#		-c:v libx264  \
+#		-preset slow \
+#		-pix_fmt yuv420p \
+#		-forced-idr 1 \
+#		-g 25 \
+#		-keyint_min 5 \
+#		-coder:v cabac \
+#		-bf:v 3 \
+#		-crf -1 \
+#		-b:v 4000000 \
+#		-minrate:v 500000 \
+#		-maxrate:v 5000000 \
+#		-bufsize 5000000 \
+#		-profile:v high \
+#		-level 5.2 \
+#		-movflags +faststart+write_colr \
+#		-an \
+#		-y "./some_test_input_file_transcoded_libx264.mp4" 2>&1 | tee ff_libx264.log
+#		
+#mediainfo -full "./some_test_input_file_transcoded_libx264.mp4"
+#
+#v4l2-ctl -d /dev/video11 --all
+#
+#/usr/local/bin/ffmpeg -hide_banner -h encoders
+#/usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m
+#/usr/local/bin/ffmpeg -hide_banner -h encoder=libx264
 #
 ### -num_capture_buffers 16 -num_output_buffers 32
 #
