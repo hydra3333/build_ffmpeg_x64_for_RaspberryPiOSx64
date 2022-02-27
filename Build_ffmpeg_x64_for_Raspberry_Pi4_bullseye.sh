@@ -190,6 +190,7 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/incl
 autoreconf -fiv
 ./configure --prefix=/usr/local --disable-shared --enable-static -enable-assembly=yes --enable-fft=yes 
 make -j$(nproc)
+make check
 sudo make install
 export -n CFLAGS
 export -n CXXFLAGS
