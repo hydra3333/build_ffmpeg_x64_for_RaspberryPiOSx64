@@ -1055,24 +1055,24 @@ sudo rm -fvR FFmpeg
 ##git clone --branch release/4.4 --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
 git clone --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
 cd FFmpeg
-#https://forums.raspberrypi.com/viewtopic.php?p=1780625#p1780625
-#APPLY PATCH FOR codec h264_v4l2m2m TO REPEAT SEQUENCE HEADERS
-patch -b -Np1 <<EOF
-diff --git a/libavcodec/v4l2_m2m_enc.c b/libavcodec/v4l2_m2m_enc.c
-index f644b50133..4b2ca7bdf4 100644
---- a/libavcodec/v4l2_m2m_enc.c
-+++ b/libavcodec/v4l2_m2m_enc.c
-@@ -197,6 +197,7 @@ static int v4l2_prepare_encoder(V4L2m2mContext *s)
-     v4l2_set_ext_ctrl(s, MPEG_CID(BITRATE) , avctx->bit_rate, "bit rate", 1);
-     v4l2_set_ext_ctrl(s, MPEG_CID(FRAME_RC_ENABLE), 1, "frame level rate control", 0);
-     v4l2_set_ext_ctrl(s, MPEG_CID(GOP_SIZE), avctx->gop_size,"gop size", 1);
-+    v4l2_set_ext_ctrl(s, MPEG_CID(REPEAT_SEQ_HEADER), 1,"repeat parameter sets", 1);
- 
-     av_log(avctx, AV_LOG_DEBUG,
-         "Encoder Context: id (%d), profile (%d), frame rate(%d/%d), number b-frames (%d), "
-EOF
-diff -U 10 libavcodec/v4l2_m2m_enc.c.orig libavcodec/v4l2_m2m_enc.c
-ls -al libavcodec/v4l2_m2m_enc.*
+## https://forums.raspberrypi.com/viewtopic.php?p=1780625#p1780625
+## APPLY PATCH FOR codec h264_v4l2m2m TO REPEAT SEQUENCE HEADERS
+#patch -b -Np1 <<EOF
+#diff --git a/libavcodec/v4l2_m2m_enc.c b/libavcodec/v4l2_m2m_enc.c
+#index f644b50133..4b2ca7bdf4 100644
+#--- a/libavcodec/v4l2_m2m_enc.c
+#+++ b/libavcodec/v4l2_m2m_enc.c
+#@@ -197,6 +197,7 @@ static int v4l2_prepare_encoder(V4L2m2mContext *s)
+#     v4l2_set_ext_ctrl(s, MPEG_CID(BITRATE) , avctx->bit_rate, "bit rate", 1);
+#     v4l2_set_ext_ctrl(s, MPEG_CID(FRAME_RC_ENABLE), 1, "frame level rate control", 0);
+#     v4l2_set_ext_ctrl(s, MPEG_CID(GOP_SIZE), avctx->gop_size,"gop size", 1);
+#+    v4l2_set_ext_ctrl(s, MPEG_CID(REPEAT_SEQ_HEADER), 1,"repeat parameter sets", 1);
+# 
+#     av_log(avctx, AV_LOG_DEBUG,
+#         "Encoder Context: id (%d), profile (%d), frame rate(%d/%d), number b-frames (%d), "
+#EOF
+#diff -U 10 libavcodec/v4l2_m2m_enc.c.orig libavcodec/v4l2_m2m_enc.c
+#ls -al libavcodec/v4l2_m2m_enc.*
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
@@ -1140,5 +1140,57 @@ export -n LDFLAGS
 if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
 #
 #
-#/home/pi/FFmpeg/ffmpeg -i /home/pi/final.mp4 -c:v h264_v4l2m2m -b:v 8M -c:a copy test.mp4
+# ffmpeg Tests:
 #
+# Looking for h264_v4l2m2m
+#/usr/local/bin/ffmpeg -hide_banner -formats            # show available formats
+#/usr/local/bin/ffmpeg -hide_banner -muxers             # show available muxers
+#/usr/local/bin/ffmpeg -hide_banner -demuxers           # show available demuxers
+#/usr/local/bin/ffmpeg -hide_banner -devices            # show available devices
+#/usr/local/bin/ffmpeg -hide_banner -codecs             # show available codecs
+#/usr/local/bin/ffmpeg -hide_banner -decoders           # show available decoders
+#/usr/local/bin/ffmpeg -hide_banner -encoders           # show available encoders
+#/usr/local/bin/ffmpeg -hide_banner -bsfs               # show available bit stream filters
+#/usr/local/bin/ffmpeg -hide_banner -protocols          # show available protocols
+#/usr/local/bin/ffmpeg -hide_banner -filters            # show available filters
+#/usr/local/bin/ffmpeg -hide_banner -pix_fmts           # show available pixel formats
+#/usr/local/bin/ffmpeg -hide_banner -layouts            # show standard channel layouts
+#/usr/local/bin/ffmpeg -hide_banner -sample_fmts        # show available audio sample formats
+#/usr/local/bin/ffmpeg -hide_banner -dispositions       # show available stream dispositions
+#/usr/local/bin/ffmpeg -hide_banner -colors             # show available color names
+#/usr/local/bin/ffmpeg -hide_banner -sources device     # list sources of the input device
+#/usr/local/bin/ffmpeg -hide_banner -sinks device       # list sinks of the output device
+#/usr/local/bin/ffmpeg -hide_banner -hwaccels           # show available HW acceleration methods
+#/usr/local/bin/ffmpeg -hide_banner -h filter=yadif     # show information about filter
+#
+/usr/local/bin/ffmpeg -v debug -version
+/usr/local/bin/ffmpeg -hide_banner -v quiet -codecs   | grep v4l2
+/usr/local/bin/ffmpeg -hide_banner -v quiet -decoders | grep v4l2
+/usr/local/bin/ffmpeg -hide_banner -v quiet -encoders | grep v4l2
+/usr/local/bin/ffmpeg -hide_banner -v quiet -hwaccels
+/usr/local/bin/ffmpeg -hide_banner -v quiet -init_hw_device list
+/usr/local/bin/ffmpeg -hide_banner -h decoder=h264_v4l2m2m 
+/usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 
+#
+v4l2-ctl --list-devices
+v4l2-ctl -d /dev/video11 -l
+v4l2-ctl -d /dev/video11 --all
+#
+# EXAMPLE transcode commandline :
+#/usr/local/bin/ffmpeg -hide_banner -nostats -v verbose \
+#		-i "./some_test_input_file.mp4" \
+#		-vsync cfr \
+#		-sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp \
+#		-strict experimental \
+#		-c:v h264_v4l2m2m -pix_fmt yuv420p \
+#		-g:v 25 \
+#		-keyint_min 5 \
+#		-b:v 4000000 -minrate:v 500000 -maxrate:v 6000000 -bufsize:v 6000000 \
+#		-level 5.2 \
+#		-movflags +faststart+write_colr \
+#		-an \
+#		-y "./some_test_input_file_transcoded.mp4" 2>&1 | tee ff.log
+## -num_capture_buffers 16 -num_output_buffers 32
+#
+#/usr/local/bin/ffprobe -hide_banner -i "./some_test_input_file.mp4" -probesize 200M -analyzeduration 200M 2>&1 | tee -a ff.log
+#/usr/local/bin/ffprobe -hide_banner -i "./some_test_input_file_transcoded.mp4" -probesize 200M -analyzeduration 200M 2>&1 | tee -a ff.log
