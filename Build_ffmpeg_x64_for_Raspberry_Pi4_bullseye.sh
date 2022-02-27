@@ -8,7 +8,7 @@ set -x
 # Here, assume an Arm8 operating system (64bit) and use ARM8 instructions.
 #
 # _debug is case sensitive !
-_debug=True
+_debug=False
 #_debug=False
 if [[ "${_debug}" == "True" ]]; then
 	echo "Running in DEBUG mode, you will need to press Enter after each dependency build."
@@ -1203,7 +1203,7 @@ v4l2-ctl -d /dev/video11 --all
 #		-y "./some_test_input_file_transcoded.mp4" 2>&1 | tee ff.log
 #
 #mediainfo "./some_test_input_file.mp4"
-#mediainfo "./some_test_input_file_transcoded.mp4"#
+#mediainfo "./some_test_input_file_transcoded.mp4"
 #
 ### -num_capture_buffers 16 -num_output_buffers 32
 #
