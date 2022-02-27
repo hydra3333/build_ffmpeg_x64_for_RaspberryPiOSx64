@@ -448,14 +448,18 @@ sudo rm -fvR libsamplerate
 git clone --depth 1 https://github.com/erikd/libsamplerate.git ./libsamplerate
 cd libsamplerate
 mkdir -pv _build
-cd _build
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
+sh ./autogen.sh
+cd _build
 cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DLIBSAMPLERATE_EXAMPLES=OFF -DBUILD_TESTING=OFF -DLIBSAMPLERATE_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DLIBSAMPLERATE_ENABLE_SANITIZERS=OFF -DHAVE_SQLITE3=ON -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
+#make check
 sudo make install
+#sudo ldconfig -v
+sudo ldconfig
 export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
