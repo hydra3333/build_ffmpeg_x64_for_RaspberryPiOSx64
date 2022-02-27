@@ -3,7 +3,9 @@
 # or, open in nano, control-o and then then alt-M a few times to toggle msdos format off and then save
 #
 set -x
-_debug=False
+# _debug is case sensitive !
+_debug=True
+#_debug=False
 if [[ "${_debug}" == "True" ]]; then
 	echo "Running in DEBUG mode, you will need to press Enter after each dependency build."
 fi
@@ -238,11 +240,16 @@ if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
 # SQLite is built into all mobile phones and most computers and comes bundled inside countless other applications that people use every day.
 #
 cd ~/Desktop/ffmpeg_libraries
-rm -fv sqlite-autoconf-3370200.tar.gz
-sudo rm -fvR sqlite-autoconf-3370200
-wget https://fossies.org/linux/misc/sqlite-autoconf-3370200.tar.gz
-tar -xf sqlite-autoconf-3370200.tar.gz
-cd sqlite-autoconf-3370200
+#rm -fv sqlite-autoconf-3370200.tar.gz
+#sudo rm -fvR sqlite-autoconf-3370200
+#wget https://fossies.org/linux/misc/sqlite-autoconf-3370200.tar.gz
+#tar -xf sqlite-autoconf-3370200.tar.gz
+#cd sqlite-autoconf-3370200
+rm -fv sqlite-autoconf-3380000.tar.gz
+sudo rm -fvR sqlite-autoconf-3380000
+wget https://www.sqlite.org/2022/sqlite-autoconf-3380000.tar.gz
+tar -xf sqlite-autoconf-3380000.tar.gz
+cd sqlite-autoconf-3380000
 #export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=ON -DSQLITE_USE_MALLOC_H=ON -DSQLITE_USE_MSIZE=ON -DSQLITE_DISABLE_DIRSYNC=ON -DSQLITE_ENABLE_RTREE=ON -fno-strict-aliasing "
 #export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=ON -DSQLITE_USE_MALLOC_H=ON -DSQLITE_USE_MSIZE=ON -DSQLITE_DISABLE_DIRSYNC=ON -DSQLITE_ENABLE_RTREE=ON -fno-strict-aliasing "
 #export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=ON -DSQLITE_USE_MALLOC_H=ON -DSQLITE_USE_MSIZE=ON -DSQLITE_DISABLE_DIRSYNC=ON -DSQLITE_ENABLE_RTREE=ON -fno-strict-aliasing "
