@@ -1,9 +1,8 @@
 # Build ffmpeg x64 for the 64bit Raspberry Pi OS (bullseye)
 
-The Raspberry Pi 4, like the Pi3/3+, contains an Armv8 CPU.   
-Here, we assume an Arm8 operating system (64bit) and build to use ARM8 instructions.
+The Raspberry Pi 4, like the Pi3/3+, contains an Armv8 CPU. Here, we assume an Arm8 operating system (64 bit) and build some dependencies to use ARM8-specific instructions.
 
-Well, so, alright, I started tinkering with building a "bleeding edge version" [gpl3, non-distributable] static 64-bit ffmpeg under 64-bit bullseye (a work in progress).
+OK, I started tinkering with building a "bleeding edge version" [gpl3, non-distributable] static 64-bit ffmpeg under 64-bit bullseye (a work in progress).
 
 It builds some of ffmpeg's dependencies from the latest "bleeding edge" sources (mostly git), so as not to depend too much on what can come from the Raspberry Pi OS repositories (which can sometimes be a few versions behind).   
 The rest of the dependencies are pre-installed from Raspberry Pi OS repositories via ```sudo apt-y install``` (usually ```\*-dev```).
