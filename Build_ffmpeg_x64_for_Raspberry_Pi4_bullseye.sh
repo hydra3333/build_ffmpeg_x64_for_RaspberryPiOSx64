@@ -137,6 +137,20 @@ sudo apt -y install libgulkan-dev libgulkan-doc libgulkan-utils
 sudo apt -y install primus-vk libprimus-vk1
 sudo apt -y install libvkd3d-dev libvkd3d-utils1 libvkd3d1
 #
+#libmediainfo-dev - library reading metadata from media files -- headers
+#libmediainfo-doc - library for reading metadata from media files -- documentation
+#libmediainfo0v5 - library for reading metadata from media files -- shared library
+#python3-mediainfodll - library for reading metadata from media files -- shared library
+#mediainfo - command-line utility for reading information from audio/video files
+#mediainfo-gui - graphical utility for reading information from audio/video files
+#python-pymediainfo-doc - documentation for the pymediainfo Python library
+#python3-pymediainfo - Library to fetch multimedia metadata information - Python 3.x
+sudo apt -y install mediainfo mediainfo-gui
+sudo apt -y install libmediainfo-dev libmediainfo-doc libmediainfo0v5
+sudo apt -y install python3-mediainfodll
+sudo apt -y install python3-pymediainfo python-pymediainfo-doc 
+#
+#
 # Purge the "-dev" pack which we are going to build dependences for ...
 # No, this will have a really bad effect of other development and uses.
 #sudo apt -y purge libgnutls30 libgnutls28-dev libgnutlsxx28 libgnutls-openssl27
