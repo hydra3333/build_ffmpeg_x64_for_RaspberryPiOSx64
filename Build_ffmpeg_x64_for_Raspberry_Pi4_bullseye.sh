@@ -1182,15 +1182,19 @@ v4l2-ctl -d /dev/video11 --all
 #		-vsync cfr \
 #		-sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp \
 #		-strict experimental \
+#		-filter_complex "[0:v]yadif=0:0:0,format=pix_fmts=yuv420p" \
 #		-c:v h264_v4l2m2m -pix_fmt yuv420p \
 #		-g:v 25 \
 #		-keyint_min 5 \
-#		-b:v 4000000 -minrate:v 500000 -maxrate:v 6000000 -bufsize:v 6000000 \
+#		-b:v 4000000 -minrate:v 500000 -maxrate:v 5000000 -bufsize:v 5000000 \
 #		-level 5.2 \
 #		-movflags +faststart+write_colr \
 #		-an \
 #		-y "./some_test_input_file_transcoded.mp4" 2>&1 | tee ff.log
-## -num_capture_buffers 16 -num_output_buffers 32
+#mediainfo "./some_test_input_file.mp4"
+#mediainfo "./some_test_input_file_transcoded.mp4"#
+#
+### -num_capture_buffers 16 -num_output_buffers 32
 #
 #/usr/local/bin/ffprobe -hide_banner -i "./some_test_input_file.mp4" -probesize 200M -analyzeduration 200M 2>&1 | tee -a ff.log
 #/usr/local/bin/ffprobe -hide_banner -i "./some_test_input_file_transcoded.mp4" -probesize 200M -analyzeduration 200M 2>&1 | tee -a ff.log
