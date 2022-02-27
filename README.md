@@ -1,4 +1,4 @@
-# build ffmpeg x64 for the 64bit Raspberry Pi OS (bullseye)
+# Build ffmpeg x64 for the 64bit Raspberry Pi OS (bullseye)
 
 The Raspberry Pi 4, like the Pi3/3+, contains an Armv8 CPU.   
 Here, we assume an Arm8 operating system (64bit) and build to use ARM8 instructions.
@@ -10,7 +10,7 @@ The rest of the dependencies are pre-installed from Raspberry Pi OS repositories
 
 Hopefully the resulting x64 ffmpeg enables h264_v4l2m2m gpu hardware accelerated encoding of h.264.
 
-perhaps also see these
+Perhaps also see these
 https://forums.raspberrypi.com/viewtopic.php?p=1776531#p1776531
 https://gist.github.com/wildrun0/86a890585857a36c90110cee275c45fd
 
