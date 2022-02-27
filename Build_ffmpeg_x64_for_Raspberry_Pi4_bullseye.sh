@@ -322,6 +322,7 @@ export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inc
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=ON  -DSQLITE_DISABLE_DIRSYNC=ON -DSQLITE_ENABLE_RTREE=ON -DSQLITE_DEFAULT_FOREIGN_KEYS=ON -DSQLITE_DEFAULT_FILE_PERMISSIONS=666 -fno-strict-aliasing "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib -fexceptions -DSQLITE_ENABLE_COLUMN_METADATA=ON  -DSQLITE_DISABLE_DIRSYNC=ON -DSQLITE_ENABLE_RTREE=ON -DSQLITE_DEFAULT_FOREIGN_KEYS=ON -DSQLITE_DEFAULT_FILE_PERMISSIONS=666 -fno-strict-aliasing "
 autoreconf -fiv
+# sqlite3 takes AGES to configure and build on a Raspberry Pi4, do not worry of it looks like it is freezing
 # seemingly OK to ignore:
 #sqlite3 shell.c:8188:17: warning: ‘__builtin_memcmp_eq’ specified size between 18446744071562067968 and 18446744073709551615 exceeds maximum object size 9223372036854775807 [-Wstringop-overflow=]
 ./configure --prefix=/usr/local --disable-shared --enable-static --enable-threadsafe --disable-editline --enable-readline --enable-json1 --enable-fts5 --enable-session
