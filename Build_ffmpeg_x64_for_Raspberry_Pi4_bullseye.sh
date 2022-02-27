@@ -49,6 +49,8 @@ sudo apt -y full-upgrade
 # sudo apt-cache packagename, eg
 # sudo apt-cache search git
 #
+# Install the packages we need for building
+#
 sudo apt -y install git
 sudo apt -y install autoconf
 sudo apt -y install autopoint
@@ -76,14 +78,14 @@ sudo apt -y install libavfilter-dev
 sudo apt -y install libavformat-dev
 sudo apt -y install libavutil-dev
 sudo apt -y install libfreetype6-dev
-#sudo apt -y install libgnutls30 libgnutls28-dev libgnutlsxx28 libgnutls-openssl27
+sudo apt -y install libgnutls30 libgnutls28-dev libgnutlsxx28 libgnutls-openssl27
 sudo apt -y install libunistring-dev
-#sudo apt -y install libgmp-dev
-#sudo apt -y install libmp3lame-dev
-#sudo apt -y install libfdk-aac-dev
+sudo apt -y install libgmp-dev
+sudo apt -y install libmp3lame-dev
+sudo apt -y install libfdk-aac-dev
 sudo apt -y install libopencore-amrnb-dev
 sudo apt -y install libopencore-amrwb-dev
-#sudo apt -y install libopus-dev
+sudo apt -y install libopus-dev
 sudo apt -y install librtmp-dev
 sudo apt -y install libsdl2-dev
 sudo apt -y install libsdl2-image-dev
@@ -98,23 +100,41 @@ sudo apt -y install libv4l-dev
 sudo apt -y install libva-dev
 sudo apt -y install libvdpau-dev
 sudo apt -y install libvo-amrwbenc-dev
-#sudo apt -y install libvorbis-dev
-#sudo apt -y install libwebp-dev
+sudo apt -y install libvorbis-dev
+sudo apt -y install libwebp-dev
 sudo apt -y install libdrm-dev
-#sudo apt -y install libvpx-dev
-#sudo apt -y install libx264-dev
-#sudo apt -y install libx265-dev
+sudo apt -y install libvpx-dev
+sudo apt -y install libx264-dev
+sudo apt -y install libx265-dev
 sudo apt -y install libxcb-shape0-dev
 sudo apt -y install libxcb-shm0-dev
 sudo apt -y install libxcb-xfixes0-dev
 sudo apt -y install libxcb1-dev
 sudo apt -y install libxml2-dev
-#sudo apt -y install lzma-dev
+sudo apt -y install lzma-dev
 sudo apt -y install python3-dev
 sudo apt -y install python3-pip
-#sudo apt -y install zlib1g-dev
-#sudo apt -y install sqlite3 sqlite3-doc sqlite3-pcre libsqlite3-mod-impexp libsqlite3-mod-xpath libsqlite3-dev 
+sudo apt -y install zlib1g-dev
+sudo apt -y install sqlite3 sqlite3-doc sqlite3-pcre libsqlite3-mod-impexp libsqlite3-mod-xpath 
+sudo apt -y install libsqlite3-dev 
 sudo apt -y install libnuma-dev libnuma1
+#
+# Purge the "-dev" pack which we are going to build dependences for ...
+# This will have a really bad effect of other development and uses.
+#
+#sudo apt -y purge libgnutls30 libgnutls28-dev libgnutlsxx28 libgnutls-openssl27
+#sudo apt -y purge libgmp-dev
+#sudo apt -y purge libmp3lame-dev
+#sudo apt -y purge libfdk-aac-dev
+#sudo apt -y purge libopus-dev
+#sudo apt -y purge libvorbis-dev
+#sudo apt -y purge libwebp-dev
+#sudo apt -y purge libvpx-dev
+#sudo apt -y purge libx264-dev
+#sudo apt -y purge libx265-dev
+#sudo apt -y purge lzma-dev
+#sudo apt -y purge zlib1g-dev
+#sudo apt -y purge libsqlite3-dev 
 #
 if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
 #
@@ -765,9 +785,9 @@ EOF
 #sed -i 's|\@CMAKE_PROJECT_NAME\@|x265|' ./x265.pc
 #sed -i 's|\@X265_LATEST_TAG\@|3.5|' ./x265.pc
 #sed -i 's|\@PRIVATE_LIBS\@|-lstdc++ -lssp_nonshared -lssp -lgcc -lgcc|' ./x265.pc
-sudo apt -y install libx265-dev
+#sudo apt -y install libx265-dev
 cp -fv /usr/lib/aarch64-linux-gnu/pkgconfig/x265.pc ./x265.pc
-sudo apt -y purge libx265-dev
+#sudo apt -y purge libx265-dev
 sed -i 's|prefix=\/usr|prefix=\/usr\/local|' ./x265.pc
 sed -i 's|\/aarch64-linux-gnu||' ./x265.pc
 sed -i 's|Version: 3.4|Version: 3.5|' ./x265.pc
