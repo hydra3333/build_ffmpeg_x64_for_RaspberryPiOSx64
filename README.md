@@ -10,7 +10,7 @@ The rest of the dependencies are pre-installed from Raspberry Pi OS repositories
 
 Hopefully the resulting x64 ffmpeg enables h264_v4l2m2m gpu hardware accelerated encoding of h.264.
 
-Perhaps also see these
+Perhaps also see these:   
 https://forums.raspberrypi.com/viewtopic.php?p=1776531#p1776531
 https://gist.github.com/wildrun0/86a890585857a36c90110cee275c45fd
 
