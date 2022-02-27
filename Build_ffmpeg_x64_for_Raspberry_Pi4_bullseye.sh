@@ -213,7 +213,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inclu
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -D_FILE_OFFSET_BITS=64
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -D_FILE_OFFSET_BITS=64
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -348,7 +348,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inclu
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DWITH_OGG=ON -DBUILD_DOCS=OFF -DWITH_STACK_PROTECTOR=ON -DENABLE_64_BIT_WORDS=ON -DBUILD_PROGRAMS=OFF -DINSTALL_PKGCONFIG_MODULES=ON -DINSTALL_MANPAGES=OFF -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DVERSION=1.3.4 -DCMAKE_BUILD_TYPE=Release -DHAVE_SQLITE3=ON 
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DWITH_OGG=ON -DBUILD_DOCS=OFF -DWITH_STACK_PROTECTOR=ON -DENABLE_64_BIT_WORDS=ON -DBUILD_PROGRAMS=OFF -DINSTALL_PKGCONFIG_MODULES=ON -DINSTALL_MANPAGES=OFF -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DVERSION=1.3.4 -DCMAKE_BUILD_TYPE=Release -DHAVE_SQLITE3=ON 
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -372,7 +372,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inclu
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DOPUS_CUSTOM_MODES=ON -DOPUS_BUILD_PROGRAMS=OFF -DOPUS_INSTALL_PKG_CONFIG_MODULE=ON -DHAVE_SQLITE3=ON
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DOPUS_CUSTOM_MODES=ON -DOPUS_BUILD_PROGRAMS=OFF -DOPUS_INSTALL_PKG_CONFIG_MODULE=ON -DHAVE_SQLITE3=ON
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -396,7 +396,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inclu
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DINSTALL_DOCS=OFF -DCMAKE_BUILD_TYPE=Release -DHAVE_SQLITE3=ON 
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DINSTALL_DOCS=OFF -DCMAKE_BUILD_TYPE=Release -DHAVE_SQLITE3=ON 
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -422,7 +422,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inclu
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DHAVE_SQLITE3=ON
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DHAVE_SQLITE3=ON
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -447,7 +447,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inclu
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DLIBSAMPLERATE_EXAMPLES=OFF -DBUILD_TESTING=OFF -DLIBSAMPLERATE_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DLIBSAMPLERATE_ENABLE_SANITIZERS=OFF -DHAVE_SQLITE3=ON -DCMAKE_BUILD_TYPE=Release
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DLIBSAMPLERATE_EXAMPLES=OFF -DBUILD_TESTING=OFF -DLIBSAMPLERATE_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DLIBSAMPLERATE_ENABLE_SANITIZERS=OFF -DHAVE_SQLITE3=ON -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -471,7 +471,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inclu
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DENABLE_BOW_DOCS=OFF -DENABLE_PACKAGE_CONFIG=ON -DCMAKE_BUILD_TYPE=Release -DHAVE_ALSA_ASOUNDLIB_H=OFF -DENABLE_EXTERNAL_LIBS=ON -DHAVE_SQLITE3=ON
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DENABLE_BOW_DOCS=OFF -DENABLE_PACKAGE_CONFIG=ON -DCMAKE_BUILD_TYPE=Release -DHAVE_ALSA_ASOUNDLIB_H=OFF -DENABLE_EXTERNAL_LIBS=ON -DHAVE_SQLITE3=ON
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -567,7 +567,7 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/incl
 autoreconf -fiv
 mkdir -pv build
 cd build
-cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=OFF -DCMAKE_BUILD_TYPE=Release
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DBUILD_PROGRAMS=OFF -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -716,7 +716,7 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/incl
 #
 cd ./12bit
 cmake -G "Unix Makefiles" ../../../source  \
-			-DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
+			-DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
 			-DENABLE_ASSEMBLY=ON \
 			-DHIGH_BIT_DEPTH=ON \
 			-DENABLE_HDR10_PLUS=ON \
@@ -734,7 +734,7 @@ mv -fv "./libx265.a" "./libx265_main12.a"
 cd ..
 cd ./10bit
 cmake -G "Unix Makefiles" ../../../source \
-			-DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
+			-DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
 			-DENABLE_ASSEMBLY=ON \
 			-DHIGH_BIT_DEPTH=ON \
 			-DENABLE_HDR10_PLUS=ON \
@@ -759,7 +759,7 @@ cp -fv "../10bit/libx265_main10.a"        ./libx265_main10.a
 cp -fv "../12bit/libx265_main12.a"        ./libx265_main12.a
 #
 cmake -G "Unix Makefiles" ../../../source \
-			-DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
+			-DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib \
 			-DENABLE_ASSEMBLY=ON \
 			-DENABLE_HDR10_PLUS=ON \
 			-DENABLE_SHARED=OFF \
@@ -828,7 +828,7 @@ export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inc
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 autoreconf -fiv
 cd _build
-cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_BINARY=OFF -DPNG_TESTS=OFF -DPNG_SHARED=OFF -DPNG_STATIC=ON -DPNG_HARDWARE_OPTIMIZATIONS=ON
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_BINARY=OFF -DPNG_TESTS=OFF -DPNG_SHARED=OFF -DPNG_STATIC=ON -DPNG_HARDWARE_OPTIMIZATIONS=ON
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -853,7 +853,7 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inclu
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DCMAKE_BUILD_TYPE=Release -DENABLE_STATIC=ON -DENABLE_SHARED=OFF -DREQUIRE_SIMD=ON -DWITH_SIMD=ON -DWITH_JAVA=OFF 
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DCMAKE_BUILD_TYPE=Release -DENABLE_STATIC=ON -DENABLE_SHARED=OFF -DREQUIRE_SIMD=ON -DWITH_SIMD=ON -DWITH_JAVA=OFF 
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -879,7 +879,7 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/incl
 sed -i.bak 's/\$LIBPNG_CONFIG /\$LIBPNG_CONFIG --static /g' ./configure.ac # fix building with libpng 
 autoreconf -fiv
 cd _build
-cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release \
+cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release \
 	-DWEBP_NEAR_LOSSLESS=ON \
 	-DWEBP_UNICODE=ON \
 	-DWEBP_BUILD_CWEBP=OFF \
