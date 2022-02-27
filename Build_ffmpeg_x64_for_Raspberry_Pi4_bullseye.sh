@@ -118,10 +118,27 @@ sudo apt -y install zlib1g-dev
 sudo apt -y install sqlite3 sqlite3-doc sqlite3-pcre libsqlite3-mod-impexp libsqlite3-mod-xpath 
 sudo apt -y install libsqlite3-dev 
 sudo apt -y install libnuma-dev libnuma1
+# sudo apt-cache search vulkan
+#libvulkan-dev - Vulkan loader library -- development files
+#libvulkan1 - Vulkan loader library
+#vulkan-tools - Miscellaneous Vulkan utilities
+#vulkan-validationlayers - Vulkan validation layers
+#vulkan-validationlayers-dev - Vulkan validation layers -- development files
+#libgulkan-dev - GLib Vulkan helper library -- development files
+#libgulkan-doc - GLib Vulkan helper library -- documentation files
+#libgulkan-utils - GLib Vulkan helper library -- utilities
+#libprimus-vk1 - vulkan layer library for the primus-vk layer
+#primus-vk - Vulkan layer for GPU offloading
+#libvkd3d-dev - Direct3D 12 to Vulkan translation - development files
+#libvkd3d-utils1 - Direct3D 12 to Vulkan translation - utilities library
+#libvkd3d1 - Direct3D 12 to Vulkan translation - library
+sudo apt -y install libvulkan1 libvulkan-dev vulkan-tools vulkan-validationlayers vulkan-validationlayers-dev
+sudo apt -y install libgulkan-dev libgulkan-doc libgulkan-utils
+sudo apt -y install primus-vk libprimus-vk1
+sudo apt -y install libvkd3d-dev libvkd3d-utils1 libvkd3d1
 #
 # Purge the "-dev" pack which we are going to build dependences for ...
-# This will have a really bad effect of other development and uses.
-#
+# No, this will have a really bad effect of other development and uses.
 #sudo apt -y purge libgnutls30 libgnutls28-dev libgnutlsxx28 libgnutls-openssl27
 #sudo apt -y purge libgmp-dev
 #sudo apt -y purge libmp3lame-dev
@@ -1077,6 +1094,7 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/incl
 	--enable-libwebp \
 	--enable-zlib \
 	--enable-lzma \
+	--enable-vulkan --enable-filter=scale_vulkan --enable-filter=avgblur_vulkan --enable-filter=chromaber_vulkan --enable-filter=overlay_vulkan \
 	--extra-cflags="-DLIBTWOLAME_STATIC" \
 	--extra-cflags="-DLIBXML_STATIC"
 	# ????  on make: ARCH=aarch64 CROSS_COMPILE=aarch64-linux-gnu-
