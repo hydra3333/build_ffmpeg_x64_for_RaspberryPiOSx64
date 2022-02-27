@@ -3,6 +3,10 @@
 # or, open in nano, control-o and then then alt-M a few times to toggle msdos format off and then save
 #
 set -x
+#
+# The Raspberry Pi 4, like the Pi3/3+ it contains an Armv8 CPU.  
+# Here, assume an Arm8 operating system (64bit) and use ARM8 instructions.
+#
 # _debug is case sensitive !
 _debug=True
 #_debug=False
@@ -72,14 +76,14 @@ sudo apt -y install libavfilter-dev
 sudo apt -y install libavformat-dev
 sudo apt -y install libavutil-dev
 sudo apt -y install libfreetype6-dev
-sudo apt -y install libgnutls30 libgnutls28-dev libgnutlsxx28 libgnutls-openssl27
+#sudo apt -y install libgnutls30 libgnutls28-dev libgnutlsxx28 libgnutls-openssl27
 sudo apt -y install libunistring-dev
-sudo apt -y install libgmp-dev
-sudo apt -y install libmp3lame-dev
-sudo apt -y install libfdk-aac-dev
+#sudo apt -y install libgmp-dev
+#sudo apt -y install libmp3lame-dev
+#sudo apt -y install libfdk-aac-dev
 sudo apt -y install libopencore-amrnb-dev
 sudo apt -y install libopencore-amrwb-dev
-sudo apt -y install libopus-dev
+#sudo apt -y install libopus-dev
 sudo apt -y install librtmp-dev
 sudo apt -y install libsdl2-dev
 sudo apt -y install libsdl2-image-dev
@@ -94,23 +98,24 @@ sudo apt -y install libv4l-dev
 sudo apt -y install libva-dev
 sudo apt -y install libvdpau-dev
 sudo apt -y install libvo-amrwbenc-dev
-sudo apt -y install libvorbis-dev
-sudo apt -y install libwebp-dev
+#sudo apt -y install libvorbis-dev
+#sudo apt -y install libwebp-dev
 sudo apt -y install libdrm-dev
-sudo apt -y install libvpx-dev
-sudo apt -y install libx264-dev
-sudo apt -y install libx265-dev
+#sudo apt -y install libvpx-dev
+#sudo apt -y install libx264-dev
+#sudo apt -y install libx265-dev
 sudo apt -y install libxcb-shape0-dev
 sudo apt -y install libxcb-shm0-dev
 sudo apt -y install libxcb-xfixes0-dev
 sudo apt -y install libxcb1-dev
 sudo apt -y install libxml2-dev
-sudo apt -y install lzma-dev
+#sudo apt -y install lzma-dev
 sudo apt -y install python3-dev
 sudo apt -y install python3-pip
-sudo apt -y install zlib1g-dev
-sudo apt -y install sqlite3 sqlite3-doc sqlite3-pcre libsqlite3-mod-impexp libsqlite3-mod-xpath libsqlite3-dev 
+#sudo apt -y install zlib1g-dev
+#sudo apt -y install sqlite3 sqlite3-doc sqlite3-pcre libsqlite3-mod-impexp libsqlite3-mod-xpath libsqlite3-dev 
 sudo apt -y install libnuma-dev libnuma1
+#
 if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
 #
 #
@@ -127,12 +132,42 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inclu
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-# The Raspberry Pi 4, like the Pi3/3+ it contains an Armv8 CPU.  TEST: assume an Arm8 operating system (64bit) and use ARM8 instructions
+# these 3 lines are from bootstrap.sh
+touch ChangeLog
+rm -rfv autom4te.cache
+autoreconf --verbose --install --symlink --force
+rm -fv config.cache
 ./configure --prefix=/usr/local --disable-shared --enable-static --disable-silent-rules --disable-doc --disable-alloca --with-our-malloc --disable-fortran \
 			--disable-sse --disable-sse2 --disable-avx --disable-avx2 --disable-avx512 --disable-avx-128-fma --disable-altivec --disable-vsx \
 			--enable-neon --with-pic \
 			--enable-threads --with-combined-threads --disable-float --disable-long-double -disable-quad-precision \
 			--enable-armv8-pmccntr-el0 --enable-armv8-cntvct-el0
+make -j$(nproc)
+sudo make install
+export -n CFLAGS
+export -n CXXFLAGS
+export -n CPPFLAGS
+export -n LDFLAGS
+cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+#
+#
+### GMP
+# GMP is a free library for arbitrary precision arithmetic, operating on signed integers, rational numbers, and floating-point numbers. 
+# There is no practical limit to the precision except the ones implied by the available memory in the machine GMP runs on.
+#
+cd ~/Desktop/ffmpeg_libraries
+rm -fv gmp-6.2.1.tar.xz
+rm -fvR gmp-6.2.1
+wget https://fossies.org/linux/misc/gmp-6.2.1.tar.xz
+#wget https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz
+tar -xf gmp-6.2.1.tar.xz
+cd gmp-6.2.1
+export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
+export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
+export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
+export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
+./configure --prefix=/usr/local --disable-shared --enable-static 
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
@@ -732,6 +767,7 @@ EOF
 #sed -i 's|\@PRIVATE_LIBS\@|-lstdc++ -lssp_nonshared -lssp -lgcc -lgcc|' ./x265.pc
 sudo apt -y install libx265-dev
 cp -fv /usr/lib/aarch64-linux-gnu/pkgconfig/x265.pc ./x265.pc
+sudo apt -y purge libx265-dev
 sed -i 's|prefix=\/usr|prefix=\/usr\/local|' ./x265.pc
 sed -i 's|\/aarch64-linux-gnu||' ./x265.pc
 sed -i 's|Version: 3.4|Version: 3.5|' ./x265.pc
