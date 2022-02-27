@@ -3,6 +3,11 @@
 # or, open in nano, control-o and then then alt-M a few times to toggle msdos format off and then save
 #
 set -x
+_debug=False
+if [[ "${_debug}" -eq True ]]; then
+	echo "Running in DEBUG mode, you will need to press Enter after each dependency build."
+fi
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 # Build script for x64 ffmpeg on the Pi4 with 64-bit OS which enables h264_v4l2m2m  ?
 # as at 2022.02.26
@@ -28,11 +33,6 @@ set -x
 cd ~/Desktop
 sudo rm -fvR ffmpeg_libraries
 mkdir ffmpeg_libraries
-_debug=True
-if [[ "${_debug}" -eq True ]]; then
-	echo "Running in DEBUG mode, you will need to press Enter after each dependency build."
-fi
-if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### Install the ffmpeg and dependency build prerequisites
