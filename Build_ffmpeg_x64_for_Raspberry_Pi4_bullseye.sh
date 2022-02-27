@@ -1176,7 +1176,17 @@ v4l2-ctl --list-devices
 v4l2-ctl -d /dev/video11 -l
 v4l2-ctl -d /dev/video11 --all
 #
-# EXAMPLE transcode commandline :
+## EXAMPLE transcode commandline converting from interlaced to progressive:
+#
+##yadif:mode:parity:deint
+##mode 0, send_frame Output one frame for each frame.
+##mode 1, send_field Output one frame for each field.
+##parity 0=TFF 1=BFF 0=AUTO
+##deint 0, all Deinterlace all frames.
+##deint 1, interlaced Only deinterlace frames marked as interlaced.
+##yadif:0:0:0 = Output one frame for each frame, incoming is TFF, Deinterlace all frames
+##yadif:1:0:0 = Output one frame for each field, incoming is TFF, Deinterlace all frames (doubles framerate)
+#
 #/usr/local/bin/ffmpeg -hide_banner -nostats -v verbose \
 #		-i "./some_test_input_file.mp4" \
 #		-vsync cfr \
@@ -1191,6 +1201,7 @@ v4l2-ctl -d /dev/video11 --all
 #		-movflags +faststart+write_colr \
 #		-an \
 #		-y "./some_test_input_file_transcoded.mp4" 2>&1 | tee ff.log
+#
 #mediainfo "./some_test_input_file.mp4"
 #mediainfo "./some_test_input_file_transcoded.mp4"#
 #
