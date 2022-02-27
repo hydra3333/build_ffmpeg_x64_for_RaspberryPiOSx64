@@ -42,7 +42,8 @@ mkdir ffmpeg_libraries
 sudo apt -y update
 sudo apt -y full-upgrade
 #
-sudo apt-cache search git
+# sudo apt-cache packagename, eg
+# sudo apt-cache search git
 #
 sudo apt -y install git
 sudo apt -y install autoconf
