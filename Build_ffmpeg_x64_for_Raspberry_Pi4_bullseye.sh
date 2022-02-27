@@ -1061,6 +1061,7 @@ export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inc
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 ./configure \
 	--extra-version="ffmpeg_for_RPi4B_having_h264_v4l2m2m" \
+	--arch=aarch64 \
 	--disable-shared --enable-static --enable-pic --enable-neon --disable-w32threads --enable-pthreads \
 	--enable-gpl --enable-version3 --enable-nonfree \
 	--prefix=/usr/local \
