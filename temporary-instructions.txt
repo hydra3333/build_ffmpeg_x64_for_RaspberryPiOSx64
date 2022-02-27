@@ -98,6 +98,8 @@ sudo apt -y install wget
 sudo apt -y install yasm
 sudo apt -y install zlib1g-dev
 sudo apt -y install perl
+sudo apt -y install libnuma-dev
+sudo apt -y install libnuma1
 #
 #
 # FFTW3
@@ -565,6 +567,17 @@ cd ~/Desktop/ffmpeg_libraries
 # This library will add support for libx265 encoding 
 #
 cd ~/Desktop/ffmpeg_libraries
+# for this dependency, first remove what is usually installed.
+sudo rm -fv /usr/local/lib/libx265.a
+sudo rm -fv /usr/local/lib/libhdr10plus.a
+sudo rm -fv /usr/local/include/x265.h
+sudo rm -fv /usr/local/include/x265_config.h
+sudo rm -fv /usr/local/include/hdr10plus.h
+sudo rm -fv /usr/local/lib/libx265_main.a
+sudo rm -fv /usr/local/lib/libx265_main10.a
+sudo rm -fv /usr/local/lib/libx265_main12.a
+sudo rm -fv /usr/local/lib/pkgconfig/x265.pc
+#
 sudo rm -fvR libx265
 git clone --depth 1 https://bitbucket.org/multicoreware/x265_git ./libx265
 cd libx265
@@ -658,13 +671,14 @@ cp -fv /usr/lib/aarch64-linux-gnu/pkgconfig/x265.pc ./x265.pc
 sed -i 's|prefix=\/usr|prefix=\/usr\/local|' ./x265.pc
 sed -i 's|\/aarch64-linux-gnu||' ./x265.pc
 sed -i 's|Version: 3.4|Version: 3.5|' ./x265.pc
+##sed -i 's|-lnuma||' ./x265.pc
 cat ./x265.pc
 # re-install the new composite libx265.a created by "ar"
 sudo make install
 sudo cp -fv ./libx265_main.a	/usr/local/lib/
 sudo cp -fv ./libx265_main10.a	/usr/local/lib/
 sudo cp -fv ./libx265_main12.a	/usr/local/lib/
-sudo cp -fv ./x265.pc			/usr/local/lib/pkgconfig/ 
+sudo cp -fv ./x265.pc			/usr/local/lib/pkgconfig/x265.pc
 export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
@@ -776,24 +790,13 @@ sudo ldconfig
 #
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR FFmpeg
-#git clone --branch release/4.4 --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
+##git clone --branch release/4.4 --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
 git clone --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
 cd FFmpeg
-export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
-
-# ????  on make: ARCH=aarch64 CROSS_COMPILE=aarch64-linux-gnu-
-
-#	--arch=aarch64 --target-os=linux \
-#	--enable xvidcore
-#	--enable-libxvid
-#	--enable-libsoxr
-#	--enable-libv4l2		enable libv4l2/v4l-utils
-#	--enable-encoder=NAME
-#	--enable-libwebp
-
+export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
+export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
+export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
+export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 ./configure \
 	--extra-version="ffmpeg_for_RPi4B_having_h264_v4l2m2m" \
 	--disable-shared --enable-static --enable-pic --enable-neon --disable-w32threads \
@@ -801,8 +804,8 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 	--prefix=/usr/local \
 	--libdir=/usr/local/lib \
 	--bindir=/usr/local/bin \
-	--extra-cflags="-I/usr/local/include" \
-	--extra-ldflags="-L/usr/local/lib" \
+	--extra-cflags="-I/usr/local/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib " \
+	--extra-ldflags="-I/usr/local/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib " \
 	--extra-libs="-lpthread -lm -latomic" \
 	--pkg-config=pkg-config \
 	--pkg-config-flags=--static \
@@ -846,6 +849,14 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 "
 
 	#--enable-openssl \
 	#--enable-pthreads \
+	# ????  on make: ARCH=aarch64 CROSS_COMPILE=aarch64-linux-gnu-
+	#	--arch=aarch64 --target-os=linux \
+	#	--enable xvidcore
+	#	--enable-libxvid
+	#	--enable-libsoxr
+	#	--enable-libv4l2		enable libv4l2/v4l-utils
+	#	--enable-encoder=NAME
+	#	--enable-libwebp
 	
   
 make -j$(nproc)
