@@ -628,7 +628,6 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -DLIBTWOLAME_STATI
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -DLIBTWOLAME_STATIC"
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -DLIBTWOLAME_STATIC"
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -DLIBTWOLAME_STATIC"
-autoreconf -fiv
 # building the frontend aborts, so try not build it (this one SED does not manage it)
 #sed -i 's|if test "x$HAVE_SNDFILE" = "xyes"; then|#if test "x$HAVE_SNDFILE" = "xyes"; then # building the frontend aborts, so do not build it\nif test "no" = "yes"; then|' ./configure.ac
 sed -i 's|AC_SUBST(TWOLAME_BIN)|TWOLAME_BIN=""\nAC_SUBST(TWOLAME_BIN)|' ./configure.ac
@@ -636,6 +635,8 @@ sed -i '/frontend\/Makefile/d' ./configure.ac
 sed -i '/simplefrontend\/Makefile/d' ./configure.ac
 sed -i '/tests\/Makefile/d' ./configure.ac
 sed -i 's/libtwolame frontend simplefrontend doc tests/libtwolame/' ./Makefile.am
+# Do the autoreconf AFTER the SED's above
+autoreconf -fiv
 # NOTE: ALSO ... This switch by itself without the SEDs prevents build of front-ends : --disable-sndfile
 ./configure --prefix=/usr/local --disable-shared --enable-static --enable-sndfile
 make -j$(nproc)
