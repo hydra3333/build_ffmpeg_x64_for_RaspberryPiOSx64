@@ -206,6 +206,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### ZIMG
@@ -228,6 +229,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### SQLITE3
@@ -260,6 +262,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### LIBFLAC
@@ -275,7 +278,6 @@ export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/inclu
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-#
 cmake -G "Unix Makefiles" .. -DCMAKE_INSTALL_LIBDIR=/usr/local/lib -DWITH_OGG=ON -DBUILD_DOCS=OFF -DWITH_STACK_PROTECTOR=ON -DENABLE_64_BIT_WORDS=ON -DBUILD_PROGRAMS=OFF -DINSTALL_PKGCONFIG_MODULES=ON -DINSTALL_MANPAGES=OFF -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DVERSION=1.3.4 -DCMAKE_BUILD_TYPE=Release -DHAVE_SQLITE3=ON 
 make -j$(nproc)
 sudo make install
@@ -284,6 +286,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### LIBOPUS
@@ -307,6 +310,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### LIBOGG
@@ -330,6 +334,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### LIBVORBIS
@@ -355,6 +360,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### LIBSAMPLERATE
@@ -379,6 +385,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### LIBSNDFILE
@@ -402,6 +409,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### VAMP_PLUGIN
@@ -442,6 +450,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### RUBBERBAND
@@ -470,6 +479,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### FDK-AAC
@@ -495,6 +505,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### LAME
@@ -519,6 +530,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### TWOLAME
@@ -551,6 +563,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### DAV1D
@@ -575,6 +588,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### LIBX264 multibit
@@ -597,6 +611,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### LIBX265 multibit
@@ -720,6 +735,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 # LIBPNG
@@ -749,6 +765,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 # LIBJPEG-TURBO
@@ -773,6 +790,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 # LIBWEBP
 # Support for the WebP image format
@@ -811,6 +829,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 # LIBVPX
 # Support for the VP8 and VP9 video codecs on our Raspberry Pi.
@@ -832,6 +851,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### kvazaar
@@ -854,7 +874,6 @@ cd ~/Desktop/ffmpeg_libraries
 #export -n CPPFLAGS
 #export -n LDFLAGS
 #cd ~/Desktop/ffmpeg_libraries
-#
 #
 # LIBAOM
 # This library adds support for encoding to the AP1 video codec
@@ -900,6 +919,7 @@ cmake -G "Unix Makefiles" AOM_SRC -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INST
 ..
 make -j$(nproc)
 sudo make install
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 ### UPDATE THE LINK CACHE
@@ -907,6 +927,7 @@ sudo make install
 #
 cd ~/Desktop
 sudo ldconfig
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
 #
 #
 #
@@ -930,8 +951,8 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/incl
 	--prefix=/usr/local \
 	--libdir=/usr/local/lib \
 	--bindir=/usr/local/bin \
-	--extra-cflags="-I/usr/local/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib " \
-	--extra-ldflags="-I/usr/local/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib " \
+	--extra-cflags=" -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib " \
+	--extra-ldflags=" -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib " \
 	--extra-libs="-lpthread -lm -latomic" \
 	--pkg-config=pkg-config \
 	--pkg-config-flags=--static \
@@ -974,25 +995,20 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/incl
 	--enable-lzma \
 	--extra-cflags="-DLIBTWOLAME_STATIC" \
 	--extra-cflags="-DLIBXML_STATIC"
-
-
-	#--enable-libpng \
-	#--enable-libjpeg-turbo \
 	# ????  on make: ARCH=aarch64 CROSS_COMPILE=aarch64-linux-gnu-
 	#	--arch=aarch64 --target-os=linux \
 	#	--enable xvidcore
 	#	--enable-libxvid
 	#	--enable-libsoxr
 	#	--enable-encoder=NAME
-
-	
-  
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
-  
-
-
+if [[ "${_debug}" -eq True ]]; then read -p "Press ENTER to continue"; fi
+#
+#
+#/home/pi/FFmpeg/ffmpeg -i /home/pi/final.mp4 -c:v h264_v4l2m2m -b:v 8M -c:a copy test.mp4
+#
