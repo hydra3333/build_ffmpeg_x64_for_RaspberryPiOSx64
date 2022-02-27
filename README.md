@@ -20,5 +20,6 @@ It uses the LATEST updated source rather than whatever old version may be in Ras
 
 ## Beware:   
 
-Encoding video to AV1 (AOM encoder) takes FOREVER on an AMD 3900X at 4000Ghz (eg 1 to 2 fps), let alone on a little Raspberry Pi 4 ...   
+Encoding video to AV1 (AOM encoder) takes FOREVER on an AMD 3900X at 4000Ghz (eg 1 to 2 fps)   
+... let alone runnit int on a little Raspberry Pi 4 ;)   
 
