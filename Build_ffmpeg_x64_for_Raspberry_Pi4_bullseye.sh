@@ -1094,15 +1094,10 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/incl
 	--enable-libwebp \
 	--enable-zlib \
 	--enable-lzma \
-	--enable-vulkan --enable-filter=scale_vulkan --enable-filter=avgblur_vulkan --enable-filter=chromaber_vulkan --enable-filter=overlay_vulkan \
 	--extra-cflags="-DLIBTWOLAME_STATIC" \
 	--extra-cflags="-DLIBXML_STATIC"
-	# ????  on make: ARCH=aarch64 CROSS_COMPILE=aarch64-linux-gnu-
-	#	--arch=aarch64 --target-os=linux \
-	#	--enable xvidcore
-	#	--enable-libxvid
-	#	--enable-libsoxr
-	#	--enable-encoder=NAME
+# "ERROR: vulkan requested but not found" when using this:
+#	--enable-vulkan --enable-filter=scale_vulkan --enable-filter=avgblur_vulkan --enable-filter=chromaber_vulkan --enable-filter=overlay_vulkan \
 make -j$(nproc)
 sudo make install
 export -n CFLAGS
