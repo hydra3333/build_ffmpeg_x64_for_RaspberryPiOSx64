@@ -1188,6 +1188,8 @@ v4l2-ctl -d /dev/video11 --all
 ##yadif:1:0:0 = Output one frame for each field, incoming is TFF, Deinterlace all frames (doubles framerate)
 #
 #mediainfo -full "./some_test_input_file.mp4"
+#/usr/local/bin/ffprobe -hide_banner -probesize 200M -analyzeduration 200M -show_format  -show_private_data -i "./some_test_input_file.mp4"
+#/usr/local/bin/ffprobe -hide_banner -probesize 200M -analyzeduration 200M -show_streams -show_private_data -i "./some_test_input_file.mp4"
 #
 #/usr/local/bin/ffmpeg -hide_banner -nostats -v verbose \
 #		-i "./some_test_input_file.mp4" \
@@ -1206,6 +1208,8 @@ v4l2-ctl -d /dev/video11 --all
 #		-y "./some_test_input_file_transcoded_h264_v4l2m2m.mp4" 2>&1 | tee ff.log
 #
 #mediainfo -full "./some_test_input_file_transcoded_h264_v4l2m2m.mp4"
+#/usr/local/bin/ffprobe -hide_banner -probesize 200M -analyzeduration 200M -show_format  -show_private_data -i "./some_test_input_file_transcoded_h264_v4l2m2m.mp4"
+#/usr/local/bin/ffprobe -hide_banner -probesize 200M -analyzeduration 200M -show_streams -show_private_data -i "./some_test_input_file_transcoded_h264_v4l2m2m.mp4"
 #
 # libx264
 #/usr/local/bin/ffmpeg -hide_banner -v verbose \
@@ -1235,6 +1239,9 @@ v4l2-ctl -d /dev/video11 --all
 #		-y "./some_test_input_file_transcoded_libx264.mp4" 2>&1 | tee ff_libx264.log
 #		
 #mediainfo -full "./some_test_input_file_transcoded_libx264.mp4"
+#/usr/local/bin/ffprobe -hide_banner -probesize 200M -analyzeduration 200M -show_format  -show_private_data -i "./some_test_input_file_transcoded_libx264.mp4"
+#/usr/local/bin/ffprobe -hide_banner -probesize 200M -analyzeduration 200M -show_streams -show_private_data -i "./some_test_input_file_transcoded_libx264.mp4"
+
 #
 #v4l2-ctl -d /dev/video11 --all
 #
