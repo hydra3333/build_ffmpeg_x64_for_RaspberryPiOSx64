@@ -169,6 +169,10 @@ sudo apt -y install python3-pymediainfo python-pymediainfo-doc
 #
 if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
 #
+#================================================================================================================
+if [[ "${1}" != "ffmpeg_only" ]]; then
+#================================================================================================================
+#
 #
 # FFTW3
 # FFTW3 is a free collection of fast C routines for computing the Discrete Fourier Transform in one or more dimensions.
@@ -1035,6 +1039,11 @@ cmake -G "Unix Makefiles" AOM_SRC -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INST
 make -j$(nproc)
 sudo make install
 if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+#
+#
+##================================================================================================================
+fi	# if [[ "${1}" != "ffmpeg_only" ]]; then
+#================================================================================================================
 #
 #
 ### UPDATE THE LINK CACHE
