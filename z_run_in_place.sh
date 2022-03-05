@@ -40,6 +40,7 @@ rm -fv tee ff_libx264.log
 		-sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp  \
 		-strict experimental \
 		-c:v libx264  \
+		-preset veryfast \
 		-pix_fmt yuv420p \
 		-g 25 \
 		-b:v 4000000 -minrate:v 500000 -maxrate:v 5000000 -bufsize:v 5000000 \
@@ -58,13 +59,18 @@ rm -fv ff.log
 		-filter_complex "[0:v]yadif=0:0:0,format=pix_fmts=yuv420p" \
 		-c:v h264_v4l2m2m \
 		-pix_fmt yuv420p \
-		-g:v 25 \
 		-b:v 4000000 -minrate:v 500000 -maxrate:v 5000000 -bufsize:v 5000000 \
 		-profile:v high \
-		-level 13 \
+		-level 4.2 \
+		-rc VBR \
+		-shm separate_buffer \
+		-rsh 0 \
+		-iframe_period 25 \
 		-movflags +faststart+write_colr \
 		-an \
 		-y "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 | tee ff.log
+
+#		-g:v 25 \
 
 exit
 
