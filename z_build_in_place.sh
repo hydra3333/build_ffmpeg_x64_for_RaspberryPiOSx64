@@ -84,6 +84,9 @@ rm -fv libavcodec/v4l2_m2m.o
 touch --no-create libavcodec/v4l2_m2m_dec.c
 rm -fv libavcodec/v4l2_m2m_dec.o
 
+touch --no-create libavcodec/options.c
+rm -fv libavcodec/options.o
+
 touch --no-create fftools/cmdutils.c
 rm -fv fftools/cmdutils.o
 
