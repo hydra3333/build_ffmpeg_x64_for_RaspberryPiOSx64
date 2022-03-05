@@ -70,6 +70,15 @@ git pull --rebase
 git reset --hard HEAD
 git status
 #
+
+#
+# to see changes,go to this URL
+# https://github.com/FFmpeg/FFmpeg/compare/master...hydra3333:master
+#
+# to see all changes across forks as a large diff file,
+# https://github.com/FFmpeg/FFmpeg/compare/master...hydra3333:master.diff
+#
+
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
