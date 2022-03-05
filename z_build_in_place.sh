@@ -87,11 +87,15 @@ rm -fv libavcodec/v4l2_m2m_dec.o
 touch --no-create libavcodec/options.c
 rm -fv libavcodec/options.o
 
+touch --no-create libavcodec/allcodecs.c
+rm -fv libavcodec/allcodecs.o
+
 touch --no-create fftools/cmdutils.c
 rm -fv fftools/cmdutils.o
 
 touch --no-create libavutil/opt.c
 rm -fv libavutil/opt.o
+
 
 ./configure \
 	--extra-version="ffmpeg_for_RPi4B_having_h264_v4l2m2m" \
