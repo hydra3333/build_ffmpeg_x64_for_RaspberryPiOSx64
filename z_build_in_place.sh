@@ -66,7 +66,7 @@ cd FFmpeg
 #     will try to combine two parallel development paths.
 # They're completely different.
 #
-#git fetch
+git pull --rebase
 git reset --hard HEAD
 git status
 #
