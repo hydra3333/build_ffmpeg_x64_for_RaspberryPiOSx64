@@ -58,8 +58,17 @@ cd ~/Desktop/ffmpeg_libraries
 #rm -fvR FFmpeg
 #git clone https://github.com/hydra3333/FFmpeg.git FFmpeg
 cd FFmpeg
-git fetch
-git merge
+#
+# git fetch
+#    updates your local repository with commits that have been added 
+#    to the server since your last fetch
+# git merge 
+#     will try to combine two parallel development paths.
+# They're completely different.
+#
+#git fetch
+git reset --hard HEAD
+git status
 #
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
