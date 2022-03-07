@@ -53,7 +53,33 @@ cd ~/Desktop
 #mediainfo -full "./some_test_input_file_tiny_transcoded_libx264.mp4" 2>&1 | tee -a ff_libx264.log
 
 
-rm -fv ff.log
+rm -fv ff_CBR.log
+/usr/local/bin/ffmpeg -hide_banner -nostats -v trace \
+		-i "./some_test_input_file_tiny.mp4" \
+		-vsync cfr \
+		-sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp \
+		-strict experimental \
+		-filter_complex "[0:v]yadif=0:0:0,format=pix_fmts=yuv420p" \
+		-c:v h264_v4l2m2m \
+		-pix_fmt yuv420p \
+		-rc CBR \
+		-b:v 4000000 \
+		-profile:v high \
+		-level 4.2 \
+		-shm separate_buffer \
+		-rsh 0 \
+		-g:v 25 \
+		-movflags +faststart+write_colr \
+		-an \
+		-y "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 | tee ff_CBR.log
+
+mediainfo -full "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 >> ff_CBR.log
+/usr/local/bin/ffmpeg -hide_banner -encoders 2>&1 >> ff_CBR.log
+/usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 2>&1 >> ff_CBR.log
+
+
+
+rm -fv ff_VBR.log
 /usr/local/bin/ffmpeg -hide_banner -nostats -v trace \
 		-i "./some_test_input_file_tiny.mp4" \
 		-vsync cfr \
@@ -71,24 +97,21 @@ rm -fv ff.log
 		-g:v 25 \
 		-movflags +faststart+write_colr \
 		-an \
-		-y "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 | tee ff.log
+		-y "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 | tee ff_VBR.log
 
-mediainfo -full "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 >> ff.log
-/usr/local/bin/ffmpeg -hide_banner -encoders 2>&1 >> tee -a ff.log
-/usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 2>&1 >> tee -a ff.log
-
-
-#/usr/local/bin/ffmpeg -hide_banner -h decoder=h264_v4l2m2m 2>&1 >> tee -a ff.log
+mediainfo -full "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 >> ff_VBR.log
+/usr/local/bin/ffmpeg -hide_banner -encoders 2>&1 >> ff_VBR.log
+/usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 2>&1 >> ff_VBR.log
 
 
-#		-g:v 25 \
-#		-b:v 4000000 -minrate:v 500000 -maxrate:v 5000000 -bufsize:v 5000000 \
-#		-profile:v high \
-#		-level 4.2 \
+
+
+
+
 #		-rc VBR \
-#		-shm separate_buffer \
-#		-rsh 0 \
-#		-iframe_period 25 \
+#		-b:v 4000000 -b_peak 6000000 \
+#		-rc CBR \
+#		-b:v 4000000 \
 
 exit
 
