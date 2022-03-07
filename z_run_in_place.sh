@@ -73,7 +73,12 @@ rm -fv ff.log
 		-an \
 		-y "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 | tee ff.log
 
-mediainfo -full "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 | tee -a ff.log
+mediainfo -full "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 >> ff.log
+/usr/local/bin/ffmpeg -hide_banner -encoders 2>&1 >> tee -a ff.log
+/usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 2>&1 >> tee -a ff.log
+
+
+#/usr/local/bin/ffmpeg -hide_banner -h decoder=h264_v4l2m2m 2>&1 >> tee -a ff.log
 
 
 #		-g:v 25 \
