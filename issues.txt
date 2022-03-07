@@ -31,7 +31,7 @@ https://github.com/raspberrypi/linux/issues/4917#issuecomment-1058120137
 A relevant spec is at:
 https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/ext-ctrls-codec.html
 
-The proposed patch addresses:
+The proposed patch mostly addresses non-substantial issues:
 
 0. AVOption private options are used to aquire and enforce 
    range and value checks and defaults on a per-coded basis
