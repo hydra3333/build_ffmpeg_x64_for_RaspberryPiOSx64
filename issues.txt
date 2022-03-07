@@ -1,0 +1,66 @@
+Hello. 
+
+The current FFMPEG h264_v4l2m2m encoder (which people use on Raspberry Pi 3+) 
+has a few issues, mostly to do with Options and what the underpinning linux
+v4l2 driver currently accepts and rejects.
+Additionally, there is inaccurate information posted on the net about 
+the options it accepts/uses, which some people seem have taken as gospel.
+
+Some Issues with the current (h264)_v4l2m2m encoder:
+1. -profile only accepts a number and rejects modern "-profile high"
+2. only a restricted set of -profiles are accepted by the driver
+3. only a restricted set of -levels are accepted by the driver
+4. b-frames are not settabe by the driver
+5. rate control mode allows VBR and CBR which is settable, however CBR causes the encoder to abort
+6. rate control mode VBR should allow setting of peak_bitrate, however it
+   cannot be specified and the driver does not accept it
+7. -g is not settable by the driver (it is an urban myth that it works)
+   ... the h264 iframe_period is not a replacement but may be close enough
+8. ffmpeg's "non -g" means of forcing i-frames at intervals is another urban myth
+9. the current ffmpeg default for repeat sequence header is built
+   in the Pi Foundation repositories with a patch to permanently turn it on 
+10. some options are not used by the encoder (eg Sequence_header_mode)
+11. somehow, ffmpeg with this encoder always yields VFR rather than CFR
+    even with Constant Frame Rate input
+
+This Linux command shows (mostly) settable options:
+v4l2-ctl --list-ctrls-menu -d 11
+
+This thread has some relevant info from a Raspberry Pi Foundation developer
+https://github.com/raspberrypi/linux/issues/4917#issuecomment-1058120137
+A relevant spec is at:
+https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/ext-ctrls-codec.html
+
+The proposed patch addresses:
+
+0. AVOption private options are used to aquire and enforce 
+   range and value checks and defaults on a per-coded basis
+1. -profile accepts named options eg "-profile high" and implements value checking
+2. only -profiles which are accepted by the driver are permitted
+3. -velevs accepts named options, only those accepted by the driver are permitted
+4. a warning is issued about b-frames b-frames which are not currently settable by the driver
+5. rate control modes VBR and CBR can be specified 
+   ... however CBR causing encoder to abort may be addressed in a future patch (if possible)
+6. rate control mode for VBR "peak_bitrate" can be specified, and an attempt made to
+   set it but a warning issued when that fails (hope the driver is updated to accept it)
+7. -g will be accepted and over-write a new option -iframe_period 
+   a new option -iframe_period will be accepted and set in the driver
+   ... the h264 iframe_period is not a replacement but may be close enough
+8. ffmpeg's "non -g" means of forcing i-frames at intervals
+   remains unchanged, however see new -iframe_period option above
+9. a new option to specifiy repeat sequence header is available with the
+   default per the Pi Foundation repositories build of True
+10. Sequence_header_mode is a new option with a default per the manual
+11. yielding VFR rather than CFR
+    ... is not addressed in this patch
+
+Other :
+
+12. possibly against ffmpeg standards, there are more comments in the code
+13. the encoder is more instumented with AV_LOG_DEBUG statements
+    ... negligible performance cost as it is during one-time setup
+14. the encoder is more instrumented with AV_LOG_ERROR statements
+    ... unexpected streams reduced for those that fire and not look
+15. the encoder appears to be back-compatible with the current release
+16. related v4l2m2m encoders, eg mpeg4_v4l2m2m have also minor updates
+
