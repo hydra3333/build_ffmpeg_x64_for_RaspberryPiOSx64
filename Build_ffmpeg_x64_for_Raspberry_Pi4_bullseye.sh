@@ -1154,6 +1154,39 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+
+
+echo #
+echo ######################################################################
+echo # DO THESE ONCE-OFF COMMANDS SO YOU CAN GIT FETCH A REMOTE REPOSITORY
+echo #
+echo #https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+echo #
+echo #ssh-keygen -t rsa -b 4096 -C "hydra3333@gmail.com"
+echo # accept the default location ~/.ssh/id_rsa
+echo # enter the github password
+echo # enter the github password again
+echo #eval "$(ssh-agent -s)"
+echo #ssh-add    ~/.ssh/id_rsa
+echo #ssh-add -k ~/.ssh/id_rsa
+echo # enter the github password
+echo # THEN
+echo # Display then copy the contents of the ~/.ssh/id_rsa.pub file to your clipboard
+echo cat ~/.ssh/id_rsa.pub
+echo # Copy it to the clipboard
+echo # open this URL in a browser https://github.com/settings/keys
+echo # Add the new RSA key and when prompted enter your guthub password to save the RSA public key
+echo ######################################################################
+echo #
+
+git remote remove ffmpeg-upstream
+git remote add ffmpeg-upstream git@github.com:FFmpeg/FFmpeg.git
+git fetch ffmpeg-upstream
+#git diff --patch ffmpeg-upstream/master master
+git diff --patch ffmpeg-upstream/master master --output=../diff-updated-v4l2m2m-options.patch
+cp -fv ./diff-updated-v4l2m2m-options.patch ~/Desktop/
+cat ../diff-updated-v4l2m2m-options.patch
+
 #
 #
 # ffmpeg Tests:
