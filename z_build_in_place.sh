@@ -171,8 +171,9 @@ rm -fv libavutil/opt.o
 # "ERROR: vulkan requested but not found" when using this:
 #	--enable-vulkan --enable-filter=scale_vulkan --enable-filter=avgblur_vulkan --enable-filter=chromaber_vulkan --enable-filter=overlay_vulkan
 make -j$(nproc)
+read -p "Press ENTER to continue"
 sudo make install
-
+read -p "Press ENTER to continue"
 echo #
 echo ######################################################################
 echo # 
@@ -190,5 +191,3 @@ git fetch ffmpeg-upstream
 git diff --patch ffmpeg-upstream/master master --output=../diff-updated-v4l2m2m-options.patch
 cp -fv ./diff-updated-v4l2m2m-options.patch ~/Desktop/
 cat ../diff-updated-v4l2m2m-options.patch
-
-
