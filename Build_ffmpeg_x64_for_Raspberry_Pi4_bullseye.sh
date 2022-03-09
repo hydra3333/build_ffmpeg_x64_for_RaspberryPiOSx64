@@ -1069,26 +1069,9 @@ if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
 cd ~/Desktop/ffmpeg_libraries
 sudo rm -fvR FFmpeg
 ##git clone --branch release/4.4 --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
-git clone --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
+##git clone --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
+git clone --depth 1 https://github.com/hydra3333/FFmpeg.git ./FFmpeg
 cd FFmpeg
-## https://forums.raspberrypi.com/viewtopic.php?p=1780625#p1780625
-## APPLY PATCH FOR codec h264_v4l2m2m TO REPEAT SEQUENCE HEADERS
-#patch -b -Np1 <<EOF
-#diff --git a/libavcodec/v4l2_m2m_enc.c b/libavcodec/v4l2_m2m_enc.c
-#index f644b50133..4b2ca7bdf4 100644
-#--- a/libavcodec/v4l2_m2m_enc.c
-#+++ b/libavcodec/v4l2_m2m_enc.c
-#@@ -197,6 +197,7 @@ static int v4l2_prepare_encoder(V4L2m2mContext *s)
-#     v4l2_set_ext_ctrl(s, MPEG_CID(BITRATE) , avctx->bit_rate, "bit rate", 1);
-#     v4l2_set_ext_ctrl(s, MPEG_CID(FRAME_RC_ENABLE), 1, "frame level rate control", 0);
-#     v4l2_set_ext_ctrl(s, MPEG_CID(GOP_SIZE), avctx->gop_size,"gop size", 1);
-#+    v4l2_set_ext_ctrl(s, MPEG_CID(REPEAT_SEQ_HEADER), 1,"repeat parameter sets", 1);
-# 
-#     av_log(avctx, AV_LOG_DEBUG,
-#         "Encoder Context: id (%d), profile (%d), frame rate(%d/%d), number b-frames (%d), "
-#EOF
-#diff -U 10 libavcodec/v4l2_m2m_enc.c.orig libavcodec/v4l2_m2m_enc.c
-#ls -al libavcodec/v4l2_m2m_enc.*
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
