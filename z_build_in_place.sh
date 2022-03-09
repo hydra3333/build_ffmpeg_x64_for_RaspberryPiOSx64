@@ -174,26 +174,13 @@ sudo make install
 
 echo #
 echo ######################################################################
-echo # DO THESE ONCE-OFF COMMANDS SO YOU CAN GIT FETCH A REMOTE REPOSITORY
+echo # 
+echo # SEE THIS:
+echo # 
+echo # 000-GITHUB-authorisation-on-LINUX.sh
 echo #
-echo #https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-echo #
-echo #ssh-keygen -t rsa -b 4096 -C "hydra3333@gmail.com"
-echo # accept the default location ~/.ssh/id_rsa
-echo # enter the github password
-echo # enter the github password again
-echo #eval "$(ssh-agent -s)"
-echo #ssh-add    ~/.ssh/id_rsa
-echo #ssh-add -k ~/.ssh/id_rsa
-echo # enter the github password
-echo # THEN
-echo # Display then copy the contents of the ~/.ssh/id_rsa.pub file to your clipboard
-echo cat ~/.ssh/id_rsa.pub
-echo # Copy it to the clipboard
-echo # open this URL in a browser https://github.com/settings/keys
-echo # Add the new RSA key and when prompted enter your guthub password to save the RSA public key
 echo ######################################################################
-echo #
+echo # 
 
 git remote remove ffmpeg-upstream
 git remote add ffmpeg-upstream git@github.com:FFmpeg/FFmpeg.git
