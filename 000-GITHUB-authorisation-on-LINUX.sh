@@ -61,13 +61,30 @@ echo ###########################################################################
 echo #
 echo # You are now authorised by Github to do things like this :
 echo #
-echo git remote remove ffmpeg-upstream
-echo git remote add ffmpeg-upstream git@github.com:FFmpeg/FFmpeg.git
-echo git fetch ffmpeg-upstream
-echo #git diff --patch ffmpeg-upstream/master master
-echo git diff --patch ffmpeg-upstream/master master --output=../diff-updated-v4l2m2m-options.patch
-echo cp -fv ./diff-updated-v4l2m2m-options.patch ~/Desktop/
-echo cat ../diff-updated-v4l2m2m-options.patch
+echo #git remote remove ffmpeg-upstream
+echo #git remote add ffmpeg-upstream git@github.com:FFmpeg/FFmpeg.git
+echo #git fetch ffmpeg-upstream
+echo ##git diff --patch ffmpeg-upstream/master master
+echo #git diff --patch ffmpeg-upstream/master master --output=../diff-updated-v4l2m2m-options.patch
+echo #cp -fv ./diff-updated-v4l2m2m-options.patch ~/Desktop/
+echo #cat ../diff-updated-v4l2m2m-options.patch
 echo #
 echo ##################################################################################################
 echo #
+#
+sudo apt install -y git
+sudo apt install -y git-email
+git config --global user.name "hydra3333"
+git config --global user.email "hydra3333@gmail.com"
+git config --global sendemail.smtpencryption tls
+git config --global sendemail.smtpserver smtp.gmail.com
+# 587 for TLS 465 for SSL
+git config --global sendemail.smtpserverport 587
+git config --global sendemail.smtpuser hydra3333@gmail.com
+#git config --global sendemail.smtppass ?????
+git config --unset sendemail.smtppass
+git config --global --unset sendemail.smtppass
+git config --global sendemail.to hydra3333@gmail.com
+git config --global --list
+git config --global credential.helper store
+#
