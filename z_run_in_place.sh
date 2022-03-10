@@ -52,6 +52,32 @@ cd ~/Desktop
 #
 #mediainfo -full "./some_test_input_file_tiny_transcoded_libx264.mp4" 2>&1 | tee -a ff_libx264.log
 
+rm -fv ff_VBR.log
+/usr/local/bin/ffmpeg -hide_banner -nostats -v trace \
+		-i "./some_test_input_file_tiny.mp4" \
+		-vsync cfr \
+		-sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp \
+		-strict experimental \
+		-filter_complex "[0:v]yadif=0:0:0,format=pix_fmts=yuv420p" \
+		-c:v h264_v4l2m2m \
+		-pix_fmt yuv420p \
+		-rc VBR \
+		-b:v 4000000 -b_peak 6000000 \
+		-profile:v high \
+		-level 4.2 \
+		-shm separate_buffer \
+		-rsh 0 \
+		-g:v 25 \
+		-movflags +faststart+write_colr \
+		-an \
+		-y "./some_test_input_file_tiny_transcoded_h264_VBR_v4l2m2m.mp4" 2>&1 | tee ff_VBR.log
+
+mediainfo -full "./some_test_input_file_tiny_transcoded_h264_VBR_v4l2m2m.mp4" 2>&1 >> ff_VBR.log
+/usr/local/bin/ffmpeg -hide_banner -encoders 2>&1 >> ff_VBR.log
+/usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 2>&1 >> ff_VBR.log
+/usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 2>&1 >> ff_VBR.log
+
+
 
 rm -fv ff_CBR.log
 /usr/local/bin/ffmpeg -hide_banner -nostats -v trace \
@@ -71,43 +97,13 @@ rm -fv ff_CBR.log
 		-g:v 25 \
 		-movflags +faststart+write_colr \
 		-an \
-		-y "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 | tee ff_CBR.log
+		-y "./some_test_input_file_tiny_transcoded_h264_CBR_v4l2m2m.mp4" 2>&1 | tee ff_CBR.log
 
-mediainfo -full "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 >> ff_CBR.log
+mediainfo -full "./some_test_input_file_tiny_transcoded_h264_CBR_v4l2m2m.mp4" 2>&1 >> ff_CBR.log
 /usr/local/bin/ffmpeg -hide_banner -encoders 2>&1 >> ff_CBR.log
 /usr/local/bin/ffmpeg -hide_banner -encoders | grep v4l2
-# V..... h263_v4l2m2m         V4L2 mem2mem H.263 encoder wrapper (codec h263)
-# V..... h264_v4l2m2m         V4L2 mem2mem H.264 encoder wrapper (codec h264)
-# V..... hevc_v4l2m2m         V4L2 mem2mem HEVC encoder wrapper (codec hevc)
-# V..... mpeg4_v4l2m2m        V4L2 mem2mem MPEG4 encoder wrapper (codec mpeg4)
-# V..... vp8_v4l2m2m          V4L2 mem2mem VP8 encoder wrapper (codec vp8)
 /usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 2>&1 >> ff_CBR.log
 
-
-rm -fv ff_VBR.log
-/usr/local/bin/ffmpeg -hide_banner -nostats -v trace \
-		-i "./some_test_input_file_tiny.mp4" \
-		-vsync cfr \
-		-sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp \
-		-strict experimental \
-		-filter_complex "[0:v]yadif=0:0:0,format=pix_fmts=yuv420p" \
-		-c:v h264_v4l2m2m \
-		-pix_fmt yuv420p \
-		-rc VBR \
-		-b:v 4000000 -b_peak 6000000 \
-		-profile:v high \
-		-level 4.2 \
-		-shm separate_buffer \
-		-rsh 0 \
-		-g:v 25 \
-		-movflags +faststart+write_colr \
-		-an \
-		-y "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 | tee ff_VBR.log
-
-mediainfo -full "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 >> ff_VBR.log
-/usr/local/bin/ffmpeg -hide_banner -encoders 2>&1 >> ff_VBR.log
-/usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 2>&1 >> ff_VBR.log
-/usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 2>&1 >> ff_VBR.log
 
 exit
 
