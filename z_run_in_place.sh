@@ -64,7 +64,7 @@ rm -fv ff_CBR.log
 		-pix_fmt yuv420p \
 		-rc CBR \
 		-b:v 4000000 \
-		-profile:v high \
+		-profile:v main \
 		-level 4.2 \
 		-shm separate_buffer \
 		-rsh 0 \
@@ -81,13 +81,7 @@ mediainfo -full "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 >
 # V..... hevc_v4l2m2m         V4L2 mem2mem HEVC encoder wrapper (codec hevc)
 # V..... mpeg4_v4l2m2m        V4L2 mem2mem MPEG4 encoder wrapper (codec mpeg4)
 # V..... vp8_v4l2m2m          V4L2 mem2mem VP8 encoder wrapper (codec vp8)
-
 /usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 2>&1 >> ff_CBR.log
-/usr/local/bin/ffmpeg -hide_banner -h encoder=hevc_v4l2m2m 2>&1 >> ff_CBR.log
-/usr/local/bin/ffmpeg -hide_banner -h encoder=mpeg4_v4l2m2m 2>&1 >> ff_CBR.log
-/usr/local/bin/ffmpeg -hide_banner -h encoder=vp8_v4l2m2m 2>&1 >> ff_CBR.log
-/usr/local/bin/ffmpeg -hide_banner -h encoder=h263_v4l2m2m 2>&1 >> ff_CBR.log
-
 
 
 rm -fv ff_VBR.log
@@ -113,16 +107,7 @@ rm -fv ff_VBR.log
 mediainfo -full "./some_test_input_file_tiny_transcoded_h264_v4l2m2m.mp4" 2>&1 >> ff_VBR.log
 /usr/local/bin/ffmpeg -hide_banner -encoders 2>&1 >> ff_VBR.log
 /usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 2>&1 >> ff_VBR.log
-
-
-
-
-
-
-#		-rc VBR \
-#		-b:v 4000000 -b_peak 6000000 \
-#		-rc CBR \
-#		-b:v 4000000 \
+/usr/local/bin/ffmpeg -hide_banner -h encoder=h264_v4l2m2m 2>&1 >> ff_VBR.log
 
 exit
 
