@@ -58,6 +58,22 @@ sudo apt -y full-upgrade
 # Install the packages we need for building
 #
 sudo apt -y install git
+#
+sudo apt install -y git-email
+git config --global user.name "hydra3333"
+git config --global user.email "hydra3333@gmail.com"
+git config --global sendemail.smtpencryption tls
+git config --global sendemail.smtpserver smtp.gmail.com
+# 587 for TLS 465 for SSL
+git config --global sendemail.smtpserverport 587
+git config --global sendemail.smtpuser hydra3333@gmail.com
+#git config --global sendemail.smtppass ?????
+git config --unset sendemail.smtppass
+git config --global --unset sendemail.smtppass
+git config --global sendemail.to hydra3333@gmail.com
+git config --global --list
+git config --global credential.helper store
+#
 sudo apt -y install autoconf
 sudo apt -y install autopoint
 sudo apt -y install automake
