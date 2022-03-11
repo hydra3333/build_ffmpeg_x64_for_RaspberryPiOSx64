@@ -62,7 +62,7 @@ rm -fv ff_VBR.log
 		-c:v h264_v4l2m2m \
 		-pix_fmt yuv420p \
 		-rc VBR \
-		-b:v 4000000 -b_peak 6000000 \
+		-b:v 4000000 \
 		-profile:v high \
 		-level 4.2 \
 		-shm separate_buffer \

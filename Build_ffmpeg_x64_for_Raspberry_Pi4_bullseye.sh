@@ -1169,7 +1169,7 @@ git remote add ffmpeg-upstream git@github.com:FFmpeg/FFmpeg.git
 git fetch ffmpeg-upstream
 #git diff --patch ffmpeg-upstream/master master
 git diff --patch ffmpeg-upstream/master master --output=../diff-updated-v4l2m2m-options.patch
-cp -fv ./diff-updated-v4l2m2m-options.patch ~/Desktop/
+cp -fv ../diff-updated-v4l2m2m-options.patch ~/Desktop/
 cat ../diff-updated-v4l2m2m-options.patch
 
 #
