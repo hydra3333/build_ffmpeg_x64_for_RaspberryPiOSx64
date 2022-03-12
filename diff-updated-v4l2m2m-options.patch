@@ -165,7 +165,7 @@ index b67b216331..e6f1124072 100644
  
  /**
 diff --git a/libavcodec/v4l2_m2m_enc.c b/libavcodec/v4l2_m2m_enc.c
-index 043fe80c69..4c90b9cd7d 100644
+index 043fe80c69..26375d6045 100644
 --- a/libavcodec/v4l2_m2m_enc.c
 +++ b/libavcodec/v4l2_m2m_enc.c
 @@ -38,37 +38,49 @@
@@ -647,13 +647,13 @@ index 043fe80c69..4c90b9cd7d 100644
 +        }
 +        ret = v4l2_set_ext_ctrl(s, MPEG_CID(GOP_SIZE), avctx->gop_size, "h264 gop size", 1);
 +        if (ret) {
-+            av_log(avctx, AV_LOG_DEBUG, "Encoder v4l2_m2m ERROR failed to set h264_gop_size (%d) "
++            av_log(avctx, AV_LOG_DEBUG, "Encoder v4l2_m2m WARNING failed to set h264_gop_size (%d) "
 +                "is OK (not used by driver anyway) ret=(%d) errno=(%d) error='%s'\n", 
 +                priv->h264_gop_size, ret, errno, strerror(errno));
 +            ///return AVERROR(EINVAL);
 +        }
 +        ret = v4l2_set_ext_ctrl(s, MPEG_CID(H264_MIN_QP), priv->h264_qmin, "h264 Qmin", 1);
-+        if (val) {
++        if (ret) {
 +            av_log(avctx, AV_LOG_DEBUG, "Encoder v4l2_m2m ERROR failed to set h264_qmin (%d) "
 +                "ret=(%d) errno=(%d) error='%s'\n", 
 +                priv->h264_qmin, ret, errno, strerror(errno));
@@ -1244,8 +1244,8 @@ index 043fe80c69..4c90b9cd7d 100644
 +    ///     "For H264 there is V4L2_CID_MPEG_VIDEO_H264_I_PERIOD, which is what is implemented in the encoder" 
 +    ///     per https://github.com/raspberrypi/linux/issues/4917#issuecomment-1057977916
 +    { "iframe_period",        "iframe_period used by the driver; overridden by -g",
-+        OFFSET(h264_iframe_period), AV_OPT_TYPE_INT, {.i64=-1},
-+        -1, INT_MAX, AV_OPT_FLAG_VIDEO_PARAM | AV_OPT_FLAG_ENCODING_PARAM },
++        OFFSET(h264_iframe_period), AV_OPT_TYPE_INT, {.i64=25},
++        0, INT_MAX, AV_OPT_FLAG_VIDEO_PARAM | AV_OPT_FLAG_ENCODING_PARAM },
 +    { NULL },
 +};
 +
