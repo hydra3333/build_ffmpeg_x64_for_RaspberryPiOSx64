@@ -1146,12 +1146,16 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/incl
 	--extra-cflags="-DLIBXML_STATIC"
 # "ERROR: vulkan requested but not found" when using this:
 #	--enable-vulkan --enable-filter=scale_vulkan --enable-filter=avgblur_vulkan --enable-filter=chromaber_vulkan --enable-filter=overlay_vulkan
+
 make -j$(nproc)
+
 sudo make install
+
 export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
+
 if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
 
 echo #
