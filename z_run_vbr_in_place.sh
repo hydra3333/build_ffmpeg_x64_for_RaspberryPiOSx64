@@ -40,7 +40,7 @@ mediainfo -full "./some_test_input_file_tiny.mp4" 2>&1 > ff_CBR_1_BEFORE.log
 		-rc CBR \
 		-b:v 4000000 \
 		-qmin 10 -qmax 51 \
-		-profile:v high \
+		-profile:v main \
 		-level 4.2 \
 		-shm separate_buffer \
 		-rsh 0 \

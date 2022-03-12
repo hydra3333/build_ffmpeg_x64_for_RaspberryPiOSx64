@@ -1,5 +1,5 @@
 diff --git a/libavcodec/v4l2_buffers.c b/libavcodec/v4l2_buffers.c
-index 4b2679eb38..520aeb2361 100644
+index 4b2679eb38..9595e76e04 100644
 --- a/libavcodec/v4l2_buffers.c
 +++ b/libavcodec/v4l2_buffers.c
 @@ -69,17 +69,34 @@ static inline void v4l2_set_pts(V4L2Buffer *out, int64_t pts)
@@ -7,10 +7,10 @@ index 4b2679eb38..520aeb2361 100644
      out->buf.timestamp.tv_usec = v4l2_pts % USEC_PER_SEC;
      out->buf.timestamp.tv_sec = v4l2_pts / USEC_PER_SEC;
 +    /// ----- temporary debug, comment out when finished debugging
-+    av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers v4l2_set_pts out->buf.timestamp.tv_usec =(%"PRId64")\n",
-+        out->buf.timestamp.tv_usec);
-+    av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers v4l2_set_pts out->buf.timestamp.tv_sec =(%"PRId64")\n",
-+        out->buf.timestamp.tv_sec);
++    //av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers v4l2_set_pts out->buf.timestamp.tv_usec =(%"PRId64")\n",
++    //    out->buf.timestamp.tv_usec);
++    //av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers v4l2_set_pts out->buf.timestamp.tv_sec =(%"PRId64")\n",
++    //    out->buf.timestamp.tv_sec);
 +    /// ----- temporary debug, comment out when finished debugging
  }
  
@@ -26,13 +26,13 @@ index 4b2679eb38..520aeb2361 100644
 -    return av_rescale_q(v4l2_pts, v4l2_timebase, v4l2_get_timebase(avbuf));
 +    v4l2_av_rescale_q = av_rescale_q(v4l2_pts, v4l2_timebase, v4l2_get_timebase(avbuf));
 +    /// ----- temporary debug, comment out when finished debugging
-+    av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers v4l2_get_pts "
-+        "avbuf->buf.timestamp.tv_sec=(%"PRId64") avbuf->buf.timestamp.tv_usec=(%"PRId64") "
-+        "calc v4l2_pts is (%"PRId64")\n",
-+        (int64_t) avbuf->buf.timestamp.tv_sec, (int64_t) avbuf->buf.timestamp.tv_usec, v4l2_pts);
-+    av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers v4l2_get_pts "
-+        "returned v4l2_av_rescale_q =(%"PRId64")\n",
-+        v4l2_av_rescale_q);
++    //av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers v4l2_get_pts "
++    //    "avbuf->buf.timestamp.tv_sec=(%"PRId64") avbuf->buf.timestamp.tv_usec=(%"PRId64") "
++    //    "calc v4l2_pts is (%"PRId64")\n",
++    //    (int64_t) avbuf->buf.timestamp.tv_sec, (int64_t) avbuf->buf.timestamp.tv_usec, v4l2_pts);
++    //av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers v4l2_get_pts "
++    //    "returned v4l2_av_rescale_q =(%"PRId64")\n",
++    //    v4l2_av_rescale_q);
 +    /// ----- temporary debug, comment out when finished debugging
 +    return v4l2_av_rescale_q;
  }
@@ -43,44 +43,44 @@ index 4b2679eb38..520aeb2361 100644
      v4l2_set_pts(out, frame->pts);
  
 +    /// ----- temporary debug, comment out when finished debugging
-+    av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->key_frame flag=(%d)\n",
-+        frame->key_frame);
-+    av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->color_primaries=(%d)\n",
-+        frame->color_primaries);
-+    av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->colorspace=(%d)\n",
-+        frame->colorspace);
-+    av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->color_range=(%d)\n",
-+        frame->color_range);
-+    av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->color_trc=(%d)\n",
-+        frame->color_trc);
-+    av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->pts=(%"PRId64")\n",
-+        frame->pts);
-+    av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->pkt_dts=(%"PRId64")\n",
-+        frame->pkt_dts);
++    //av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->key_frame flag=(%d)\n",
++    //    frame->key_frame);
++    //av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->color_primaries=(%d)\n",
++    //    frame->color_primaries);
++    //av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->colorspace=(%d)\n",
++    //    frame->colorspace);
++    //av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->color_range=(%d)\n",
++    //    frame->color_range);
++    //av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->color_trc=(%d)\n",
++    //    frame->color_trc);
++    //av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->pts=(%"PRId64")\n",
++    //    frame->pts);
++    //av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avframe_to_buf frame->pkt_dts=(%"PRId64")\n",
++    //    frame->pkt_dts);
 +    /// ----- temporary debug, comment out when finished debugging
 +
      return v4l2_buffer_swframe_to_buf(frame, out);
  }
  
-@@ -436,14 +470,37 @@ int ff_v4l2_buffer_buf_to_avframe(AVFrame *frame, V4L2Buffer *avbuf)
+@@ -436,11 +470,34 @@ int ff_v4l2_buffer_buf_to_avframe(AVFrame *frame, V4L2Buffer *avbuf)
      frame->pts = v4l2_get_pts(avbuf);
      frame->pkt_dts = AV_NOPTS_VALUE;
  
 +    /// ----- temporary debug, comment out when finished debugging
-+    av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->key_frame flag=(%d)\n",
-+        frame->key_frame);
-+    av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->color_primaries=(%d)\n",
-+        frame->color_primaries);
-+    av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->colorspace=(%d)\n",
-+        frame->colorspace);
-+    av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->color_range=(%d)\n",
-+        frame->color_range);
-+    av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->color_trc=(%d)\n",
-+        frame->color_trc);
-+    av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->pts=(%"PRId64")\n",
-+        frame->pts);
-+    av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->pkt_dts=(%"PRId64")\n",
-+        frame->pkt_dts);
++    //av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->key_frame flag=(%d)\n",
++    //    frame->key_frame);
++    //av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->color_primaries=(%d)\n",
++    //    frame->color_primaries);
++    //av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->colorspace=(%d)\n",
++    //    frame->colorspace);
++    //av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->color_range=(%d)\n",
++    //    frame->color_range);
++    //av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->color_trc=(%d)\n",
++    //    frame->color_trc);
++    //av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->pts=(%"PRId64")\n",
++    //    frame->pts);
++    //av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe frame->pkt_dts=(%"PRId64")\n",
++    //    frame->pkt_dts);
 +    /// ----- temporary debug, comment out when finished debugging
 +
      /* these values are updated also during re-init in v4l2_process_driver_event */
@@ -89,19 +89,15 @@ index 4b2679eb38..520aeb2361 100644
      frame->sample_aspect_ratio = avbuf->context->sample_aspect_ratio;
  
 +    /// ----- temporary debug, comment out when finished debugging
-+    av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe "
-+        "frame->height =(%d) frame->width =(%d) frame->sample_aspect_ratio.=(%d),frame->sample_aspect_ratio.=(%d) \n",
-+        frame->height, frame->width, frame->sample_aspect_ratio.num, frame->sample_aspect_ratio.den);
++    //av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avframe "
++    //    "frame->height =(%d) frame->width =(%d) frame->sample_aspect_ratio.=(%d),frame->sample_aspect_ratio.=(%d) \n",
++    //    frame->height, frame->width, frame->sample_aspect_ratio.num, frame->sample_aspect_ratio.den);
 +    /// ----- temporary debug, comment out when finished debugging
 +
      /* 3. report errors upstream */
      if (avbuf->buf.flags & V4L2_BUF_FLAG_ERROR) {
--        av_log(logger(avbuf), AV_LOG_ERROR, "%s: driver decode error\n", avbuf->context->name);
-+        av_log(logger(avbuf), AV_LOG_ERROR, "Encoder v4l2_m2m v4l2_buffers %s: driver decode error\n", avbuf->context->name);
-         frame->decode_error_flags |= FF_DECODE_ERROR_INVALID_BITSTREAM;
-     }
- 
-@@ -462,11 +519,18 @@ int ff_v4l2_buffer_buf_to_avpkt(AVPacket *pkt, V4L2Buffer *avbuf)
+         av_log(logger(avbuf), AV_LOG_ERROR, "%s: driver decode error\n", avbuf->context->name);
+@@ -462,8 +519,15 @@ int ff_v4l2_buffer_buf_to_avpkt(AVPacket *pkt, V4L2Buffer *avbuf)
      pkt->size = V4L2_TYPE_IS_MULTIPLANAR(avbuf->buf.type) ? avbuf->buf.m.planes[0].bytesused : avbuf->buf.bytesused;
      pkt->data = pkt->buf->data;
  
@@ -109,19 +105,15 @@ index 4b2679eb38..520aeb2361 100644
 +    if (avbuf->buf.flags & V4L2_BUF_FLAG_KEYFRAME) {
          pkt->flags |= AV_PKT_FLAG_KEY;
 +        /// ----- temporary debug, comment out when finished debugging
-+        av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avpkt '%s' "
-+            "AVBUF FLAG (avbuf->buf.flags & V4L2_BUF_FLAG_KEYFRAME) is TRUE: "
-+            "just set pkt->flags |= AV_PKT_FLAG_KEY; (%d)\n", 
-+            avbuf->context->name, pkt->flags);
++        //av_log(logger(avbuf), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_buf_to_avpkt '%s' "
++        //    "AVBUF FLAG (avbuf->buf.flags & V4L2_BUF_FLAG_KEYFRAME) is TRUE: "
++        //    "just set pkt->flags |= AV_PKT_FLAG_KEY; (%d)\n", 
++        //    avbuf->context->name, pkt->flags);
 +        /// ----- temporary debug, comment out when finished debugging
 +    }
  
      if (avbuf->buf.flags & V4L2_BUF_FLAG_ERROR) {
--        av_log(logger(avbuf), AV_LOG_ERROR, "%s driver encode error\n", avbuf->context->name);
-+        av_log(logger(avbuf), AV_LOG_ERROR, "Encoder v4l2_m2m %s driver encode error\n", avbuf->context->name);
-         pkt->flags |= AV_PKT_FLAG_CORRUPT;
-     }
- 
+         av_log(logger(avbuf), AV_LOG_ERROR, "%s driver encode error\n", avbuf->context->name);
 @@ -485,8 +549,15 @@ int ff_v4l2_buffer_avpkt_to_buf(const AVPacket *pkt, V4L2Buffer *out)
  
      v4l2_set_pts(out, pkt->pts);
@@ -130,10 +122,10 @@ index 4b2679eb38..520aeb2361 100644
 +    if (pkt->flags & AV_PKT_FLAG_KEY) {
          out->flags = V4L2_BUF_FLAG_KEYFRAME;
 +        /// ----- temporary debug, comment out when finished debugging
-+        av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avpkt_to_buf '%s' "
-+            "PKT FLAG (pkt->flags & AV_PKT_FLAG_KEY) is TRUE: "
-+            "just set out->flags = V4L2_BUF_FLAG_KEYFRAME; (%d)\n", 
-+            out->context->name, out->flags);
++        //av_log(logger(out), AV_LOG_DEBUG, "Encoder v4l2_m2m v4l2_buffers ff_v4l2_buffer_avpkt_to_buf '%s' "
++        //    "PKT FLAG (pkt->flags & AV_PKT_FLAG_KEY) is TRUE: "
++        //    "just set out->flags = V4L2_BUF_FLAG_KEYFRAME; (%d)\n", 
++        //    out->context->name, out->flags);
 +        /// ----- temporary debug, comment out when finished debugging
 +    }
  
@@ -165,7 +157,7 @@ index b67b216331..e6f1124072 100644
  
  /**
 diff --git a/libavcodec/v4l2_m2m_enc.c b/libavcodec/v4l2_m2m_enc.c
-index 043fe80c69..26375d6045 100644
+index 043fe80c69..11491edaf6 100644
 --- a/libavcodec/v4l2_m2m_enc.c
 +++ b/libavcodec/v4l2_m2m_enc.c
 @@ -38,37 +38,49 @@
@@ -530,7 +522,7 @@ index 043fe80c69..26375d6045 100644
 +        if (priv->h264_video_bit_rate_mode == V4L2_MPEG_VIDEO_BITRATE_MODE_CBR &&
 +             priv->h264_profile == V4L2_MPEG_VIDEO_H264_PROFILE_HIGH) {
 +            av_log(avctx, AV_LOG_WARNING, "Encoder v4l2_m2m WARNING h264_video_bit_rate_mode 'CBR' "
-+                "and profile 'high' may not be compatible. Try profile 'main' if it fails.");
++                "and profile 'high' may not be compatible. Try profile 'main' if it fails.\n");
 +            ///return AVERROR(EINVAL);
 +        }
 +        if (priv->h264_qmin > priv->h264_qmax) {
@@ -1056,7 +1048,7 @@ index 043fe80c69..26375d6045 100644
  #define OFFSET(x) offsetof(V4L2m2mPriv, x)
  #define FLAGS AV_OPT_FLAG_VIDEO_PARAM | AV_OPT_FLAG_ENCODING_PARAM
  
-@@ -394,20 +845,216 @@ static av_cold int v4l2_encode_close(AVCodecContext *avctx)
+@@ -394,20 +845,226 @@ static av_cold int v4l2_encode_close(AVCodecContext *avctx)
      { "num_capture_buffers", "Number of buffers in the capture context", \
          OFFSET(num_capture_buffers), AV_OPT_TYPE_INT, {.i64 = 4 }, 4, INT_MAX, FLAGS }
  
@@ -1204,13 +1196,23 @@ index 043fe80c69..26375d6045 100644
 +    { "VBR",                  "for variable bitrate mode",
 +        0, AV_OPT_TYPE_CONST, {.i64=V4L2_MPEG_VIDEO_BITRATE_MODE_VBR},
 +        0, 0, AV_OPT_FLAG_VIDEO_PARAM | AV_OPT_FLAG_ENCODING_PARAM, "rc" },
++    /// CBR: 1. CBR is not supported in high profile on the Raspberry Pi SoC. 
++    ///      2. CBR causes ffmpeg encoder to hang on the Raspberry Pi.
 +    { "CBR",                  "for constant bitrate mode",
 +        0, AV_OPT_TYPE_CONST, {.i64=V4L2_MPEG_VIDEO_BITRATE_MODE_CBR},
 +        0, 0, AV_OPT_FLAG_VIDEO_PARAM | AV_OPT_FLAG_ENCODING_PARAM, "rc" },
++    /// CQ: https://lkml.org/lkml/2020/5/22/1219
++    ///         When V4L2_CID_MPEG_VIDEO_BITRATE_MODE value is V4L2_MPEG_VIDEO_BITRATE_MODE_CQ,
++    ///         encoder will produce constant quality output indicated by the 
++    ///         V4L2_CID_MPEG_VIDEO_CONSTANT_QUALITY control value. Encoder will choose
++    ///         appropriate quantization parameter and bitrate to produce requested frame quality level.
++    ///         Valid range is 1 to 100 where 1 = lowest quality, 100 = highest quality.
++    ///     ** V4L2_CID_MPEG_VIDEO_CONSTANT_QUALITY not dealt with here ... since
++    ///        mode V4L2_MPEG_VIDEO_BITRATE_MODE_CQ is not allowed on a Raspberry Pi 4.
++    /// sequence_header_mode is peculiar ... here called -shm separate_buffer or -shm joined_1st_frame    
 +    { "CQ",                  "for constant quality mode",
 +        0, AV_OPT_TYPE_CONST, {.i64=V4L2_MPEG_VIDEO_BITRATE_MODE_CQ},
 +        0, 0, AV_OPT_FLAG_VIDEO_PARAM | AV_OPT_FLAG_ENCODING_PARAM, "rc" },
-+    /// sequence_header_mode is peculiar ... here called -shm separate_buffer or -shm joined_1st_frame
 +    { "shm",                  "Sequence_header_mode",
 +        OFFSET(h264_sequence_header_mode), AV_OPT_TYPE_INT, {.i64=V4L2_MPEG_VIDEO_HEADER_MODE_JOINED_WITH_1ST_FRAME},
 +        V4L2_MPEG_VIDEO_HEADER_MODE_SEPARATE,
@@ -1277,7 +1279,7 @@ index 043fe80c69..26375d6045 100644
      { NULL },
  };
  
-@@ -437,8 +1084,10 @@ static const AVCodecDefault v4l2_m2m_defaults[] = {
+@@ -437,8 +1094,10 @@ static const AVCodecDefault v4l2_m2m_defaults[] = {
          .wrapper_name   = "v4l2m2m", \
      }
  
