@@ -53,3 +53,25 @@ mediainfo -full "./some_test_input_file_tiny_transcoded_h264_VBR_v4l2m2m.mp4" 2>
 
 exit
 
+rm -fv ff_VBR_nogop
+/usr/local/bin/ffmpeg -hide_banner -nostats -v trace \
+		-i "./some_test_input_file_tiny.mp4" \
+		-vsync cfr \
+		-sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp \
+		-strict experimental \
+		-filter_complex "[0:v]yadif=0:0:0,format=pix_fmts=yuv420p" \
+		-c:v h264_v4l2m2m \
+		-pix_fmt yuv420p \
+		-rc VBR \
+		-b:v 4000000 \
+		-profile:v high \
+		-level 4.2 \
+		-shm separate_buffer \
+		-rsh 0 \
+		-movflags +faststart+write_colr \
+		-an \
+		-y "./some_test_input_file_tiny_transcoded_h264_VBR_nogop_v4l2m2m.mp4" 2>&1 | tee ff_VBR_nogop.log
+
+#		-g:v 25 \
+#		-iframe_period 0
+#		-iframe_period 25
