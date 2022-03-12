@@ -47,7 +47,7 @@ mediainfo -full "./some_test_input_file_tiny.mp4" 2>&1 > ff_CBR_1_BEFORE.log
 		-g:v 25 \
 		-movflags +faststart+write_colr \
 		-an \
-		-y "./some_test_input_file_tiny_transcoded_h264_CBR_v4l2m2m.mp4" 2>&1 | tee ff_CBR.log
+		-y "./some_test_input_file_tiny_transcoded_h264_CBR_v4l2m2m.mp4" 2>&1 | tee -a ff_CBR.log
 
 mediainfo -full "./some_test_input_file_tiny_transcoded_h264_CBR_v4l2m2m.mp4" 2>&1 >> ff_CBR.log
 mediainfo -full "./some_test_input_file_tiny_transcoded_h264_CBR_v4l2m2m.mp4" 2>&1 > ff_CBR_2_AFTER.log
@@ -79,7 +79,7 @@ mediainfo -full "./some_test_input_file_tiny.mp4" 2>&1 > ff_VBR_g25_1_BEFORE.log
 		-g:v 25 \
 		-movflags +faststart+write_colr \
 		-an \
-		-y "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 | tee ff_VBR_g25.log
+		-y "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 | tee -a ff_VBR_g25.log
 
 mediainfo -full "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 >> ff_VBR_g25.log
 mediainfo -full "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 > ff_VBR_g25_2_AFTER.log
@@ -111,7 +111,7 @@ echo "**************************************************************************
 #		-g:v 25 \
 #		-movflags +faststart+write_colr \
 #		-an \
-#		-y "./some_test_input_file_tiny_transcoded_h264_CQ_g25_v4l2m2m.mp4" 2>&1 | tee ff_CQ_g25.log
+#		-y "./some_test_input_file_tiny_transcoded_h264_CQ_g25_v4l2m2m.mp4" 2>&1 | tee -a ff_CQ_g25.log
 #
 #mediainfo -full "./some_test_input_file_tiny_transcoded_h264_CQ_g25_v4l2m2m.mp4" 2>&1 >> ff_CQ_g25.log
 #mediainfo -full "./some_test_input_file_tiny_transcoded_h264_CQ_g25_v4l2m2m.mp4" 2>&1 > ff_CQ_g25_2_AFTER.log
