@@ -12,11 +12,12 @@ cd ~/Desktop
 sudo apt -y install git
 sudo apt -y install git-email
 sudo apt -y install wget
+sudo apt -y install valgrind
 #
-#rm -fvR ./FFmpeg
-if [[ ! -d ./FFmpeg ]]; then
+rm -fvR ./FFmpeg
+#if [[ ! -d ./FFmpeg ]]; then
 	git clone --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
-fi
+#fi
 #
 cd FFmpeg
 #
@@ -148,12 +149,13 @@ git format-patch -1 HEAD -s --stat --output=../updated_v4l2m2m_options.patch.eml
 make -j$(nproc) fate
 
 
-# Build it for real
+# Build it for FATE ONLY
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 ./configure \
+	--toolchain=valgrind-memcheck \
 	--extra-version="ffmpeg_for_RPi4B_having_h264_v4l2m2m" \
 	--arch=aarch64 --target-os=linux \
 	--disable-shared --enable-static --enable-pic --enable-neon --disable-w32threads --enable-pthreads \
@@ -212,11 +214,12 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 
+
 # Try FATE tests
-make -j$(nproc) fate
+make fate
 
 
-
+#
 
 
 

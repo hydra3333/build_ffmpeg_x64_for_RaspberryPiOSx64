@@ -58,7 +58,6 @@ sudo apt -y full-upgrade
 # Install the packages we need for building
 #
 sudo apt -y install git
-#
 sudo apt install -y git-email
 git config --global user.name "hydra3333"
 git config --global user.email "hydra3333@gmail.com"
@@ -74,6 +73,7 @@ git config --global sendemail.to hydra3333@gmail.com
 git config --global --list
 git config --global credential.helper store
 #
+sudo apt -y install valgrind
 sudo apt -y install autoconf
 sudo apt -y install autopoint
 sudo apt -y install automake
