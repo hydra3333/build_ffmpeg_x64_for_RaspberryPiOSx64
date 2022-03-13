@@ -120,6 +120,27 @@ Added more return value checking, AV_LOG_WARNING and a lot
 more AV_LOG_DEBUG code; one-time runtime cost of debug code
 during init phase is negligible.
 Intentionally left in //commented-out debug code.
+
+A working commandline using an interlaced source:
+/usr/local/bin/ffmpeg -hide_banner -nostats -v debug \
+-i "~/Desktop/input_file_tiny.mp4" \
+-vsync cfr \
+-sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp \
+-strict experimental \
+-filter_complex "[0:v]yadif=0:0:0,format=pix_fmts=yuv420p" \
+-c:v h264_v4l2m2m \
+-pix_fmt yuv420p \
+-rc VBR \
+-b:v 4000000 \
+-qmin 10 -qmax 51 \
+-profile:v high \
+-level 4.2 \
+-shm separate_buffer \
+-rsh 0 \
+-g:v 25 \
+-movflags +faststart+write_colr \
+-an \
+-y "./output_file_tiny_h264_VBR_g25.mp4"
 EOF
 #
 ls -al "../ffmpeg_git_commit_message.txt"
