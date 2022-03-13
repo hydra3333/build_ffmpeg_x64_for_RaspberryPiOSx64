@@ -141,7 +141,7 @@ rm -fv ../updated_v4l2m2m_options.patch
 git format-patch -1 HEAD -s --stat --output=../updated_v4l2m2m_options.patch
 #cat ../updated_v4l2m2m_options.patch
 
-git format-patch -1 HEAD -s --stat --output=../updated_v4l2m2m_options.patch.eml --add-header "X-Unsent: 1" --to hydra3333@gmail.com --to ffmpeg-devel@ffmpeg.org
+git format-patch -1 HEAD --signoff --stat --output=../updated_v4l2m2m_options.patch.eml --add-header "X-Unsent: 1" --to hydra3333@gmail.com --to ffmpeg-devel@ffmpeg.org
 #cat ../updated_v4l2m2m_options.patch.eml
 
 
