@@ -15,8 +15,10 @@ sudo apt -y install wget
 sudo apt -y install valgrind lcov gcov
 #
 rm -fvR ./FFmpeg
+git clone --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
+
 #if [[ ! -d ./FFmpeg ]]; then
-	git clone --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
+#	git clone --depth 1 https://github.com/FFmpeg/FFmpeg.git ./FFmpeg
 #fi
 #
 cd FFmpeg
@@ -77,7 +79,7 @@ cat >"../ffmpeg_git_commit_message.txt" <<EOF
 Add and use cli options for v4l2 encoder=h264_v4l2m2m
 
 Add commandline options to v4l2_m2m_enc (h264_v4l2m2m only)
-and use those to configure options into the h264_v4l2m2m encoder.
+and use those to configure options for the h264_v4l2m2m encoder.
 Uses AVOption options to filter for valid options per v4l2 spec.
 For h264 it adds spec-compliant:
 -profile <name> (high is max accepted by Raspberry Pi)
@@ -97,23 +99,23 @@ eg on a Raspberry Pi,
 - Bitrate mode VBR, file is reported by mediainfo as CBR
 - Bitrate mode CBR, encoder hangs and appears to 
   "lock" /dev/video11 until reboot
-- CFR input yields a VFR file repoted by mediainfo (and an
-  odd framerate) whereas equivalent libx264 commandline
-  yields expected CFR; as tested on a Raspberry Pi4
+- CFR input yields a VFR file reported by mediainfo (and an
+  odd framerate) whereas an equivalent libx264 commandline
+  yields expected CFR; tested on a Raspberry Pi4
 - Bitrate mode CBR, profile is limited to less than "high"
 - Bitrate mode VBR, only target bitrate option exposed to set
 - Bitrate mode CQ, is not exposed to set
 
 Notes:
-This patch arises for use on a Raspberry Pi (4 +).
-Fixes "--profile high" was not working (required an integer).
+This patch arises from a desire to use ffmpeg on a Raspberry Pi (4 +).
+Fixes "--profile high" not working (required an integer).
 The Raspberry Pi OS does not expose a GOP size to set, so -g is
 used for backward compatibility with its value overriding
 the "close enough" effect of an "iframe_period" value.
 Hardware like Raspberry Pi 4 rejects some spec-compliant options
 beyond its capacity and/or not implemented by the Raspberry Pi OS.
 The Raspberry Pi OS repository for ffmpeg appears to have Repeat
-Sequence Header hard-coded as True, not as a cli an option.
+Sequence Header hard-coded as True, rather than a cli an option.
 Added more return value checking, AV_LOG_WARNING and a lot
 more AV_LOG_DEBUG code; one-time runtime cost of debug code
 during init phase is negligible.
@@ -215,14 +217,14 @@ read -p "Press ENTER to continue" x
 
 
 echo "Try FATE tests with VALGRIND"
-make fate		# for FATE ONLY using VALGRIND
+make fate 2>&a | tee ./VALGRIND_output.txt
 read -p "Press ENTER to continue" x
 
 
 echo "try a sample VFR encode with VALGRIND"
-rm -fv ff_VBR_g25.log
-mediainfo -full "~/Desktop/some_test_input_file_tiny.mp4" 2>&1 >> ff_VBR_g25.log
-mediainfo -full "~/Desktop/some_test_input_file_tiny.mp4" 2>&1  > ff_VBR_g25_1_BEFORE.log
+rm -fv ff_VBR_g25_VALGRIND.log
+mediainfo -full "~/Desktop/some_test_input_file_tiny.mp4" 2>&1 >> ff_VBR_g25_VALGRIND.log
+mediainfo -full "~/Desktop/some_test_input_file_tiny.mp4" 2>&1  > ff_VBR_g25_1_BEFORE_VALGRIND.log
 /usr/local/bin/ffmpeg -hide_banner -nostats -v debug \
 		-i "~/Desktop/some_test_input_file_tiny.mp4" \
 		-vsync cfr \
@@ -241,13 +243,13 @@ mediainfo -full "~/Desktop/some_test_input_file_tiny.mp4" 2>&1  > ff_VBR_g25_1_B
 		-g:v 25 \
 		-movflags +faststart+write_colr \
 		-an \
-		-y "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 | tee -a ff_VBR_g25.log
-mediainfo -full "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 >> ff_VBR_g25.log
-mediainfo -full "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1  > ff_VBR_g25_2_AFTER.log
+		-y "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 | tee -a ff_VBR_g25_VALGRIND.log
+mediainfo -full "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 >> ff_VBR_g25_VALGRIND.log
+mediainfo -full "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1  > ff_VBR_g25_2_AFTER_VALGRIND.log
 
 read -p "Press ENTER to continue" x
 
-echo "Now try the coverage tool"
+echo "Now try the Coverage tool"
 # Configure to compile with instrumentation enabled: 'configure --toolchain=gcov'
 # Run your test case, either manually or via FATE. 
 # This can be either the full FATE regression suite, or any arbitrary invocation of any front-end tool provided by FFmpeg, in any combination.
@@ -312,8 +314,8 @@ export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/incl
 	--enable-lzma \
 	--extra-cflags="-DLIBTWOLAME_STATIC" \
 	--extra-cflags="-DLIBXML_STATIC"
-make -j$(nproc)		# for FATE ONLY using VALGRIND
-sudo make install	# for FATE ONLY using VALGRIND
+make -j$(nproc)
+sudo make install
 export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
@@ -322,6 +324,7 @@ export -n LDFLAGS
 read -p "Press ENTER to continue" x
 
 echo "try a sample VFR encode with the coverage tool"
+rm -fv ./ff_VBR_g25_COVERAGE.log
 /usr/local/bin/ffmpeg -hide_banner -nostats -v debug \
 		-i "~/Desktop/some_test_input_file_tiny.mp4" \
 		-vsync cfr \
@@ -340,15 +343,12 @@ echo "try a sample VFR encode with the coverage tool"
 		-g:v 25 \
 		-movflags +faststart+write_colr \
 		-an \
-		-y "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4"
+		-y "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 > ./ff_VBR_g25_COVERAGE.log
 
 echo "Run 'make lcov' to generate coverage data in HTML format."
-make lcov
-ls -al lcov/index.html
-
-read -p "Press ENTER to continue" x
-
-echo "View 'lcov/index.html' in your preferred HTML viewer"
+make lcov 2>&1 >> ./ff_VBR_g25_COVERAGE.log
+ls -al lcov/index.html 2>&1 >> ./ff_VBR_g25_COVERAGE.log
+echo "View 'lcov/index.html' in your preferred HTML viewer" 2>&1 >> ./ff_VBR_g25_COVERAGE.log
 #
 
 read -p "Press ENTER to continue" x
