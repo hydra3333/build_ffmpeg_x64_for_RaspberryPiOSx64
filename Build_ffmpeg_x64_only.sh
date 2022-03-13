@@ -5,5 +5,6 @@
 #
 # Build ffmpeg only, without (re)building dependencies
 #
-sh ./Build_ffmpeg_x64_for_Raspberry_Pi4_bullseye.sh "ffmpeg_only"
+cd ~/Desktop
+./Build_ffmpeg_x64_for_Raspberry_Pi4_bullseye.sh "ffmpeg_only"
 #

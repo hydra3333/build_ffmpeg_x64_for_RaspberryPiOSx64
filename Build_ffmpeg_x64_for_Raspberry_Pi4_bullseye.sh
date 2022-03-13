@@ -9,11 +9,11 @@ set -x
 #
 # _debug is case sensitive !
 _debug=False
-#_debug=False
+#_debug=True
 if [[ "${_debug}" == "True" ]]; then
 	echo "Running in DEBUG mode, you will need to press Enter after each dependency build."
 fi
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 # Build script for x64 ffmpeg on the Pi4 with 64-bit OS which enables h264_v4l2m2m  ?
 # as at 2022.02.26
@@ -189,7 +189,7 @@ sudo apt -y install python3-pymediainfo python-pymediainfo-doc
 #sudo apt -y purge zlib1g-dev
 #sudo apt -y purge libsqlite3-dev 
 #
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 #================================================================================================================
@@ -227,7 +227,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### GMP
@@ -255,7 +255,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### ZLIB
@@ -279,7 +279,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### ICONV
@@ -303,7 +303,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 # XZ
@@ -328,7 +328,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### ZIMG
@@ -351,7 +351,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### SQLITE3
@@ -391,7 +391,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### LIBFLAC
@@ -417,7 +417,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### LIBOPUS
@@ -442,7 +442,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### LIBOGG
@@ -467,7 +467,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### LIBVORBIS
@@ -494,7 +494,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### LIBSAMPLERATE
@@ -523,7 +523,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### LIBSNDFILE
@@ -548,7 +548,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### VAMP_PLUGIN
@@ -590,7 +590,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### RUBBERBAND
@@ -619,7 +619,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### FDK-AAC
@@ -645,7 +645,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### LAME
@@ -670,7 +670,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### TWOLAME
@@ -704,7 +704,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### DAV1D
@@ -729,7 +729,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### LIBX264 multibit
@@ -752,7 +752,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### LIBX265 multibit
@@ -877,7 +877,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 # LIBPNG
@@ -907,7 +907,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 # LIBJPEG-TURBO
@@ -932,7 +932,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 # LIBWEBP
 # Support for the WebP image format
@@ -971,7 +971,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 # LIBVPX
 # Support for the VP8 and VP9 video codecs on our Raspberry Pi.
@@ -993,7 +993,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 cd ~/Desktop/ffmpeg_libraries
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ### kvazaar
@@ -1061,7 +1061,7 @@ cmake -G "Unix Makefiles" AOM_SRC -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INST
 ..
 make -j$(nproc)
 sudo make install
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 ##================================================================================================================
@@ -1074,7 +1074,7 @@ fi	# if [[ "${1}" != "ffmpeg_only" ]]; then
 #
 cd ~/Desktop
 sudo ldconfig
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 #
 #
 #
@@ -1156,7 +1156,7 @@ export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
 
-if [[ "${_debug}" == "True" ]]; then read -p "Press ENTER to continue"; fi
+if [[ "${_debug}" == "True" ]]; then read -p "press ENTER to continue" x; fi
 
 echo #
 echo ######################################################################
