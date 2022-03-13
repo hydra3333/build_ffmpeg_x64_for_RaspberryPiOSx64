@@ -126,30 +126,27 @@ cat "../ffmpeg_git_commit_message.txt"
 git commit --signoff --file="../ffmpeg_git_commit_message.txt"
 git status
 #
-#git log --name-status HEAD^..HEAD
-#git log -1 --pretty=format:"%H" # for the commit hash alone
-git log -1 --stat # to show the last commit USE THIS
-git show --name-status --oneline
-commit_id=$(git log -1 --pretty=format:"%H")
-echo "${commit_id}"
+##git log --name-status HEAD^..HEAD
+##git log -1 --pretty=format:"%H" # for the commit hash alone
+##git log -1 --stat # to show the last commit USE THIS
+##git show --name-status --oneline
+##commit_id=$(git log -1 --pretty=format:"%H")
+##echo "${commit_id}"
 
 # get the DIFF for the last commit ready for emailing
-
 rm -fv ../updated_v4l2m2m_options.patch
 ##git diff -patch HEAD^ HEAD --output=../updated_v4l2m2m_options.patch
 ##git show HEAD >../updated_v4l2m2m_options.patch
-git format-patch -1 HEAD -s --stat --output=../updated_v4l2m2m_options.patch
+git format-patch -1 HEAD --signoff --stat --output=../updated_v4l2m2m_options.patch
 #cat ../updated_v4l2m2m_options.patch
-
+#
+rm -fv ./updated_v4l2m2m_options.patch.eml
 git format-patch -1 HEAD --signoff --stat --output=../updated_v4l2m2m_options.patch.eml --add-header "X-Unsent: 1" --to hydra3333@gmail.com --to ffmpeg-devel@ffmpeg.org
 #cat ../updated_v4l2m2m_options.patch.eml
 
+read -p "Press ENTER to continue" x
 
-# Try FATE tests
-make -j$(nproc) fate
-
-
-# Build it for FATE ONLY using VALGRIND
+echo "Build it for FATE ONLY using VALGRIND"
 export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
 export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
@@ -213,11 +210,16 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
-#
-# Try FATE tests with VALGRIND
+read -p "Press ENTER to continue" x
+
+
+
+echo "Try FATE tests with VALGRIND"
 make fate		# for FATE ONLY using VALGRIND
-#
-# try a sample VFR encode with VALGRIND
+read -p "Press ENTER to continue" x
+
+
+echo "try a sample VFR encode with VALGRIND"
 rm -fv ff_VBR_g25.log
 mediainfo -full "~/Desktop/some_test_input_file_tiny.mp4" 2>&1 >> ff_VBR_g25.log
 mediainfo -full "~/Desktop/some_test_input_file_tiny.mp4" 2>&1  > ff_VBR_g25_1_BEFORE.log
@@ -243,7 +245,9 @@ mediainfo -full "~/Desktop/some_test_input_file_tiny.mp4" 2>&1  > ff_VBR_g25_1_B
 mediainfo -full "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 >> ff_VBR_g25.log
 mediainfo -full "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1  > ff_VBR_g25_2_AFTER.log
 
-# Now for the coverage tool
+read -p "Press ENTER to continue" x
+
+echo "Now try the coverage tool"
 # Configure to compile with instrumentation enabled: 'configure --toolchain=gcov'
 # Run your test case, either manually or via FATE. 
 # This can be either the full FATE regression suite, or any arbitrary invocation of any front-end tool provided by FFmpeg, in any combination.
@@ -314,8 +318,10 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
-#
-# try a sample VFR encode with the coverage tool
+
+read -p "Press ENTER to continue" x
+
+echo "try a sample VFR encode with the coverage tool"
 /usr/local/bin/ffmpeg -hide_banner -nostats -v debug \
 		-i "~/Desktop/some_test_input_file_tiny.mp4" \
 		-vsync cfr \
@@ -335,11 +341,19 @@ export -n LDFLAGS
 		-movflags +faststart+write_colr \
 		-an \
 		-y "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4"
-Run 'make lcov' to generate coverage data in HTML format.
+
+echo "Run 'make lcov' to generate coverage data in HTML format."
 make lcov
 ls -al lcov/index.html
-# View 'lcov/index.html' in your preferred HTML viewer
+
+read -p "Press ENTER to continue" x
+
+echo "View 'lcov/index.html' in your preferred HTML viewer"
 #
+
+read -p "Press ENTER to continue" x
+
+rm -fv /usr/local/bin/ffmpeg 
 
 cd ~/Desktop
 #
