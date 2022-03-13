@@ -64,3 +64,30 @@ Other :
 15. the encoder appears to be back-compatible with the current release
 16. related v4l2m2m encoders, eg mpeg4_v4l2m2m have also minor updates
 
+
+
+
+
+
+Did you add an entry to the table of supported formats or codecs in doc/general.texi?
+Did you add an entry in the Changelog?
+Does make fate pass with the patch applied?
+
+Did you test your decoder or demuxer against sample files? Samples may be obtained at 
+https://samples.ffmpeg.org
+
+Run the Regression tests 
+https://www.ffmpeg.org/developer.html#Regression-tests
+before submitting a patch in order to verify it does not cause unexpected problems.
+
+Use git send-email
+
+Using git send-email might not be desirable for everyone. 
+The following trick allows to send patches via email clients in a safe way. 
+It has been tested with Outlook and Thunderbird (with X-Unsent extension) and might work with other applications.
+
+Create your patch like this:
+
+git format-patch -1 HEAD -s --stat --output=../updated_v4l2m2m_options.patch.eml --add-header "X-Unsent: 1" --to hydra3333@gmail.com --to ffmpeg-devel@ffmpeg.org
+
+Now you’ll just need to open the eml file with the email application and execute ’Send’.
