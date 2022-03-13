@@ -167,6 +167,9 @@ rm -fv ./updated_v4l2m2m_options.patch.eml
 git format-patch -1 HEAD --signoff --stat --output=../updated_v4l2m2m_options.patch.eml --add-header "X-Unsent: 1" --to ffmpeg-devel@ffmpeg.org
 #--to hydra3333@gmail.com
 #cat ../updated_v4l2m2m_options.patch.eml
+#
+# 15H15
+git send-email -1 --from=hydra3333@gmail.com --to=hydra3333@gmail.com 
 
 read -p "Press ENTER to continue" x
 

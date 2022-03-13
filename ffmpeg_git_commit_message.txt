@@ -1,0 +1,47 @@
+Add and use cli options for v4l2 encoder=h264_v4l2m2m
+
+Add commandline options to v4l2_m2m_enc (h264_v4l2m2m only)
+and use those to configure options for the h264_v4l2m2m encoder.
+Uses AVOption options to filter for valid options per v4l2 spec.
+For h264 it adds spec-compliant:
+-profile <name> (high is max accepted by Raspberry Pi)
+-level <name>   (4.2 is max  accepted by Raspberry Pi)
+-rc <name>      (Bitrate mode, VBR or CBR or CQ)
+-shm <option>   (Sequence Header Mode, separate_buffer or joined_1st_frame)
+-rsh <boolean>  (Repeat Sequence Header 0(false) 1(true))
+-fsme           (Frame Skip Mode for encoder, rejected by Pi OS)
+-b:v <bps>      (Bit per second)
+-g <integer>    (pseudo GOP size, not an actual one)
+-iframe_period <integer> (the period between two I-frames)
+-qmin <integer> (Minimum quantization parameter for h264)
+-qmax <integer> (Maximum quantization parameter for h264)
+
+Patch does not address pre-existing quirks with h264_v4l2m2m,
+eg on a Raspberry Pi,
+- Bitrate mode VBR, file is reported by mediainfo as CBR
+- Bitrate mode CBR, encoder hangs and appears to 
+  "lock" /dev/video11 until reboot
+- CFR input yields a VFR file reported by mediainfo (and an
+  odd framerate) whereas an equivalent libx264 commandline
+  yields expected CFR; tested on a Raspberry Pi4
+- Bitrate mode CBR, profile is limited to less than "high"
+- Bitrate mode VBR, only target bitrate option exposed to set
+- Bitrate mode CQ, is not exposed to set
+
+Notes:
+Patch arises from a desire to use ffmpeg on a Raspberry Pi (4 +).
+Fixes "--profile high" not working (required an integer).
+The Raspberry Pi OS does not expose a GOP size to set, so -g is
+used for backward compatibility with its value overriding
+the "close enough" effect of an "iframe_period" value.
+Hardware like Raspberry Pi 4 rejects some spec-compliant options
+beyond its capacity and/or not implemented by the Raspberry Pi OS.
+The Raspberry Pi OS repository for ffmpeg appears to have Repeat
+Sequence Header hard-coded as True, rather than a cli an option.
+Added more return value checking, AV_LOG_WARNING and a lot
+more AV_LOG_DEBUG code; one-time runtime cost of debug code
+during init phase is negligible.
+Intentionally left in //commented-out debug code.
+
+A working commandline using an interlaced source:
+/usr/local/bin/ffmpeg -hide_banner -nostats -v debug -i "~/Desktop/input_file_tiny.mp4" -vsync cfr -sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp -strict experimental -filter_complex "[0:v]yadif=0:0:0,format=pix_fmts=yuv420p" -c:v h264_v4l2m2m -pix_fmt yuv420p -rc VBR -b:v 4000000 -qmin 10 -qmax 51 -profile:v high -level 4.2 -shm separate_buffer -rsh 0 -g:v 25 -movflags +faststart+write_colr -an -y "./output_file_tiny_h264_VBR_g25.mp4"
