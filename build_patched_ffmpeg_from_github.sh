@@ -94,7 +94,7 @@ For h264 it adds spec-compliant:
 -qmin <integer> (Minimum quantization parameter for h264)
 -qmax <integer> (Maximum quantization parameter for h264)
 
-Patch does NOT address pre-existing quirks/issues with h264_v4l2m2m,
+Patch does not address pre-existing quirks with h264_v4l2m2m,
 eg on a Raspberry Pi,
 - Bitrate mode VBR, file is reported by mediainfo as CBR
 - Bitrate mode CBR, encoder hangs and appears to 
@@ -107,7 +107,7 @@ eg on a Raspberry Pi,
 - Bitrate mode CQ, is not exposed to set
 
 Notes:
-This patch arises from a desire to use ffmpeg on a Raspberry Pi (4 +).
+Patch arises from a desire to use ffmpeg on a Raspberry Pi (4 +).
 Fixes "--profile high" not working (required an integer).
 The Raspberry Pi OS does not expose a GOP size to set, so -g is
 used for backward compatibility with its value overriding
@@ -233,21 +233,22 @@ export -n CFLAGS
 export -n CXXFLAGS
 export -n CPPFLAGS
 export -n LDFLAGS
-read -p "Press ENTER to continue" x
+
+#read -p "Press ENTER to continue to test 'make fate'" x
 
 
+#echo "Try FATE tests with VALGRIND"
+#make fate 2>&a | tee ./VALGRIND_output.txt
 
-echo "Try FATE tests with VALGRIND"
-make fate 2>&a | tee ./VALGRIND_output.txt
-read -p "Press ENTER to continue" x
+read -p "Press ENTER to continue to run a VALGRIND sample" x
 
 
 echo "try a sample VFR encode with VALGRIND"
 rm -fv ff_VBR_g25_VALGRIND.log
-mediainfo -full "~/Desktop/some_test_input_file_tiny.mp4" 2>&1 >> ff_VBR_g25_VALGRIND.log
-mediainfo -full "~/Desktop/some_test_input_file_tiny.mp4" 2>&1  > ff_VBR_g25_1_BEFORE_VALGRIND.log
+mediainfo -full "../some_test_input_file_tiny.mp4" 2>&1 >> ff_VBR_g25_VALGRIND.log
+mediainfo -full "../some_test_input_file_tiny.mp4" 2>&1  > ff_VBR_g25_1_BEFORE_VALGRIND.log
 /usr/local/bin/ffmpeg -hide_banner -nostats -v debug \
-		-i "~/Desktop/some_test_input_file_tiny.mp4" \
+		-i "../some_test_input_file_tiny.mp4" \
 		-vsync cfr \
 		-sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp \
 		-strict experimental \
@@ -268,108 +269,108 @@ mediainfo -full "~/Desktop/some_test_input_file_tiny.mp4" 2>&1  > ff_VBR_g25_1_B
 mediainfo -full "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 >> ff_VBR_g25_VALGRIND.log
 mediainfo -full "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1  > ff_VBR_g25_2_AFTER_VALGRIND.log
 
-read -p "Press ENTER to continue" x
+#read -p "Press ENTER to continue" x
 
-echo "Now try the Coverage tool"
-# Configure to compile with instrumentation enabled: 'configure --toolchain=gcov'
-# Run your test case, either manually or via FATE. 
-# This can be either the full FATE regression suite, or any arbitrary invocation of any front-end tool provided by FFmpeg, in any combination.
-# Run 'make lcov' to generate coverage data in HTML format.
-# View 'lcov/index.html' in your preferred HTML viewer.
-# You can use the command 'make lcov-reset' to reset the coverage measurements. 
-# You will need to rerun 'make lcov' after running a new test.
-export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
-./configure \
-	--toolchain=--toolchain=gcov \
-	--extra-version="ffmpeg_for_RPi4B_having_h264_v4l2m2m" \
-	--arch=aarch64 --target-os=linux \
-	--disable-shared --enable-static --enable-pic --enable-neon --disable-w32threads --enable-pthreads \
-	--enable-gpl --enable-version3 --enable-nonfree \
-	--prefix=/usr/local \
-	--libdir=/usr/local/lib \
-	--bindir=/usr/local/bin \
-	--extra-cflags=" -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib " \
-	--extra-ldflags=" -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib " \
-	--extra-libs="-lpthread -lm -latomic" \
-	--pkg-config=pkg-config \
-	--pkg-config-flags=--static \
-	--disable-doc --disable-htmlpages --disable-manpages --disable-podpages --disable-txtpages \
-	--disable-avisynth \
-	--disable-vapoursynth \
-	--disable-libkvazaar \
-	--disable-schannel \
-	--enable-v4l2-m2m \
-	--enable-hardcoded-tables \
-	--enable-gray \
-	--enable-gmp \
-	--enable-gnutls \
-	--enable-iconv \
-	--enable-libaom \
-	--enable-libass \
-	--enable-libdav1d \
-	--enable-libdrm \
-	--enable-libfdk-aac \
-	--enable-libmp3lame \
-	--enable-libtwolame \
-	--enable-libfreetype \
-	--enable-libopencore-amrnb \
-	--enable-libopencore-amrwb \
-	--enable-libopus \
-	--enable-librtmp \
-	--enable-libsnappy \
-	--enable-libsoxr \
-	--enable-libssh \
-	--enable-libvorbis \
-	--enable-libvpx \
-	--enable-libzimg \
-	--enable-libwebp \
-	--enable-libx264 \
-	--enable-libx265 \
-	--enable-libxml2 \
-	--enable-librubberband \
-	--enable-libwebp \
-	--enable-zlib \
-	--enable-lzma \
-	--extra-cflags="-DLIBTWOLAME_STATIC" \
-	--extra-cflags="-DLIBXML_STATIC"
-make -j$(nproc)
-sudo make install
-export -n CFLAGS
-export -n CXXFLAGS
-export -n CPPFLAGS
-export -n LDFLAGS
-
-read -p "Press ENTER to continue" x
-
-echo "try a sample VFR encode with the coverage tool"
-rm -fv ./ff_VBR_g25_COVERAGE.log
-/usr/local/bin/ffmpeg -hide_banner -nostats -v debug \
-		-i "~/Desktop/some_test_input_file_tiny.mp4" \
-		-vsync cfr \
-		-sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp \
-		-strict experimental \
-		-filter_complex "[0:v]yadif=0:0:0,format=pix_fmts=yuv420p" \
-		-c:v h264_v4l2m2m \
-		-pix_fmt yuv420p \
-		-rc VBR \
-		-b:v 4000000 \
-		-qmin 10 -qmax 51 \
-		-profile:v high \
-		-level 4.2 \
-		-shm separate_buffer \
-		-rsh 0 \
-		-g:v 25 \
-		-movflags +faststart+write_colr \
-		-an \
-		-y "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 > ./ff_VBR_g25_COVERAGE.log
-
-echo "Run 'make lcov' to generate coverage data in HTML format."
-make lcov 2>&1 >> ./ff_VBR_g25_COVERAGE.log
-ls -al lcov/index.html 2>&1 >> ./ff_VBR_g25_COVERAGE.log
-echo "View 'lcov/index.html' in your preferred HTML viewer" 2>&1 >> ./ff_VBR_g25_COVERAGE.log
+#echo "Now try the Coverage tool"
+## Configure to compile with instrumentation enabled: 'configure --toolchain=gcov'
+## Run your test case, either manually or via FATE. 
+## This can be either the full FATE regression suite, or any arbitrary invocation of any front-end tool provided by FFmpeg, in any combination.
+## Run 'make lcov' to generate coverage data in HTML format.
+## View 'lcov/index.html' in your preferred HTML viewer.
+## You can use the command 'make lcov-reset' to reset the coverage measurements. 
+## You will need to rerun 'make lcov' after running a new test.
+#export CFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
+#export CXXFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
+#export CPPFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
+#export LDFLAGS=" -O3 -fstack-protector-all -D_FORTIFY_SOURCE=2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib "
+#./configure \
+#	--toolchain=--toolchain=gcov \
+#	--extra-version="ffmpeg_for_RPi4B_having_h264_v4l2m2m" \
+#	--arch=aarch64 --target-os=linux \
+#	--disable-shared --enable-static --enable-pic --enable-neon --disable-w32threads --enable-pthreads \
+#	--enable-gpl --enable-version3 --enable-nonfree \
+#	--prefix=/usr/local \
+#	--libdir=/usr/local/lib \
+#	--bindir=/usr/local/bin \
+#	--extra-cflags=" -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib " \
+#	--extra-ldflags=" -I/usr/local/include -I/usr/include/aarch64-linux-gnu -I/usr/include -L/usr/local/lib -L/usr/lib/aarch64-linux-gnu -L/usr/lib " \
+#	--extra-libs="-lpthread -lm -latomic" \
+#	--pkg-config=pkg-config \
+#	--pkg-config-flags=--static \
+#	--disable-doc --disable-htmlpages --disable-manpages --disable-podpages --disable-txtpages \
+#	--disable-avisynth \
+#	--disable-vapoursynth \
+#	--disable-libkvazaar \
+#	--disable-schannel \
+#	--enable-v4l2-m2m \
+#	--enable-hardcoded-tables \
+#	--enable-gray \
+#	--enable-gmp \
+#	--enable-gnutls \
+#	--enable-iconv \
+#	--enable-libaom \
+#	--enable-libass \
+#	--enable-libdav1d \
+#	--enable-libdrm \
+#	--enable-libfdk-aac \
+#	--enable-libmp3lame \
+#	--enable-libtwolame \
+#	--enable-libfreetype \
+#	--enable-libopencore-amrnb \
+#	--enable-libopencore-amrwb \
+#	--enable-libopus \
+#	--enable-librtmp \
+#	--enable-libsnappy \
+#	--enable-libsoxr \
+#	--enable-libssh \
+#	--enable-libvorbis \
+#	--enable-libvpx \
+#	--enable-libzimg \
+#	--enable-libwebp \
+#	--enable-libx264 \
+#	--enable-libx265 \
+#	--enable-libxml2 \
+#	--enable-librubberband \
+#	--enable-libwebp \
+#	--enable-zlib \
+#	--enable-lzma \
+#	--extra-cflags="-DLIBTWOLAME_STATIC" \
+#	--extra-cflags="-DLIBXML_STATIC"
+#make -j$(nproc)
+#sudo make install
+#export -n CFLAGS
+#export -n CXXFLAGS
+#export -n CPPFLAGS
+#export -n LDFLAGS
+#
+#read -p "Press ENTER to continue" x
+#
+#echo "try a sample VFR encode with the coverage tool"
+#rm -fv ./ff_VBR_g25_COVERAGE.log
+#/usr/local/bin/ffmpeg -hide_banner -nostats -v debug \
+#		-i "~/Desktop/some_test_input_file_tiny.mp4" \
+#		-vsync cfr \
+#		-sws_flags lanczos+accurate_rnd+full_chroma_int+full_chroma_inp \
+#		-strict experimental \
+#		-filter_complex "[0:v]yadif=0:0:0,format=pix_fmts=yuv420p" \
+#		-c:v h264_v4l2m2m \
+#		-pix_fmt yuv420p \
+#		-rc VBR \
+#		-b:v 4000000 \
+#		-qmin 10 -qmax 51 \
+#		-profile:v high \
+#		-level 4.2 \
+#		-shm separate_buffer \
+#		-rsh 0 \
+#		-g:v 25 \
+#		-movflags +faststart+write_colr \
+#		-an \
+#		-y "./some_test_input_file_tiny_transcoded_h264_VBR_g25_v4l2m2m.mp4" 2>&1 > ./ff_VBR_g25_COVERAGE.log
+#
+#echo "Run 'make lcov' to generate coverage data in HTML format."
+#make lcov 2>&1 >> ./ff_VBR_g25_COVERAGE.log
+#ls -al lcov/index.html 2>&1 >> ./ff_VBR_g25_COVERAGE.log
+#echo "View 'lcov/index.html' in your preferred HTML viewer" 2>&1 >> ./ff_VBR_g25_COVERAGE.log
 #
 
 read -p "Press ENTER to continue" x
