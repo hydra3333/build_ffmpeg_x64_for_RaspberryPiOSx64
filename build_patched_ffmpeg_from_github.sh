@@ -97,9 +97,9 @@ eg on a Raspberry Pi,
 - Bitrate mode VBR, file is reported by mediainfo as CBR
 - Bitrate mode CBR, encoder hangs and appears to 
   "lock" /dev/video11 until reboot
-- CFR input yields VFR file repoted by mediainfo (and an
+- CFR input yields a VFR file repoted by mediainfo (and an
   odd framerate) whereas equivalent libx264 commandline
-  yields expected CFR
+  yields expected CFR; as tested on a Raspberry Pi4
 - Bitrate mode CBR, profile is limited to less than "high"
 - Bitrate mode VBR, only target bitrate option exposed to set
 - Bitrate mode CQ, is not exposed to set
